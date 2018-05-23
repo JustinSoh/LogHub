@@ -1,0 +1,65 @@
+.login-canvas {
+    border-radius: 4px;
+    margin: 0px auto;
+    height: 50%;
+    position:fixed;
+    top: 25%;
+    bottom: 25%;
+    left: 0;
+    right: 0;
+}
+.white-area {
+    background-color: white;
+    height: 13%;
+    border-radius: 30px;
+    margin-bottom: 2%;
+    vertical-align: bottom;
+}
+.blue-area {
+    background-color: #00A8FF;
+    height: 85%;
+    border-radius: 30px;
+}
+
+.type-header {
+    position: relative; 
+    top: 10%;
+}
+
+.mat-button {
+    width: auto; 
+    height: auto;
+    border-radius: 20px;
+    text-align: center;
+}
+.mat-button:focus {
+    border: 0;
+    outline: none;
+}
+
+#login-button {
+    width: 45%;
+    text-align: center;
+    font-size: 18px;
+    font-weight:bold; 
+}
+
+#dividing-line {
+    width:10%; 
+    text-align: center;
+    font-size: 24px; 
+    font-weight: bold;
+}
+
+
+#register-button {
+    width:45%;
+    text-align: center;
+    font-size: 18px;
+    font-weight:bold; 
+}
+
+.button-active {
+    background-color: #0072FF;
+    color: #fafafa;
+}
