@@ -1,0 +1,6 @@
+C:\Users\SengokuMedaru\Desktop\OSCS\LogHub\LogHubEndpointLogsExtraction1\LogHubEndpointLogsExtraction1\bin\Debug\LogHubEndpointLogsExtraction1.exe.config
+C:\Users\SengokuMedaru\Desktop\OSCS\LogHub\LogHubEndpointLogsExtraction1\LogHubEndpointLogsExtraction1\bin\Debug\LogHubEndpointLogsExtraction1.exe
+C:\Users\SengokuMedaru\Desktop\OSCS\LogHub\LogHubEndpointLogsExtraction1\LogHubEndpointLogsExtraction1\bin\Debug\LogHubEndpointLogsExtraction1.pdb
+C:\Users\SengokuMedaru\Desktop\OSCS\LogHub\LogHubEndpointLogsExtraction1\LogHubEndpointLogsExtraction1\obj\Debug\LogHubEndpointLogsExtraction1.csprojResolveAssemblyReference.cache
+C:\Users\SengokuMedaru\Desktop\OSCS\LogHub\LogHubEndpointLogsExtraction1\LogHubEndpointLogsExtraction1\obj\Debug\LogHubEndpointLogsExtraction1.exe
+C:\Users\SengokuMedaru\Desktop\OSCS\LogHub\LogHubEndpointLogsExtraction1\LogHubEndpointLogsExtraction1\obj\Debug\LogHubEndpointLogsExtraction1.pdb
