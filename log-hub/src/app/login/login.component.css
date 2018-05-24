@@ -24,6 +24,7 @@
 .type-header {
     position: relative; 
     top: 10%;
+    background-color: red;
 }
 
 .mat-button {
