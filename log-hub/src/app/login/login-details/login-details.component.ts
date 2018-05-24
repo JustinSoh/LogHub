@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { passwordHash }  from 'password-hash';
+import { md5 }  from 'node_modules/md5';
 @Component({
   selector: 'app-login-details',
   templateUrl: './login-details.component.html',
@@ -18,6 +18,7 @@ export class LoginDetailsComponent implements OnInit {
   logIn()
   {
     console.log(this.username);
+    console.log(this.hashedpw);
   }
   passwordHash(passwd)
   {
@@ -26,7 +27,9 @@ export class LoginDetailsComponent implements OnInit {
 
   hashpw(passwd):string
   {
-
-    return "he"
+    var md5 = require('md5');
+    this.hashedpw = md5(passwd);
+    return this.hashedpw;
+    
   }
 }
