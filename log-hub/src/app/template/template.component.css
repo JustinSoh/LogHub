@@ -1,0 +1,16 @@
+.navbar-dark {
+    background-color: #FAFAFA;
+}
+.navbar-dark .navbar-nav .nav-link{
+    color: black;
+    font-weight: bold;
+}
+
+.navbar-dark .navbar-brand{
+    color: black;
+    font-weight: bold;
+}
+
+.active {
+    color: #0072FF !important;
+}
