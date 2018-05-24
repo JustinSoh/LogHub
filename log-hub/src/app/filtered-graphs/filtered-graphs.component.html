@@ -1,0 +1,33 @@
+<div style="width: 950px">
+  <div style="margin-top: 7%">
+    <div class="row">
+      <div class="col">
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Type of logs</button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button class="dropdown-item" (click)="applicationClick()">Application</button>
+            <button class="dropdown-item" (click)="eventClick()">Event</button>
+            <button class="dropdown-item" (click)="processClick()">Process</button>
+            <button class="dropdown-item" (click)="cpuClick()">CPU Usage</button>
+            <button class="dropdown-item" (click)="batteryClick()">Battery Usage</button>
+          </div>
+        </div>
+        <div ngbDropdown class="d-inline-block" *ngIf="toggle" style="margin-left: 3%">
+          <button class="btn btn-outline-primary" id="dropdownBasic2" ngbDropdownToggle>Sort CPU usage by</button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
+            <button class="dropdown-item" (click)="cpuClick()">Time</button>
+            <button class="dropdown-item" (click)="cpuAppClick()">Application</button>
+          </div>
+        </div>
+        <div ngbDropdown class="d-inline-block" *ngIf="toggle2" style="margin-left: 3%">
+          <button class="btn btn-outline-primary" id="dropdownBasic2" ngbDropdownToggle>Sort battery usage by</button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
+            <button class="dropdown-item" (click)="batteryClick()">Time</button>
+            <button class="dropdown-item" (click)="batteryAppClick()">Application</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <canvas id="canvas" width="300" height="123" class="chartjs-render-monitor"></canvas>
+  </div>
+</div>
