@@ -6,10 +6,11 @@
       <div class="type-header row ">
             <p id="login-button" class="headline custom-button" [ngClass]="{'button-active': loginBoolean}" (click)="loginActivated()">Login</p>
             <p class="headline dividing-line">/</p>
-            <p id="register-button" class="headline custom-button" [ngClass]="{'button-active': registerBoolean}" (click)="registrationActivated()">Register</p>
+            <p id="register-button" class="headline custom-button" [ngClass]="{'button-active': registerBoolean}" (click)="registrationActivated()"> Register</p>
       </div>
     </div>
     <div class="blue-area">
+        <routing-outlet></routing-outlet>
         <app-login-details *ngIf="showLogin"></app-login-details>
         <app-registration-details *ngIf="showRegistration"></app-registration-details>
     </div>

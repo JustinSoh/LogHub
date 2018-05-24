@@ -15,6 +15,7 @@ export class LoginDetailsComponent implements OnInit {
 
   public username = ""
   private hashedpw = ""
+  public forgetBoolean
   logIn()
   {
     console.log(this.username);
@@ -32,4 +33,10 @@ export class LoginDetailsComponent implements OnInit {
     return this.hashedpw;
     
   }
+
+  forgetPassword()
+  {
+    this.forgetBoolean = true;
+  }
+
 }

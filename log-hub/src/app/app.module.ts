@@ -13,7 +13,9 @@ import { FilteredGraphsComponent } from './filtered-graphs/filtered-graphs.compo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginDetailsComponent } from './login/login-details/login-details.component';
 import { RegistrationDetailsComponent } from './login/registration-details/registration-details.component';
-
+import { ForgetPasswordComponent } from './login/forget-password/forget-password.component';
+import { RouterModule, Routes } from '@angular/router';
+import { AppRoutingModule } from './app.router';
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +23,8 @@ import { RegistrationDetailsComponent } from './login/registration-details/regis
     TemplateComponent,
     LoginDetailsComponent,
     RegistrationDetailsComponent,
-    FilteredGraphsComponent
+    FilteredGraphsComponent,
+    ForgetPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -35,10 +38,13 @@ import { RegistrationDetailsComponent } from './login/registration-details/regis
     MatInputModule,
     BrowserAnimationsModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AppRoutingModule,
+    RouterModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
+  
 })
 export class AppModule {
 }
