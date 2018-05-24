@@ -1,0 +1,27 @@
+<div class="login-section">
+    <form class="login-form">
+        <mat-form-field class="username-field">
+          <div style="display: inline-block;">
+            <input style="color:black" placeholder="username" class ="input login-input"  [(ngModel)]="username" name="username" matInput >
+          </div>
+        </mat-form-field>
+        <br>
+        <mat-form-field class="password-field">
+            <div style="display: inline-block;">
+                <input 
+                  style="color:black" 
+                  placeholder="password" 
+                  class="input password-input"
+                  [(ngModel)]="password"
+                  name="password"
+                  (change)="passwordHash(password)"  
+                  matInput >
+              </div>
+        </mat-form-field>
+    </form>
+    <div class="bottom-section">
+        <p class="text forget-button">Forget password?</p>
+        <button mat-button class="login-button col-md-4" (click)="logIn($event)">Log In</button> 
+    </div>
+    
+</div>

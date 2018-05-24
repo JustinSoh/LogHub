@@ -1,10 +1,10 @@
 .login-canvas {
     border-radius: 4px;
     margin: 0px auto;
-    height: 50%;
+    height: 35%;
     position:fixed;
-    top: 25%;
-    bottom: 25%;
+    top: 28.5%;
+    bottom: 32.5%;
     left: 0;
     right: 0;
 }
@@ -12,18 +12,21 @@
     background-color: white;
     height: 13%;
     border-radius: 30px;
-    margin-bottom: 2%;
+    margin-bottom: 7%;
     vertical-align: bottom;
 }
 .blue-area {
-    background-color: #00A8FF;
+    background-color: #FAFAFA;
     height: 85%;
     border-radius: 30px;
 }
 
 .type-header {
     position: relative; 
+    padding: 0%;
+    margin: 0%;
     top: 10%;
+
 }
 
 .mat-button {
@@ -31,35 +34,40 @@
     height: auto;
     border-radius: 20px;
     text-align: center;
-}
-.mat-button:focus {
-    border: 0;
-    outline: none;
+    color: black;
 }
 
 #login-button {
-    width: 45%;
-    text-align: center;
-    font-size: 18px;
-    font-weight:bold; 
+    text-align:left;
+    width: auto;
+    margin: 0%;
+    padding: 0px ;
 }
 
-#dividing-line {
-    width:10%; 
-    text-align: center;
-    font-size: 24px; 
-    font-weight: bold;
+.custom-button:hover {
+    color: #00A8FF;
 }
-
-
-#register-button {
-    width:45%;
-    text-align: center;
-    font-size: 18px;
-    font-weight:bold; 
+.custom-button{
+    color: black;
 }
 
 .button-active {
-    background-color: #0072FF;
-    color: #fafafa;
+    color: #0072FF;
 }
+
+.dividing-line {
+    text-align: center;
+    font-size: 24px; 
+    padding-left: 2%; 
+    padding-right: 2%;
+    font-weight: bold;
+}
+
+#register-button {
+    width:auto;
+    font-size: 18px;
+}
+
+
+
+

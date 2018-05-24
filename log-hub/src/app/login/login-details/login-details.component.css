@@ -1,0 +1,59 @@
+.login-section{
+    width:100%;
+  
+    
+}
+
+.username-field {
+    display: inline-block;
+    width:100%;
+}
+
+.password-field {
+    display: inline-block;
+    width:100%;
+}
+
+.login-input{
+    float:left;
+    width:80%;
+    margin-left:20;
+}
+
+.password-input{
+    float:left;
+    width:80%;
+    margin-left:20;
+}
+
+.login-form {
+    width:90%;
+    padding-top: 5%;
+    padding-left:10%;
+}
+
+.login-button {
+    float:right;
+    background-color: #0072FF;
+    color: #fafafa;
+    margin-right: 10%;
+}
+
+.forget-button {
+    color:black;
+    float:left;
+    margin-left:10%;
+}
+
+.forget-button:hover {
+    color: #00A2FF;
+}
+
+.bottom-section{
+    width:100%;
+    display: inline-block;
+}
+
+.active{
+    color: #0072FF;
+}

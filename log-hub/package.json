@@ -11,7 +11,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^6.0.2",
+    "@angular/animations": "^6.0.3",
     "@angular/cdk": "^6.1.0",
     "@angular/common": "^6.0.2",
     "@angular/compiler": "^6.0.2",
@@ -31,6 +31,7 @@
     "core-js": "^2.5.4",
     "font-awesome": "^4.7.0",
     "ngx-bootstrap": "^3.0.0",
+    "password-hash": "^1.2.2",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"
   },

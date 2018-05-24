@@ -1,3 +1,44 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~bootstrap/dist/css/bootstrap.min.css';
-@import '~font-awesome/css/font-awesome.css'
+@import '~font-awesome/css/font-awesome.css';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+
+.display {
+    font-weight: bold !important;
+    font-size: 48px !important;
+}
+
+.headline {
+    font-weight: bold !important;
+    font-size: 32px !important;
+}
+
+.title1 {
+    font-weight: normal !important;
+    font-size: 24px !important;
+}
+
+.title2 {
+    font-weight: bold !important;
+    font-size: 24px !important;
+}
+
+.subheading {
+    font-weight: bold !important;
+    font-size: 18px !important;
+}
+
+.text {
+    font-size: 14px !important;
+    font-weight: normal !important;
+}
+
+.caption {
+    font-size: 12px !important;
+    font-weight: normal !important;
+}
+
+.active {
+    color: #0072FF !important;
+}

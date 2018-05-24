@@ -3,18 +3,15 @@
 
   <div class="login-canvas col-md-4">
     <div class="white-area">
-      <div class="type-header title2 row ">
-            <div style="text-align:center;width: 45%">
-              <button mat-button id="login-button" class="button-active headline">Login</button>
-            </div>
-            <div id="dividing-line">/</div>
-            <div style="text-align:center; width: 45%">
-              <button mat-button id="register-button" class="headline" >Register</button>
-            </div>
+      <div class="type-header row ">
+            <p id="login-button" class="headline custom-button" [ngClass]="{'button-active': loginBoolean}" (click)="loginActivated()">Login</p>
+            <p class="headline dividing-line">/</p>
+            <p id="register-button" class="headline custom-button" [ngClass]="{'button-active': registerBoolean}" (click)="registrationActivated()">Register</p>
       </div>
     </div>
     <div class="blue-area">
-
+        <app-login-details *ngIf="showLogin"></app-login-details>
+        <app-registration-details *ngIf="showRegistration"></app-registration-details>
     </div>
   </div> 
   <div class="col-md-5"></div>
