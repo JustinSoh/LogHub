@@ -15,7 +15,7 @@ import { LoginDetailsComponent } from './login/login-details/login-details.compo
 import { RegistrationDetailsComponent } from './login/registration-details/registration-details.component';
 import { ForgetPasswordComponent } from './login/forget-password/forget-password.component';
 import { RouterModule, Routes } from '@angular/router';
-import { AppRoutingModule } from './app.router';
+import { AppRoutingModule } from './app-routing.module'
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,10 +39,10 @@ import { AppRoutingModule } from './app.router';
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    AppRoutingModule,
     RouterModule,
+    AppRoutingModule,
   ],
-  providers: [],
+  providers: [AppRoutingModule],
     bootstrap: [AppComponent],
   
 })

@@ -4,15 +4,16 @@
   <div class="login-canvas col-md-4">
     <div class="white-area">
       <div class="type-header row ">
-            <p id="login-button" class="headline custom-button" [ngClass]="{'button-active': loginBoolean}" (click)="loginActivated()">Login</p>
+            <a routerLink="/login" id="login-button" class="headline custom-button" [ngClass]="{'button-active': loginBoolean}" (click)="loginActivated()">Login</a>
             <p class="headline dividing-line">/</p>
-            <p id="register-button" class="headline custom-button" [ngClass]="{'button-active': registerBoolean}" (click)="registrationActivated()"> Register</p>
+            <a routerLink="/register" id="register-button" class="headline custom-button" [ngClass]="{'button-active': registerBoolean}" (click)="registrationActivated()"> Register</a>
       </div>
     </div>
     <div class="blue-area">
-        <routing-outlet></routing-outlet>
-        <app-login-details *ngIf="showLogin"></app-login-details>
-        <app-registration-details *ngIf="showRegistration"></app-registration-details>
+        <!-- <app-login-details *ngIf="showLogin"></app-login-details>
+        <app-registration-details *ngIf="showRegistration"></app-registration-details> -->
+        <router-outlet></router-outlet>
+        
     </div>
   </div> 
   <div class="col-md-5"></div>

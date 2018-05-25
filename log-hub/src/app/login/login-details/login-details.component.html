@@ -28,8 +28,9 @@
         </mat-form-field>
     </form>
     <div class="bottom-section">
-        <a href="/login/forgotPassword" class="text forget-button" (click)="forgetPassword()">Forget password?</a>
+        <a routerLink="/login/forgotPassword" class="text forget-button" (click)="forgetPassword()">Forget password?</a>
         <button mat-button class="login-button col-md-4" (click)="logIn($event)">Log In</button> 
     </div>
-    
 </div>
+
+<router-outlet></router-outlet>
