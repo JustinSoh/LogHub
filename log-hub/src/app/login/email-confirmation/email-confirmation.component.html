@@ -1,0 +1,30 @@
+
+<div class="login-section">
+    <form class="login-form">
+        <mat-form-field class="email-field">
+          <div style="display: inline-block; width: 100%">
+            <input 
+                style="color:black" 
+                placeholder="Confirmation Code" 
+                class ="input email-input" 
+                [(ngModel)]="confirmation1" 
+                type="string" 
+                name="confirmation1" 
+                [formControl]="confirmation"
+                required
+                (input)="validate(confirmation.value)"
+                matInput>
+          </div>
+        </mat-form-field>
+        <br>
+        <div *ngIf="validated">
+         <button routerLink="/changeDetails" mat-button class="submit-button">Submit</button> 
+        </div>
+        <div *ngIf="!validated">
+            <button *ngIf="confirmation.valid"  mat-button class="submit-button">Submit</button> 
+            <button disabled *ngIf="!confirmation.valid" mat-button class="submit-button">Submit</button> 
+        </div>
+       
+        
+    </form>
+</div>

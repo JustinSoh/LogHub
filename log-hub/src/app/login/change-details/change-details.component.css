@@ -1,4 +1,4 @@
-.login-section{
+.change-section{
     width:100%;
   
     
@@ -14,7 +14,7 @@
     width:100%;
 }
 
-.login-input{
+.change-input{
     float:left;
     width:100%;
 }
@@ -24,13 +24,13 @@
     width:100%;
 }
 
-.login-form {
+.change-form {
     width:90%;
     padding-top: 5%;
     padding-left:10%;
 }
 
-.login-button {
+.change-button {
     float:right;
     background-color: #0072FF;
     color: #fafafa;

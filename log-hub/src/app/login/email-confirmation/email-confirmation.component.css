@@ -1,0 +1,35 @@
+
+.login-section{
+    width:100%;
+  
+    
+}
+
+.email-field {
+    display: inline-block;
+    width:100%;
+    margin-top: 10%;
+}
+
+.confirmation-field {
+    display: inline-block;
+    width:100%;
+}
+
+.email-input{
+    float:left;
+    width:100%;
+}
+
+
+.login-form {
+    width:90%;
+    padding-top: 5%;
+    padding-left:10%;
+}
+
+.submit-button {
+    float:right;
+    background-color: #0072FF;
+    color: #fafafa;
+}

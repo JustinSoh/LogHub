@@ -1,11 +1,11 @@
-<div class="login-section">
-    <form class="login-form">
+<div class="change-section">
+    <form class="change-form">
         <mat-form-field class="username-field">
           <div style="display: inline-block; width:100%;">
             <input 
                 style="color:black" 
-                placeholder="username" 
-                class ="input login-input" 
+                placeholder="new password" 
+                class ="input change-input" 
                 [(ngModel)]="username" 
                 type="string" 
                 name="username" 
@@ -21,20 +21,17 @@
                   id="password"
                   name="password"
                   style="color:black" 
-                  placeholder="password" 
+                  placeholder="retype password" 
                   class="input password-input"
-                  [(ngModel)]="password"
                   type="text"
                   name="password"
-                  (change)="passwordHash(password)"  
                   required
                   matInput >
               </div>
         </mat-form-field>
     </form>
     <div class="bottom-section">
-        <a routerLink="/forgotPassword" class="text forget-button" (click)="forgetPassword()">Forget password?</a>
-        <button mat-button class="login-button col-md-4" (click)="logIn($event)">Log In</button> 
+        <button mat-button class="change-button col-md-4" (click)="logIn($event)">Submit</button> 
     </div>
   
 </div>

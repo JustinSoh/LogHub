@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { md5 }  from 'node_modules/md5';
+import {FormControl, Validators} from '@angular/forms';
 @Component({
   selector: 'app-login-details',
   templateUrl: './login-details.component.html',
@@ -12,14 +13,23 @@ export class LoginDetailsComponent implements OnInit {
   ngOnInit() {
 
   }
-
+  public usernameEmpty = true;
+  public passwordEmpty = false;
   public username = ""
   private hashedpw = ""
   public forgetBoolean
+
+
   logIn()
   {
-    console.log(this.username);
-    console.log(this.hashedpw);
+    if(this.username == "" || this.username == null || this.hashedpw == null || this.hashedpw == "")
+    {
+      console.log("Fields are not filled")
+    }
+    else {
+      console.log(this.username);
+      console.log(this.hashedpw);
+    }
   }
   passwordHash(passwd)
   {
@@ -37,6 +47,7 @@ export class LoginDetailsComponent implements OnInit {
   forgetPassword()
   {
     this.forgetBoolean = true;
+
   }
 
 }
