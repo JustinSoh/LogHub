@@ -21,15 +21,16 @@ import { RegistrationDetailsComponent } from './login/registration-details/regis
 import { LoginDetailsComponent } from './login/login-details/login-details.component';
 import { EmailConfirmationComponent } from './login/email-confirmation/email-confirmation.component';
 import { ChangeDetailsComponent } from './login/change-details/change-details.component';
+import { TemplateComponent } from './template/template.component';
 
 const routes: Routes = [
   { path: "changeDetails", component: ChangeDetailsComponent },
   { path: "confirmation", component: EmailConfirmationComponent },
-  { path: "forgotPassword", component: ForgetPasswordComponent },
-  { path: "login", component: LoginDetailsComponent },
-  { path: "register", component: RegistrationDetailsComponent },
-
-  { path: "", component: LoginDetailsComponent }
+  { path: "forgotPassword",component: ForgetPasswordComponent },
+  { path: "login",component: LoginDetailsComponent },
+  { path: "register",component: RegistrationDetailsComponent },
+  { path: "home", component: TemplateComponent},
+  { path: "",component: LoginComponent }
   
 ];
 
