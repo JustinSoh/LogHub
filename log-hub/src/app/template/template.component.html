@@ -1,17 +1,14 @@
 
 <nav class="navbar navbar-expand navbar-dark fixed-top">
-  <a class="navbar-brand title2" href="#">Image</a>
+  <a class="navbar-brand title2 logo" href="#">LogHub</a>
   <div class="collapse navbar-collapse">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active title2">
-        <a class="nav-link active" href="#"> Folder 1 <span class="sr-only">(current)</span></a>
+        <a class="nav-link hovering" [routerLink]="['/home', { outlets:{mainPath: ['analytics']}}]">Analytics</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Folder 2</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Folder 3</a>
-      </li>
+      <!-- <li class="nav-item">
+        <a class="nav-link" href="#"></a>
+      </li> -->
     </ul>
     <ul class="navbar-nav title2">
       <li class="nav-item">

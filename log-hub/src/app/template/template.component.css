@@ -11,4 +11,11 @@
     font-weight: bold;
 }
 
+a:hover {
+    text-decoration: #00A2FF; 
+    color: #00A2FF !important;
+}
 
+.active{
+    color: #00A2FF;
+}

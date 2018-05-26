@@ -42,7 +42,6 @@ export class LoginDetailsComponent implements OnInit {
     if(this.username.valid)
     {
       //do some test 
-      console.log(this.username.value);
       this.usernameB = true;
       this.finalValidation()
     }
@@ -53,7 +52,6 @@ export class LoginDetailsComponent implements OnInit {
     this.hashpw(passwd);
     if(this.password.valid)
     {
-      console.log(this.hashedpw)
       this.passwordB = true;
       this.finalValidation();
     }

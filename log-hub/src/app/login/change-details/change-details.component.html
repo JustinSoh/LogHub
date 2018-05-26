@@ -36,8 +36,7 @@
     <div class="bottom-section">
         <p *ngIf="!passwordBoolean" class="text forget-button">{{errorMessage}}</p>
         <button disabled *ngIf="!passwordBoolean" mat-button class="change-button col-md-4">Submit</button> 
-        <button routerLink="/login" *ngIf="passwordBoolean" mat-button class="change-button col-md-4">Submit</button> 
-        
+        <button [routerLink]="['/login', { outlets:{loginPath: ['loginDetails']}}]" *ngIf="passwordBoolean" mat-button class="change-button col-md-4">Submit</button> 
     </div>
   
 </div>

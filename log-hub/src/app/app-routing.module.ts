@@ -22,16 +22,29 @@ import { LoginDetailsComponent } from './login/login-details/login-details.compo
 import { EmailConfirmationComponent } from './login/email-confirmation/email-confirmation.component';
 import { ChangeDetailsComponent } from './login/change-details/change-details.component';
 import { TemplateComponent } from './template/template.component';
+import { AnalyticsMainComponent } from './analytics/analytics-main/analytics-main.component';
+import { MainComponent } from './main/main.component';
 
 const routes: Routes = [
-  { path: "changeDetails", component: ChangeDetailsComponent },
-  { path: "confirmation", component: EmailConfirmationComponent },
-  { path: "forgotPassword",component: ForgetPasswordComponent },
-  { path: "login",component: LoginDetailsComponent },
-  { path: "register",component: RegistrationDetailsComponent },
-  { path: "home", component: TemplateComponent},
-  { path: "",component: LoginComponent }
+  {path: "" , redirectTo: "login" , pathMatch:"full"},
+  { path: "login",component: LoginComponent , children: [
+    {path: "" , component: LoginDetailsComponent, outlet: 'loginPath'},
+    { path: "loginDetails", component: LoginDetailsComponent , outlet: 'loginPath'},
+    { path: "register",component: RegistrationDetailsComponent ,  outlet: 'loginPath' },
+    { path: "changeDetails", component: ChangeDetailsComponent , outlet: 'loginPath'},
+    { path: "confirmation", component: EmailConfirmationComponent , outlet: 'loginPath' },
+    { path: "forgotPassword",component: ForgetPasswordComponent , outlet: 'loginPath'},
+  ] },
+  { path: "home", component: MainComponent , children: [
+    {path: "", component: AnalyticsMainComponent , outlet: 'mainPath'},
+    {path: "analytics", component: AnalyticsMainComponent , outlet: 'mainPath'} 
+    
+  ]}
   
+  // { path: "home", component: MainComponent , children: [
+  //   {path: "", component: AnalyticsMainComponent , outlet: 'mainPath'} //Change this to the main page next time
+  // ]},
+
 ];
 
 

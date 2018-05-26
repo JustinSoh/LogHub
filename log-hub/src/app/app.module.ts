@@ -17,7 +17,9 @@ import { ForgetPasswordComponent } from './login/forget-password/forget-password
 import { RouterModule, Routes } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { EmailConfirmationComponent } from './login/email-confirmation/email-confirmation.component';
-import { ChangeDetailsComponent } from './login/change-details/change-details.component'
+import { ChangeDetailsComponent } from './login/change-details/change-details.component';
+import { AnalyticsMainComponent } from './analytics/analytics-main/analytics-main.component';
+import { MainComponent } from './main/main.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +30,9 @@ import { ChangeDetailsComponent } from './login/change-details/change-details.co
     FilteredGraphsComponent,
     ForgetPasswordComponent,
     EmailConfirmationComponent,
-    ChangeDetailsComponent
+    ChangeDetailsComponent,
+    AnalyticsMainComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,

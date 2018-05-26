@@ -25,7 +25,6 @@ export class LoginComponent implements OnInit {
     this.loginBoolean = true;
     this.registerBoolean = false;
     this.showRegistration = false;
-    console.log("login");
 
   }
 
@@ -34,6 +33,5 @@ export class LoginComponent implements OnInit {
     this.showRegistration = true;
     this.registerBoolean = true; 
     this.loginBoolean = false;
-    console.log("register")
   }
 }

@@ -3,7 +3,6 @@
 @import '~font-awesome/css/font-awesome.css';
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-
 .display {
     font-weight: bold !important;
     font-size: 48px !important;
