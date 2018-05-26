@@ -6,9 +6,10 @@
                 style="color:black" 
                 placeholder="username" 
                 class ="input login-input" 
-                [(ngModel)]="username" 
+                [formControl]="username"
                 type="string" 
                 name="username" 
+                (input)="validateUser()"
                 required
                 matInput>
           </div>
@@ -20,13 +21,13 @@
                 <input 
                   id="password"
                   name="password"
+                  [formControl]="password"
                   style="color:black" 
                   placeholder="password" 
                   class="input password-input"
-                  [(ngModel)]="password"
-                  type="text"
+                  type="password"
                   name="password"
-                  (change)="passwordHash(password)"  
+                  (input)="passwordHash(password.value)"
                   required
                   matInput >
               </div>
@@ -34,7 +35,8 @@
     </form>
     <div class="bottom-section">
         <a routerLink="/forgotPassword" class="text forget-button" (click)="forgetPassword()">Forget password?</a>
-        <button mat-button class="login-button col-md-4" (click)="logIn($event)">Log In</button> 
+        <button *ngIf="validatedBoolean" routerLink="/home" mat-button class="login-button col-md-4" >Log Innnnnn</button> 
+        <button *ngIf="!validatedBoolean" mat-button class="login-button col-md-4">Log In</button> 
     </div>
   
 </div>

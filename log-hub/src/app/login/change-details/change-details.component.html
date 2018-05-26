@@ -6,9 +6,10 @@
                 style="color:black" 
                 placeholder="new password" 
                 class ="input change-input" 
-                [(ngModel)]="username" 
-                type="string" 
+                type="password" 
                 name="username" 
+                [formControl]="password"
+                (input)="changeDetails()"
                 required
                 matInput>
           </div>
@@ -23,7 +24,9 @@
                   style="color:black" 
                   placeholder="retype password" 
                   class="input password-input"
-                  type="text"
+                  [formControl]="retype"
+                  (input)="changeDetails()"
+                  type="password"
                   name="password"
                   required
                   matInput >
@@ -31,7 +34,10 @@
         </mat-form-field>
     </form>
     <div class="bottom-section">
-        <button mat-button class="change-button col-md-4" (click)="logIn($event)">Submit</button> 
+        <p *ngIf="!passwordBoolean" class="text forget-button">{{errorMessage}}</p>
+        <button disabled *ngIf="!passwordBoolean" mat-button class="change-button col-md-4">Submit</button> 
+        <button routerLink="/login" *ngIf="passwordBoolean" mat-button class="change-button col-md-4">Submit</button> 
+        
     </div>
   
 </div>
