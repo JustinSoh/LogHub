@@ -13,30 +13,15 @@ export class LoginDetailsComponent implements OnInit {
   ngOnInit() {
 
   }
-  public usernameEmpty = true;
-  public passwordEmpty = false;
-  public username = ""
-  private hashedpw = ""
-  public forgetBoolean
+  username = new FormControl('', [Validators.required]);
+  password = new FormControl('', [Validators.required]);
+  private hashedpw = "";
+  public forgetBoolean;
+  public validatedBoolean;
 
-
-  logIn()
-  {
-    if(this.username == "" || this.username == null || this.hashedpw == null || this.hashedpw == "")
-    {
-      console.log("Fields are not filled")
-    }
-    else {
-      console.log(this.username);
-      console.log(this.hashedpw);
-    }
-  }
-  passwordHash(passwd)
-  {
-    this.hashpw(passwd);
-  }
-
-  hashpw(passwd):string
+  
+  
+  public hashpw(passwd):string
   {
     var md5 = require('md5');
     this.hashedpw = md5(passwd);
@@ -49,5 +34,41 @@ export class LoginDetailsComponent implements OnInit {
     this.forgetBoolean = true;
 
   }
+   usernameB:Boolean
+   passwordB:Boolean
+  
+  validateUser()
+  {
+    if(this.username.valid)
+    {
+      //do some test 
+      console.log(this.username.value);
+      this.usernameB = true;
+      this.finalValidation()
+    }
+  }
+
+  passwordHash(passwd)
+  {
+    this.hashpw(passwd);
+    if(this.password.valid)
+    {
+      console.log(this.hashedpw)
+      this.passwordB = true;
+      this.finalValidation();
+    }
+  }
+
+  finalValidation()
+  {
+    if(this.passwordB && this.usernameB)
+    {
+      this.validatedBoolean = true;
+    }
+    else {
+      this.validatedBoolean = false;
+    }
+  }
+
 
 }
