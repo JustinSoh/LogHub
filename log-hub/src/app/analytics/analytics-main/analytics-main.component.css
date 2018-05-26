@@ -1,4 +1,7 @@
 .container-fluid{
     padding-top: 70px;
-    background-color: orange; 
+}
+
+.analytics-nav{
+    margin-top: 5%;
 }

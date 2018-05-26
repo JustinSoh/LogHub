@@ -19,7 +19,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { EmailConfirmationComponent } from './login/email-confirmation/email-confirmation.component';
 import { ChangeDetailsComponent } from './login/change-details/change-details.component';
 import { AnalyticsMainComponent } from './analytics/analytics-main/analytics-main.component';
-import { MainComponent } from './main/main.component'
+import { MainComponent } from './main/main.component';
+import { AnalyticsNavComponent } from './analytics/modules/analytics-nav/analytics-nav.component';
+import {MatMenuModule, MatMenu} from '@angular/material/menu';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +35,8 @@ import { MainComponent } from './main/main.component'
     EmailConfirmationComponent,
     ChangeDetailsComponent,
     AnalyticsMainComponent,
-    MainComponent
+    MainComponent,
+    AnalyticsNavComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +53,7 @@ import { MainComponent } from './main/main.component'
     ReactiveFormsModule,
     RouterModule,
     AppRoutingModule,
+    MatMenuModule
   ],
   providers: [AppRoutingModule],
     bootstrap: [AppComponent],
