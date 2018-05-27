@@ -17,15 +17,15 @@
 
 <div class="container-fluid row" >
 
-  <div class="col-md-12" *ngIf="!showCompareOutlet" style="background:orange; display: inline-block">
+  <div class="col-md-12" *ngIf="!showCompareOutlet" style="display: inline-block">
     <router-outlet  name="analyticsMainPath"></router-outlet>
     <!-- <router-outlet  class="col-md-6" name="analyticsComparePath"></router-outlet> -->
   </div>
-  <div class="col-md-6" *ngIf="showCompareOutlet" style="background:orange; display: inline-block">
+  <div class="col-md-6" *ngIf="showCompareOutlet" style="display: inline-block">
     <router-outlet  name="analyticsMainPath"></router-outlet>
     <!-- <router-outlet  class="col-md-6" name="analyticsComparePath"></router-outlet> -->
   </div>
-  <div class="col-md-6"  *ngIf="showCompareOutlet"  style="background:green; display: inline-block">
+  <div class="col-md-6"  *ngIf="showCompareOutlet"  style="display: inline-block">
       <router-outlet name="analyticsComparePath"></router-outlet>
     </div>
   

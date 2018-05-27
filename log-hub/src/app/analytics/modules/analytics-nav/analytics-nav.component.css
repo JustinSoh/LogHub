@@ -11,7 +11,7 @@
     background-color: #0072FF;
     margin-left: 8px;
     margin-right: 8px;
-    margin-bottom: 8%;
+    margin-bottom: 10%;
     border-radius:30px;
     color: white;
 }
@@ -27,10 +27,8 @@ button {
 
 .main-section {
     width:50%; 
-    background-color: orange;
 }
 
 .compare-section {
     width:50%; 
-    background-color: pink;
 }
