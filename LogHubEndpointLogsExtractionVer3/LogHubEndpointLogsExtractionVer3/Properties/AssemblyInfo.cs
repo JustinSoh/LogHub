@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("LogHubEndpointLogsExtractionVer2")]
+[assembly: AssemblyTitle("LogHubEndpointLogsExtractionVer3")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("LogHubEndpointLogsExtractionVer2")]
+[assembly: AssemblyProduct("LogHubEndpointLogsExtractionVer3")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("f6a164e4-12bc-47eb-978a-05681ef0914e")]
+[assembly: Guid("21e0dc22-cbf6-4264-972a-ab66e6aaa52d")]
 
 // Version information for an assembly consists of the following four values:
 //
