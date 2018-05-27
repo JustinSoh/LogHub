@@ -1,16 +1,22 @@
 
 <nav class="navbar navbar-expand navbar-dark fixed-top">
-  <a class="navbar-brand title2 logo" href="#">LogHub</a>
+  <a disabled class="navbar-brand logo" href="#"><span class="title2 title-name">LOG</span><span class="title1 title-name2">HUB</span></a>
   <div class="collapse navbar-collapse">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active title2">
-        <a class="nav-link hovering" [routerLink]="['/home', { outlets:{mainPath: ['analytics']}}]">Analytics</a>
+    <ul class="navbar-nav mr-auto links-bar">
+      <li class="nav-item subheading">
+        <a class="nav-link hovering" [routerLink]="['/home', { outlets:{mainPath: ['analytics']}}]" routerLinkActive="active">Analytics</a>
       </li>
+      <li class="nav-item subheading">
+          <a class="nav-link hovering">empty</a>
+        </li>
+        <li class="nav-item subheading">
+            <a class="nav-link hovering" >empty</a>
+          </li>
       <!-- <li class="nav-item">
         <a class="nav-link" href="#"></a>
       </li> -->
     </ul>
-    <ul class="navbar-nav title2">
+    <ul class="navbar-nav subheading">
       <li class="nav-item">
         <a class="nav-link"><i class="fa fa-medium" aria-hidden="true"></i></a>
       </li>

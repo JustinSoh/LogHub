@@ -1,4 +1,36 @@
 .navigation-section {
     display: inline-block; 
     margin-top: 1%;
+    margin-left: 2%;
+    width: 98%;
+}
+
+.main-button {
+    outline: none;
+    border: 0;
+    background-color: #0072FF;
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-bottom: 8%;
+    border-radius:30px;
+    color: white;
+}
+
+button {
+    outline:none; 
+    border: 0;
+}
+
+.navigation-button-div {
+    display: inline-block;
+}
+
+.main-section {
+    width:50%; 
+    background-color: orange;
+}
+
+.compare-section {
+    width:50%; 
+    background-color: pink;
 }

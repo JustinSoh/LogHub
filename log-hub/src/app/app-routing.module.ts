@@ -24,6 +24,8 @@ import { ChangeDetailsComponent } from './login/change-details/change-details.co
 import { TemplateComponent } from './template/template.component';
 import { AnalyticsMainComponent } from './analytics/analytics-main/analytics-main.component';
 import { MainComponent } from './main/main.component';
+import { OverviewChartComponent } from './analytics/modules/overview-chart/overview-chart.component';
+import { CpuChartComponent } from './analytics/modules/cpu-chart/cpu-chart.component';
 
 const routes: Routes = [
   {path: "" , redirectTo: "login" , pathMatch:"full"},
@@ -36,8 +38,14 @@ const routes: Routes = [
     { path: "forgotPassword",component: ForgetPasswordComponent , outlet: 'loginPath'},
   ] },
   { path: "home", component: MainComponent , children: [
-    {path: "", component: AnalyticsMainComponent , outlet: 'mainPath'},
-    {path: "analytics", component: AnalyticsMainComponent , outlet: 'mainPath'} 
+    {path: "", component: TemplateComponent , outlet: 'mainPath'},
+    {path: "analytics", component: AnalyticsMainComponent , outlet: 'mainPath', children: [
+      {path: "overview" , component: OverviewChartComponent, outlet: 'analyticsMainPath'},
+      {path: "cpu" , component: CpuChartComponent, outlet: 'analyticsMainPath'},
+      {path: "overview" , component: OverviewChartComponent, outlet: 'analyticsComparePath'},
+      {path: "cpu" , component: CpuChartComponent, outlet: 'analyticsComparePath'},
+      ],
+    } 
     
   ]}
   

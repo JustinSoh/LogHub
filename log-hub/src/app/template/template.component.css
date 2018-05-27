@@ -3,12 +3,10 @@
 }
 .navbar-dark .navbar-nav .nav-link{
     color: black;
-    font-weight: bold;
 }
 
 .navbar-dark .navbar-brand{
     color: black;
-    font-weight: bold;
 }
 
 a:hover {
@@ -17,5 +15,17 @@ a:hover {
 }
 
 .active{
-    color: #00A2FF;
+    color: #0072FF;
+}
+
+.title-name {
+    color: #0072FF;
+}
+
+.title-name2 {
+    color: black
+}
+
+.links-bar {
+    margin-left: 1%;
 }

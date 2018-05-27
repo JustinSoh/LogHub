@@ -1,7 +1,32 @@
 <div class="navigation-section">
-  <button mat-button [matMenuTriggerFor]="menu">Charts</button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item>CPU Baseline</button>
-    <button mat-menu-item>Alerts</button>
+  <div class="navigation-button-div">
+    <button mat-button [matMenuTriggerFor]="chartType" class="main-button">Charts</button>
+    <button mat-button [matMenuTriggerFor]="compareChart" class="main-button">Compare with</button>
+  </div>
+  <mat-menu #chartType="matMenu">
+    <button mat-menu-item [routerLink]="[ { outlets:{analyticsMainPath: ['overview']}}]">Overview</button>
+    <button mat-menu-item [routerLink]="[ { outlets:{analyticsMainPath: ['cpu']}}]">CPU Chart</button>
+  </mat-menu>
+  <mat-menu #compareChart="matMenu">
+      <button mat-menu-item [routerLink]="[ { outlets:{analyticsComparePath: ['overview']}}]" (click)="showRouterOutlet()">Overview</button>
+      <button mat-menu-item [routerLink]="[ { outlets:{analyticsComparePath: ['cpu']}}]" (click)="showRouterOutlet()">CPU Chart</button>
+      <button mat-menu-item (click)="clearRouterOutlet()">Clear</button>
   </mat-menu>
 </div>
+
+
+<div class="container-fluid row" >
+
+  <div class="col-md-12" *ngIf="!showCompareOutlet" style="background:orange; display: inline-block">
+    <router-outlet  name="analyticsMainPath"></router-outlet>
+    <!-- <router-outlet  class="col-md-6" name="analyticsComparePath"></router-outlet> -->
+  </div>
+  <div class="col-md-6" *ngIf="showCompareOutlet" style="background:orange; display: inline-block">
+    <router-outlet  name="analyticsMainPath"></router-outlet>
+    <!-- <router-outlet  class="col-md-6" name="analyticsComparePath"></router-outlet> -->
+  </div>
+  <div class="col-md-6"  *ngIf="showCompareOutlet"  style="background:green; display: inline-block">
+      <router-outlet name="analyticsComparePath"></router-outlet>
+    </div>
+  
+</div> 

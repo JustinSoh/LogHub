@@ -12,4 +12,12 @@ export class AnalyticsNavComponent implements OnInit {
   ngOnInit() {
   }
 
+  public showCompareOutlet = false;
+
+  private showRouterOutlet(){
+    this.showCompareOutlet = true;
+  }
+  private clearRouterOutlet(){
+    this.showCompareOutlet = false;
+  }
 }
