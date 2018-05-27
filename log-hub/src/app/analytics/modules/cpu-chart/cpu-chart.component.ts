@@ -8,57 +8,152 @@ import { Component, OnInit } from '@angular/core';
 export class CpuChartComponent implements OnInit {
 
   constructor() { }
-
+  private predictionArray = [3,4,3,4,5,3,5,4,2,3,4,5,3,2,2,1,1,2,3,4,5,3,2,5,3,4,3,2,1,2];
+  private actualArray = [2,3,4,5,6,4,3,3,2,1,5,4,3,6,7,8,9,4,2,1,2,4,5,3,1,3,5,8,6,3];
+  private labelArray = ['a','b','c','d','e','f','g','h','i','j','aa','bb','cc','dd','ee','ff','gg','hh','ii','jj','aaa','bbb','ccc','ddd','eee','fff','ggg','hhh','iii','jjj']
+  private splicePredictionArray; 
+  private spliceActualArray;
+  private spliceLabelArray;
+  private arrays = []
+  private actualData = [];
+  private predictData = [];
+  private labelData = [];
+  public lineChartData:Array<any>;
+  public lineChartLabels:Array<any> ;
+  private counter = 0;
   ngOnInit() {
+   
+    this.splicePredictionArray = this.splicingMethod(this.predictionArray, 10);
+    this.spliceActualArray = this.splicingMethod(this.actualArray, 10);
+    this.spliceLabelArray = this.splicingMethod(this.labelArray, 10);
+    this.actualData = this.splicePredictionArray[0];
+    this.predictData = this.spliceActualArray[0];
+    this.labelData = this.spliceLabelArray[0];
+    console.log(this.actualData);
+    this.UpdateChart(this.actualData, this.predictData, this.labelData);
+
+
+
+    
   }
-  public lineChartData:Array<any> = [
-    {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
-    {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'},
-    {data: [18, 48, 77, 9, 100, 27, 40], label: 'Series C'}
-  ];
-  public lineChartLabels:Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+
+  public setFrequency()
+  {
+
+  }
+
+  private splicingMethod(array, n_length)
+  {
+    var temp = [];
+    if(array.length > 10)
+    {
+      for(var i = 0; i < array.length; i+=10)
+      {
+        var myChunk = array.slice(i , i+10);
+        temp.push(myChunk);
+        
+      }
+    }
+    else {
+      temp = array;
+    }
+   
+    return temp; 
+  }
+    
+  // public lineChartData:Array<any> = [
+  //   // {data: [this.predictData.get(0, label: 'Prediction'},
+  //   {data: this.actualData[0], label: 'Actual'},
+  // ];
+  
   public lineChartOptions:any = {
-    responsive: true
+    responsive: true,
+    maintainAspectRatio: true, 
+    ticks: {
+      autoSkip: false
+    }, 
+    
   };
+  
   public lineChartColors:Array<any> = [
     { // grey
-      backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+      borderColor: '#4EAB7E',
+      pointBackgroundColor: '#FAFAFA',
+      pointBorderColor: '#4EAB7E',
+      pointRadius: 6,
+      pointHoverRadius: 6
     },
-    { // dark grey
-      backgroundColor: 'rgba(77,83,96,0.2)',
-      borderColor: 'rgba(77,83,96,1)',
-      pointBackgroundColor: 'rgba(77,83,96,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(77,83,96,1)'
+    { //line 2 
+      borderColor: '#00A8FF',
+      pointBackgroundColor: '#FAFAFA',
+      pointBorderColor: '#00A8FF',
+      pointRadius: 6,
+      pointHoverRadius: 6
+      
     },
-    { // grey
-      backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    }
+    
   ];
   public lineChartLegend:boolean = true;
   public lineChartType:string = 'line';
  
-  public randomize():void {
-    let _lineChartData:Array<any> = new Array(this.lineChartData.length);
-    for (let i = 0; i < this.lineChartData.length; i++) {
-      _lineChartData[i] = {data: new Array(this.lineChartData[i].data.length), label: this.lineChartData[i].label};
-      for (let j = 0; j < this.lineChartData[i].data.length; j++) {
-        _lineChartData[i].data[j] = Math.floor((Math.random() * 100) + 1);
-      }
+  public nextSet():void {
+    console.log(this.spliceActualArray.length);
+    if(this.counter < this.spliceActualArray.length-1 ){
+      this.counter++;
+      this.actualData = this.spliceActualArray[this.counter];
+      this.predictData = this.splicePredictionArray[this.counter];
+      this.labelData = this.spliceLabelArray[this.counter];
+      this.UpdateChart(this.actualData, this.predictData, this.labelData);
+   
+      
     }
-    this.lineChartData = _lineChartData;
+    else{
+      console.log("end");
+    }
+    // let _lineChartData:Array<any> = new Array(this.lineChartData.length);
+    // for (let i = 0; i < this.lineChartData.length; i++) {
+    //   _lineChartData[i] = {data: new Array(this.lineChartData[i].data.length), label: this.lineChartData[i].label};
+    //   for (let j = 0; j < this.lineChartData[i].data.length; j++) {
+    //     _lineChartData[i].data[j] = Math.floor((Math.random() * 100) + 1);
+    //   }
+    // }
+    // this.lineChartData = _lineChartData;
   }
+
+  public previousSet():void {
+    console.log(this.spliceActualArray.length);
+    if(this.counter > 0 ){
+      this.counter--;
+      this.actualData = this.spliceActualArray[this.counter];
+      this.predictData = this.splicePredictionArray[this.counter];
+      this.labelData = this.spliceLabelArray[this.counter];
+      this.UpdateChart(this.actualData, this.predictData, this.labelData);
+   
+      
+    }
+    else{
+      console.log("end");
+    }
+    // let _lineChartData:Array<any> = new Array(this.lineChartData.length);
+    // for (let i = 0; i < this.lineChartData.length; i++) {
+    //   _lineChartData[i] = {data: new Array(this.lineChartData[i].data.length), label: this.lineChartData[i].label};
+    //   for (let j = 0; j < this.lineChartData[i].data.length; j++) {
+    //     _lineChartData[i].data[j] = Math.floor((Math.random() * 100) + 1);
+    //   }
+    // }
+    // this.lineChartData = _lineChartData;
+  }
+
+  private UpdateChart(actualData, predictData, labelData)
+  {
+    this.lineChartData = [
+      {data: predictData, label: 'Prediction' , fill:false, borderWidth: 4},
+      {data: actualData, label: 'Actual', fill:false, borderWidth: 4},
+    ];
+
+    this.lineChartLabels = labelData;
+  }
+
  
   // events
   public chartClicked(e:any):void {

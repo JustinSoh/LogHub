@@ -1,0 +1,44 @@
+.chartTitle {
+    margin-left: 2%;
+    float:left;
+}
+
+.format-button {
+    outline: none;
+    border: 0;
+    background-color: white;
+    margin-left: 8px;
+    margin-right: 8px;
+    border-radius:30px;
+    color: #0072FF;
+}
+
+button {
+    outline:none; 
+    border: 0;
+}
+
+
+.next-button {
+    vertical-align: middle; 
+    height: auto;
+    display:inline-block;
+    position: relative;
+    bottom:50%;
+}
+
+.next-button-detail {
+    background-color: white;
+    color: #0072FF;
+    text-align: center;
+    position: relative;
+    font-size: 20px;
+}
+
+.canvas-section {
+    display:inline-block;
+}
+
+.chart-header-section {
+    display: inline-block;
+}

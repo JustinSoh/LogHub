@@ -1,20 +1,33 @@
-<p class="title2">CPU Chart</p>
-<div class="col-md-12" style="background-color:orange">
-    <div class="row">
-        <div class="col-md-6">
-          <div style="display: block;">
-          <canvas baseChart width="400" height="400"
-                      [datasets]="lineChartData"
-                      [labels]="lineChartLabels"
-                      [options]="lineChartOptions"
-                      [colors]="lineChartColors"
-                      [legend]="lineChartLegend"
-                      [chartType]="lineChartType"
-                      (chartHover)="chartHovered($event)"
-                      (chartClick)="chartClicked($event)"></canvas>
+<div>
+  <p class="title2 chartTitle">CPU Chart</p>
+  <button mat-icon-button [matMenuTriggerFor]="frequency" class="fa fa-bars format-button"></button>
+  <mat-menu #frequency="matMenu">
+      <button mat-menu-item >Daily</button>
+      <button mat-menu-item >Week</button>
+    </mat-menu>
+</div> 
+<div>
+    <div class="row" style=" width: 100%; height: 100%; margin-left: 2%">
+        <div class="col-md-12 chart-header-section" >
+          <div class="col-md-11 canvas-section">
+            <div >
+            <canvas style="display: block;" baseChart
+                        [datasets]="lineChartData"
+                        [labels]="lineChartLabels"
+                        [options]="lineChartOptions"
+                        [colors]="lineChartColors"
+                        [legend]="lineChartLegend"
+                        [chartType]="lineChartType"
+                        (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)"></canvas>
+            </div>
+          </div>
+          <div class="col-md-1 next-button" >
+              <button mat-icon-button  class="fa fa-chevron-left next-button-detail" (click)="previousSet()"></button>
+              <button mat-icon-button  class="fa fa-chevron-right next-button-detail" (click)="nextSet()"></button>
           </div>
         </div>
-        <div class="col-md-6" style="margin-bottom: 10px">
+        <div class="col-md-12" style="margin-bottom: 10px">
           <table class="table table-responsive table-condensed">
             <tr>
               <th *ngFor="let label of lineChartLabels">{{label}}</th>
@@ -23,7 +36,7 @@
               <td *ngFor="let label of lineChartLabels; let j=index">{{d && d.data[j]}}</td>
             </tr>
           </table>
-          <button (click)="randomize()">CLICK</button>
+      
         </div>
       </div>
 </div>

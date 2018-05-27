@@ -13,11 +13,26 @@ export class AnalyticsNavComponent implements OnInit {
   }
 
   public showCompareOutlet = false;
-
-  private showRouterOutlet(){
+  public showTestingOutlet = false;
+  public Chart = "Chart";
+  public Compare = "Compare with";
+  public chartBoolean = false; 
+  public compareBoolean = false;
+  private showRouterOutlet(data){
     this.showCompareOutlet = true;
+    this.Compare = data;
+    console.log(this.showCompareOutlet)
+    
   }
-  private clearRouterOutlet(){
+  private clearRouterOutlet(data){
+    
     this.showCompareOutlet = false;
+    this.Compare = data;
+    console.log(this.showCompareOutlet)
+  }
+  
+  private activateChart(data)
+  {
+    this.Chart = data;
   }
 }
