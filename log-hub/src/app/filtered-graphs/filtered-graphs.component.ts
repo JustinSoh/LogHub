@@ -162,22 +162,9 @@ export class FilteredGraphsComponent implements OnInit {
         datasets: [{
           label: 'number of applications related to',
           data: [24, 10, 30, 20, 46, 78],
-          backgroundColor: [
-            'rgba(54, 162, 235, 0.2',
-            'rgba(54, 162, 235, 0.2',
-            'rgba(54, 162, 235, 0.2',
-            'rgba(54, 162, 235, 0.2',
-            'rgba(54, 162, 235, 0.2',
-            'rgba(54, 162, 235, 0.2'
-          ],
-          borderColor: [
-            'rgba(54, 162, 235, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(54, 162, 235, 1)'
-          ],
+          backgroundColor: 'rgba(54, 162, 235, 0.2',
+          borderColor: 'rgba(54, 162, 235, 1)',
+          pointHoverBackgroundColor: 'red',
           borderWidth: 1
         }]
       },
