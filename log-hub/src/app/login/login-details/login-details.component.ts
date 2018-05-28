@@ -23,7 +23,7 @@ export class LoginDetailsComponent implements OnInit {
   
   public hashpw(passwd):string
   {
-    var md5 = require('md5');
+    var md5 = md5.require('md5');
     this.hashedpw = md5(passwd);
     return this.hashedpw;
     
