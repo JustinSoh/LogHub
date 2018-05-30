@@ -20,7 +20,7 @@ export class FilteredGraphsComponent implements OnInit {
   labelSet2 = ["Application", "Security-Related", "System"];
   dataSet2 = [10, 32, 49];
   text2 = "Event Logs";
-  label2 = "number of events related to this category"  
+  label2 = "number of events related to this category"
 
   labelSet3 = ["User", "Admin", "Root"];
   dataSet3 = [48, 38, 10];
@@ -32,6 +32,12 @@ export class FilteredGraphsComponent implements OnInit {
   text4 = "Batery Usage by application"
   label4 = "battery usage of this application over the past 24 hours";
 
+  graphClick(event) {
+    var index = this.chart.getElementAtEvent(event)[0]._index;
+    var data = this.chart.config.data.datasets[0].data[index];
+    console.log(data);
+  }
+  
   applicationClick() {
     this.toggle = false;
     this.createBarChart();
@@ -55,10 +61,10 @@ export class FilteredGraphsComponent implements OnInit {
       })
     }
 
-    this.chart.options.title.text = this.text2; 
+    this.chart.options.title.text = this.text2;
     this.chart.data.datasets.forEach((dataset) => {
       dataset.label = this.label2;
-    })   
+    })
     this.chart.update();
   }
 
@@ -80,10 +86,10 @@ export class FilteredGraphsComponent implements OnInit {
       })
     }
 
-    this.chart.options.title.text = this.text3;    
+    this.chart.options.title.text = this.text3;
     this.chart.data.datasets.forEach((dataset) => {
       dataset.label = this.label3;
-    })   
+    })
     this.chart.update();
   }
 
@@ -112,10 +118,10 @@ export class FilteredGraphsComponent implements OnInit {
       })
     }
 
-    this.chart.options.title.text = this.text;    
+    this.chart.options.title.text = this.text;
     this.chart.data.datasets.forEach((dataset) => {
       dataset.label = this.label;
-    })   
+    })
     this.chart.update();
   }
 
@@ -144,10 +150,10 @@ export class FilteredGraphsComponent implements OnInit {
       })
     }
 
-    this.chart.options.title.text = this.text4;    
+    this.chart.options.title.text = this.text4;
     this.chart.data.datasets.forEach((dataset) => {
       dataset.label = this.label4;
-    })   
+    })
     this.chart.update();
   }
 
@@ -187,7 +193,7 @@ export class FilteredGraphsComponent implements OnInit {
   createLineChart() {
     this.chart.destroy();
     this.chart = new Chart('canvas', {
-      type: 'line',      
+      type: 'line',
       data: {
         labels: ['12am', '1am', '2am', '3am', '4am', '5am', '6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm', '10pm', '11pm'],
         datasets: [{
@@ -196,7 +202,7 @@ export class FilteredGraphsComponent implements OnInit {
           borderColor: 'rgba(54, 162, 235, 1)',
           fill: true
         }]
-      }, 
+      },
       options: {
         title: {
           text: "CPU Usage by time",
@@ -210,13 +216,13 @@ export class FilteredGraphsComponent implements OnInit {
           }]
         }
       }
-    }) 
+    })
   }
 
   createLineChart2() {
     this.chart.destroy();
     this.chart = new Chart('canvas', {
-      type: 'line',      
+      type: 'line',
       data: {
         labels: ['12am', '1am', '2am', '3am', '4am', '5am', '6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm', '10pm', '11pm'],
         datasets: [{
@@ -225,7 +231,7 @@ export class FilteredGraphsComponent implements OnInit {
           borderColor: 'rgba(54, 162, 235, 1)',
           fill: true
         }]
-      }, 
+      },
       options: {
         title: {
           text: "Battery Usage by time",
@@ -239,7 +245,7 @@ export class FilteredGraphsComponent implements OnInit {
           }]
         }
       }
-    }) 
+    })
   }
   constructor() { }
 
