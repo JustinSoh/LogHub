@@ -5,8 +5,10 @@
     <button mat-button  class="main-button" *ngIf="showCompareOutlet"[routerLink]="[ { outlets:{analyticsComparePath: null}}]"(click)="clearRouterOutlet('Compare with')">Clear</button>
   </div>
   <mat-menu #chartType="matMenu">
-    <button mat-menu-item [routerLink]="[ { outlets:{analyticsMainPath: ['overview']}}]" (click)="activateChart('Overview')">Overview</button>
-    <button mat-menu-item [routerLink]="[ { outlets:{analyticsMainPath: ['cpu']}}]" (click)="activateChart('CPU Chart')">CPU Chart</button>
+    <!-- <button mat-menu-item [routerLink]="[ { outlets:{analyticsMainPath: ['overview']}}]" (click)="activateChart('Overview')">Overview</button>
+    <button mat-menu-item [routerLink]="[ { outlets:{analyticsMainPath: ['cpu']}}]" (click)="activateChart('CPU Chart')">CPU Chart</button> -->
+    <button mat-menu-item (click)="activateChart('Overview')">Overview</button>
+    <button mat-menu-item (click)="activateChart('CPU Chart')">CPU Chart</button> 
   </mat-menu>
   <mat-menu #compareChart="matMenu">
       <button mat-menu-item [routerLink]="[ { outlets:{analyticsComparePath: ['overview']}}]" (click)="showRouterOutlet('Overview')">Overview</button>

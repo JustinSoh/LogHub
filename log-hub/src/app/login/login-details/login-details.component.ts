@@ -18,13 +18,13 @@ export class LoginDetailsComponent implements OnInit {
   private hashedpw = "";
   public forgetBoolean;
   public validatedBoolean;
-
   
   
   public hashpw(passwd):string
   {
-    var md5 = md5.require('md5');
-    this.hashedpw = md5(passwd);
+    var SHA512 = require("crypto-js/sha512");
+    console.log(SHA512(passwd).toString());
+    console.log(this.hashedpw)
     return this.hashedpw;
     
   }

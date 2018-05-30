@@ -2,11 +2,15 @@
   <p class="title2 chartTitle">CPU Chart</p>
   <button mat-icon-button [matMenuTriggerFor]="frequency" class="fa fa-bars format-button"></button>
   <mat-menu #frequency="matMenu">
-      <button mat-menu-item >Daily</button>
+      <button mat-menu-item >Overview</button>
       <button mat-menu-item >Week</button>
     </mat-menu>
 </div> 
 <div>
+  <!-- Insert Scatter Plot -->
+</div> 
+
+<div *ngIf = "individualBoolean" class="individual-cpu-based-section">
     <div class="row" style=" width: 100%; height: 100%; margin-left: 2%">
         <div class="col-md-12 chart-header-section" >
           <div class="col-md-11 canvas-section">
