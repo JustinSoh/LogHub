@@ -25,6 +25,7 @@ import {MatMenuModule, MatMenu} from '@angular/material/menu';
 import { CpuChartComponent } from './analytics/modules/cpu-chart/cpu-chart.component';
 import { OverviewChartComponent } from './analytics/modules/overview-chart/overview-chart.component';
 import { ChartsModule } from 'node_modules/ng2-charts';
+import { CPUChartOverview } from './analytics/modules/cpu-chart-overview/cpu-chart-overview.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,7 +41,8 @@ import { ChartsModule } from 'node_modules/ng2-charts';
     MainComponent,
     AnalyticsNavComponent,
     CpuChartComponent,
-    OverviewChartComponent
+    OverviewChartComponent,
+    CPUChartOverview
   ],
   imports: [
     BrowserModule,
