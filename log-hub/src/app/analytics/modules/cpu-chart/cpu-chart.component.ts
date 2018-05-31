@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Gchart } from 'src/app/class/gchart';
 
 @Component({
   selector: 'app-cpu-chart',
@@ -6,8 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cpu-chart.component.css']
 })
 export class CpuChartComponent implements OnInit {
-
+  
   constructor() { }
+
+  //For overview chart
+  private cpuChartOverview:Gchart; 
+
   private predictionArray = [3,4,3,4,5,3,5,4,2,3,4,5,3,2,2,1,1,2,3,4,5,3,2,5,3,4,3,2,1,2];
   private actualArray = [2,3,4,5,6,4,3,3,2,1,5,4,3,6,7,8,9,4,2,1,2,4,5,3,1,3,5,8,6,3];
   private labelArray = ['a','b','c','d','e','f','g','h','i','j','aa','bb','cc','dd','ee','ff','gg','hh','ii','jj','aaa','bbb','ccc','ddd','eee','fff','ggg','hhh','iii','jjj']
@@ -31,7 +36,24 @@ export class CpuChartComponent implements OnInit {
     this.labelData = this.spliceLabelArray[0];
     console.log(this.actualData);
     this.UpdateChart(this.actualData, this.predictData, this.labelData);
-
+    
+    
+    //Initializing the Scatterplot data
+   
+    var cpuChartOverviewData = [
+      {data: [{
+        x: '0.0', y: '1.0', r: 20
+      }], label: 'Low' , fill:true, backgroundColor: '#4EAB7E' , borderWidth: 2 , pointHoverRadius: 6 , id:"20"},
+      {data: [{
+        x: '5.0', y: '6.0', r: 30
+      }], label: 'Medium' , fill:true, backgroundColor: "#FFC000", borderWidth: 2, pointHoverRadius: 6 , id:"30"},
+      {data: [{
+        x: '10.0', y: '6.0', r: 40
+      }], label: 'High' , fill:true,backgroundColor: '#D44343' , borderWidth: 2, pointHoverRadius: 6 , id:"40"},
+    ];
+    var cpuChartOverviewLabel = ['Low','Medium','High']
+    var cpuChartType = "bubble";
+    this.cpuChartOverview = new Gchart(cpuChartOverviewData, cpuChartOverviewLabel , cpuChartType);
 
 
     

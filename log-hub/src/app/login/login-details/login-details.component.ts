@@ -18,7 +18,7 @@ export class LoginDetailsComponent implements OnInit {
   private hashedpw = "";
   public forgetBoolean;
   public validatedBoolean;
-  
+  public require:any;
   
   public hashpw(passwd):string
   {

@@ -2,15 +2,17 @@
   <p class="title2 chartTitle">CPU Chart</p>
   <button mat-icon-button [matMenuTriggerFor]="frequency" class="fa fa-bars format-button"></button>
   <mat-menu #frequency="matMenu">
-      <button mat-menu-item >Overview</button>
+      <button mat-menu-item (click)="chartOverview()">CPU Overview</button>
       <button mat-menu-item >Week</button>
     </mat-menu>
 </div> 
 <div>
-  <!-- Insert Scatter Plot -->
+  <app-cpu-chart-overview 
+    [cpuChartOverview] = "cpuChartOverview"
+    ></app-cpu-chart-overview>
 </div> 
 
-<div *ngIf = "individualBoolean" class="individual-cpu-based-section">
+<div class="individual-cpu-based-section">
     <div class="row" style=" width: 100%; height: 100%; margin-left: 2%">
         <div class="col-md-12 chart-header-section" >
           <div class="col-md-11 canvas-section">
@@ -31,7 +33,7 @@
               <button mat-icon-button  class="fa fa-chevron-right next-button-detail" (click)="nextSet()"></button>
           </div>
         </div>
-        <!-- <div class="col-md-12" style="margin-bottom: 10px">
+        <div class="col-md-12" style="margin-bottom: 10px">
           <table class="table table-responsive table-condensed">
             <tr>
               <th *ngFor="let label of lineChartLabels">{{label}}</th>
@@ -41,6 +43,6 @@
             </tr>
           </table>
       
-        </div> -->
+        </div>
       </div>
 </div>
