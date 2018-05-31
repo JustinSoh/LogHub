@@ -22,7 +22,7 @@ export class LoginDetailsComponent implements OnInit {
   
   public hashpw(passwd):string
   {
-    var SHA512 = require("crypto-js/sha512");
+    var SHA512 = md5.require("crypto-js/sha512");
     console.log(SHA512(passwd).toString());
     console.log(this.hashedpw)
     return this.hashedpw;
