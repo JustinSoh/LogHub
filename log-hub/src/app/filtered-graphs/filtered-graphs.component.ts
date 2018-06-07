@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import * as Chart from 'chart.js'
 
 @Component({
@@ -11,32 +12,41 @@ export class FilteredGraphsComponent implements OnInit {
   toggle: boolean = false;
   toggle2: boolean = false;
   chart: any;
-
+  closeResult: string;
+  
   labelSet = ["Browser", "Game", "Word Processing", "Database", "Spreadsheet", "Multimedia"];
   dataSet = [4, 59, 2, 35, 11, 21];
   text = "CPU Usage by application";
   label = "CPU usage of this application over the past 24 hours";
 
-  labelSet2 = ["Application", "Security-Related", "System"];
+  labelSet2 = ["Application", "Security", "System"];
   dataSet2 = [10, 32, 49];
   text2 = "Event Logs";
-  label2 = "number of events related to this category"
+  label2 = "Number of events related to"
 
   labelSet3 = ["User", "Admin", "Root"];
   dataSet3 = [48, 38, 10];
   text3 = "Process Logs"
-  label3 = "number of processes related to this category"
+  label3 = "Number of processes related to"
 
   labelSet4 = ["Browser", "Game", "Word Processing", "Database", "Spreadsheet", "Multimedia"];
   dataSet4 = [8, 60, 2, 8, 8, 14];
   text4 = "Batery Usage by application"
-  label4 = "battery usage of this application over the past 24 hours";
+  label4 = "Battery usage of this application over the past 24 hours";
 
-  graphClick(event) {
+  currentData: any;
+  category: any;
+  modalLabel: any;
+
+  graphClick(event, content) {
     var index = this.chart.getElementAtEvent(event)[0]._index;
-    var data = this.chart.config.data.datasets[0].data[index];
-    console.log(data);
+    console.log(index);
+    this.currentData = this.chart.config.data.datasets[0].data[index];
+    this.category = this.chart.config.data.labels[index];
+    this.modalLabel = this.chart.config.data.datasets[0].label;
+    this.modalService.open(content);
   }
+
   
   applicationClick() {
     this.toggle = false;
@@ -166,7 +176,7 @@ export class FilteredGraphsComponent implements OnInit {
       data: {
         labels: ["Browser", "Game", "Word Processing", "Database", "Spreadsheet", "Multimedia"],
         datasets: [{
-          label: 'number of applications related to',
+          label: 'Number of applications related to',
           data: [24, 10, 30, 20, 46, 78],
           backgroundColor: 'rgba(54, 162, 235, 0.2',
           borderColor: 'rgba(54, 162, 235, 1)',
@@ -197,7 +207,7 @@ export class FilteredGraphsComponent implements OnInit {
       data: {
         labels: ['12am', '1am', '2am', '3am', '4am', '5am', '6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm', '10pm', '11pm'],
         datasets: [{
-          label: "CPU usage at this time",
+          label: "CPU usage at",
           data: ['20', '17', '0', '0', '0', '0', '0', '0', '0', '12', '15', '14', '19', '8', '12', '20', '60', '21', '12', '0', '0', '0', '0', '0'],
           borderColor: 'rgba(54, 162, 235, 1)',
           fill: true
@@ -226,7 +236,7 @@ export class FilteredGraphsComponent implements OnInit {
       data: {
         labels: ['12am', '1am', '2am', '3am', '4am', '5am', '6am', '7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm', '10pm', '11pm'],
         datasets: [{
-          label: "Battery usage at this time",
+          label: "Battery usage at",
           data: ['9', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '23', '22', '25', '21'],
           borderColor: 'rgba(54, 162, 235, 1)',
           fill: true
@@ -247,7 +257,9 @@ export class FilteredGraphsComponent implements OnInit {
       }
     })
   }
-  constructor() { }
+  constructor(private modalService: NgbModal) {
+
+  }
 
   ngOnInit() {
     this.createBarChart();

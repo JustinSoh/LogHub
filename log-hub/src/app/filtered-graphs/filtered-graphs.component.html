@@ -1,5 +1,23 @@
 <div style="width: 950px">
   <div style="margin-top: 7%">
+    <ng-template #content let-c="close" let-d="dismiss">
+      <div class="modal-header">
+        <h4 class="model-title">Details on {{ category }}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>
+          <span style="font-size: 14px">{{ modalLabel }}</span>
+          <span style="font-size: 14px; font-weight: bold"> {{ category }}:</span>
+          <span style="font-size: 16px"> {{ currentData }}</span>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
+      </div>
+    </ng-template>
     <div class="row">
       <div class="col">
         <div ngbDropdown class="d-inline-block">
@@ -28,6 +46,6 @@
         </div>
       </div>
     </div>
-    <canvas id="canvas" width="300" height="123" class="chartjs-render-monitor" (click)="graphClick($event)"></canvas>
+    <canvas id="canvas" width="300" height="123" class="chartjs-render-monitor" (click)="graphClick($event, content)"></canvas>
   </div>
 </div>

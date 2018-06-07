@@ -7,7 +7,8 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { ChartModule } from 'angular2-chartjs';
 import { LoginComponent } from './login/login.component';
 import { TemplateComponent } from './template/template.component';
-import {MatInputModule} from '@angular/material/input';
+import { MatInputModule } from '@angular/material/input';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule, MatCheckboxModule, MatSelectModule } from '@angular/material';
 import { FilteredGraphsComponent } from './filtered-graphs/filtered-graphs.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -21,7 +22,7 @@ import { ChangeDetailsComponent } from './login/change-details/change-details.co
 import { AnalyticsMainComponent } from './analytics/analytics-main/analytics-main.component';
 import { MainComponent } from './main/main.component';
 import { AnalyticsNavComponent } from './analytics/modules/analytics-nav/analytics-nav.component';
-import {MatMenuModule, MatMenu} from '@angular/material/menu';
+import { MatMenuModule, MatMenu } from '@angular/material/menu';
 import { CpuChartComponent } from './analytics/modules/cpu-chart/cpu-chart.component';
 import { OverviewChartComponent } from './analytics/modules/overview-chart/overview-chart.component';
 import { ChartsModule } from 'node_modules/ng2-charts';
@@ -63,8 +64,8 @@ import { CPUChartOverview } from './analytics/modules/cpu-chart-overview/cpu-cha
     ChartsModule
   ],
   providers: [AppRoutingModule],
-    bootstrap: [AppComponent],
-  
+  bootstrap: [AppComponent],
+
 })
 export class AppModule {
 }

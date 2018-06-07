@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.ServiceProcess;
 using System.Timers;
 using System.Windows.Forms;
@@ -33,16 +35,37 @@ namespace LogHubEndpointLogsExtractionVer3
         private void timer1_Tick(object sender, ElapsedEventArgs e)
         {
             Library.WriteErrorLog("\nBattery: " +getBatteryPercentage());
-            Library.WriteErrorLog("\nCPU    : " + (string.Format("{0:N2}", getCpuUsage())));
+            Library.WriteErrorLog(getCpuUsage());
             Library.WriteErrorLog("\nTimer ticked and logs have been sent successfully");
         }
 
-        static float getCpuUsage()
+        static string getCpuUsage()
         {
-            cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
-            cpuCounter.NextValue();
-            System.Threading.Thread.Sleep(1000);
-            return cpuCounter.NextValue();
+            Process[] processes = Process.GetProcesses();
+            string stringsOfCpu = "";
+
+            var counters = new List<PerformanceCounter>();
+
+            foreach (Process process in processes)
+            {
+                var counter = new PerformanceCounter("Process", "% Processor Time", process.ProcessName);
+                counter.NextValue();
+                counters.Add(counter);
+            }
+
+            int i = 0;
+
+            int processorCount = Environment.ProcessorCount;
+
+            foreach (var counter in counters)
+            {
+
+                stringsOfCpu += (processes[i].ProcessName + ":" + (Math.Round(counter.NextValue(), 1) / processorCount) + "\n");
+                ++i;
+                
+            }
+
+            return "CPU:\n" + stringsOfCpu;
         }
 
         static string getBatteryPercentage()
@@ -64,5 +87,10 @@ namespace LogHubEndpointLogsExtractionVer3
         // Changed ConsoleApp to a Service.
         // Added a timer that will write to a log file every 30 seconds, called timer1_Tick
         // timer1_Tick will be updated in the future to send the logs over to Chester.
+
+        // 31.5.18
+        // Evolved getCpuUsage() to get the CPU usage of every single process 
+        // However, many processes share the same name, svchost
+        // Next step is to find out if it is possible to get the more specific name of svchost processes
     }
 }
