@@ -10,7 +10,6 @@ namespace LogHubEndpointLogsExtractionVer3
     public partial class Service1 : ServiceBase
     {
         private System.Timers.Timer timer1 = null;
-        static PerformanceCounter cpuCounter;
 
         public Service1()
         {
@@ -34,9 +33,9 @@ namespace LogHubEndpointLogsExtractionVer3
 
         private void timer1_Tick(object sender, ElapsedEventArgs e)
         {
-            Library.WriteErrorLog("\nBattery: " +getBatteryPercentage());
+            Library.WriteErrorLog("Battery{" +getBatteryPercentage()+"}");
             Library.WriteErrorLog(getCpuUsage());
-            Library.WriteErrorLog("\nTimer ticked and logs have been sent successfully");
+            Library.WriteErrorLog("Timer ticked and logs have been sent successfully");
         }
 
         static string getCpuUsage()
@@ -59,15 +58,13 @@ namespace LogHubEndpointLogsExtractionVer3
 
             foreach (var counter in counters)
             {
-
-                stringsOfCpu += (processes[i].ProcessName + ":" + (Math.Round(counter.NextValue(), 1) / processorCount) + "\n");
-                ++i;
-                
+                stringsOfCpu += (processes[i].ProcessName + "(" + +processes[i].Id +"): " + (Math.Round(counter.NextValue(), 1) / processorCount) + ";\n");
+                ++i;   
             }
 
-            return "CPU:\n" + stringsOfCpu;
+            return "CPU{" + stringsOfCpu+"}";
         }
-
+            
         static string getBatteryPercentage()
         {
             PowerStatus p = SystemInformation.PowerStatus;
@@ -92,5 +89,10 @@ namespace LogHubEndpointLogsExtractionVer3
         // Evolved getCpuUsage() to get the CPU usage of every single process 
         // However, many processes share the same name, svchost
         // Next step is to find out if it is possible to get the more specific name of svchost processes
+
+        // 20.6.18
+        // Added PID to processes to properly identify them, especially svchost
+        // I couldn't find a way to attach their full process names so this is a workaround
+        // Also added {} for ease of data extraction for chester
     }
 }
