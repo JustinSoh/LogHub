@@ -1,6 +1,10 @@
-.chartTitle {
+/* The entire component */
+.mainContainer {
     margin-left: 2%;
-    float:left;
+}
+
+.component-header {
+    font-style: italic;
 }
 
 .format-button {

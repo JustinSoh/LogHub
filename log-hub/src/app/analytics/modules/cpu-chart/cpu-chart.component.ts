@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Gchart } from 'src/app/class/gchart';
 import { AnalyticsService } from '../../services/analytics.service';
+import { CpuClass } from '../../../class/cpu-class';
 
 @Component({
   selector: 'app-cpu-chart',
@@ -37,39 +38,56 @@ export class CpuChartComponent implements OnInit {
 
   ngOnInit() {
     
-    this.splicePredictionArray = this.splicingMethod(this.predictionArray, 10);
-    this.spliceActualArray = this.splicingMethod(this.actualArray, 10);
-    this.spliceLabelArray = this.splicingMethod(this.labelArray, 10);
-    this.actualData = this.splicePredictionArray[0];
-    this.predictData = this.spliceActualArray[0];
-    this.labelData = this.spliceLabelArray[0];
-    this.UpdateChart(this.actualData, this.predictData, this.labelData);
+    // this.splicePredictionArray = this.splicingMethod(this.predictionArray, 10);
+    // this.spliceActualArray = this.splicingMethod(this.actualArray, 10);
+    // this.spliceLabelArray = this.splicingMethod(this.labelArray, 10);
+    // this.actualData = this.splicePredictionArray[0];
+    // this.predictData = this.spliceActualArray[0];
+    // this.labelData = this.spliceLabelArray[0];
+    // this.UpdateChart(this.actualData, this.predictData, this.labelData);
     
-    var lowDataSet = [{
-      x:'0.0', y:'1.0', r:20
-    },
-    {
-      x: '0.0', y: '3.0', r: 10
-    }
-    ];
+    //method to retrieve data from database 
+    var cpuChartOverviewData = this.retrieveDatasetFromDatabase();
+    //indicate the type of labels of the chart
+    var cpuChartOverviewLabel = ['Low','Medium','High'];
+    //indicate what type of chart you would like
+    var cpuChartType = "bubble";
+    //used to pass data over to the cpu-chart-overview component
+    this.cpuChartOverview = new Gchart(cpuChartOverviewData, cpuChartOverviewLabel , cpuChartType);
+    //subscribe to an event on the cpu-chart-overview component
+    this.analyticsService.currentDetails.subscribe(status => this.showDetails = status);
+  }
 
-    var mediumDataSet = [{
-      x:'5.0', y:'2.0', r:20
-    },
-    {
-      x:'5.0', y:'3.0', r:20
-    }
-    ];
-
-    var highDataSet = [{
-      x:'10.0', y:'4.0', r:20
-    },
-    {
-      x:'10.0', y:'6.0', r:40
-    }
-    ];
-    
+  public retrieveDatasetFromDatabase()
+  {
     //Initializing the Scatterplot data (Get from database)
+    //Low = 0.0, Medium = 5.0 , High = 10.0 (X Value)
+    //6 = Broser , 5 = Game , 4 = Word Processing , 3 = Database , 2 = Spreadsheet , 1 = Multimedia
+   
+    var cpuClassLow1 = new CpuClass('0.0' , '1.0' , 20);
+    var cpuClassLow2 = new CpuClass('0.0' , '3.0' , 10);
+    var cpuClassMedium1 = new CpuClass('5.0' , '2.0', 20);
+    var cpuClassMedium2 = new CpuClass('5.0' , '3.0' , 20);
+    var cpuClassHigh1 = new CpuClass('10.0' , '4.0', 20);
+    var cpuClassHigh2 = new CpuClass('10.0', '6.0' , 40);
+    
+    var arrayOfAllData = new Array<CpuClass>();
+    //Change arrayOfAllData to retrieved data from database
+    arrayOfAllData.push(cpuClassLow1 , cpuClassLow2 , cpuClassMedium1 , cpuClassMedium2 , cpuClassHigh1 , cpuClassHigh2);
+    var array:any = this.sortData(arrayOfAllData);
+
+    var arrayOfLowSet = array[0]; 
+    console.log(arrayOfLowSet);
+    var arrayOfMediumSet = array[1];
+    var arrayOfHighSet = array[2];
+
+    //use this to trasform data into dataset
+    var lowDataSet = this.transformData(arrayOfLowSet);
+    var mediumDataSet = this.transformData(arrayOfMediumSet);
+    var highDataSet = this.transformData(arrayOfHighSet);
+
+
+    //Replace the dataset with data retrieved from database in the format of [{x,y,r}, {x,y,r}];
     var cpuChartOverviewData = 
     [{data: lowDataSet,
       label: 'Low' , 
@@ -86,20 +104,45 @@ export class CpuChartComponent implements OnInit {
         fill:true,
       }
     ] ;
-    var cpuChartOverviewLabel = ['Low','Medium','High']
-    var cpuChartType = "bubble";
-    this.cpuChartOverview = new Gchart(cpuChartOverviewData, cpuChartOverviewLabel , cpuChartType);
-    
-    this.analyticsService.currentDetails.subscribe(status => this.showDetails = status);
-    
-    console.log(this.showDetails);
+
+    return cpuChartOverviewData;
   }
 
-
-  public setFrequency()
+  private transformData(dataSet:Array<CpuClass>)
   {
+    var array = new Array<any>();
+    dataSet.forEach(element => {
+      var data = {x:element.$x, y:element.$y , r:element.$r};
+      array.push(data);
+      console.log(array)
+    });
 
+    return array;
   }
+
+  private sortData(dataSet:Array<CpuClass>){
+    var lowSet = new Array<CpuClass>();
+    var mediumSet = new Array<CpuClass>();
+    var highSet = new Array<CpuClass>();
+    dataSet.forEach(element => {
+      if(element.$x == '5.0')
+      {
+        mediumSet.push(element);
+      }
+      if(element.$x == '0.0')
+      {
+        console.log("does this work");
+        lowSet.push(element);
+      }
+      if(element.$x == '10.0')
+      {
+        highSet.push(element);
+      }
+    });
+
+    return [lowSet, mediumSet, highSet];
+  }
+
 
   private splicingMethod(array, n_length)
   {
@@ -120,10 +163,6 @@ export class CpuChartComponent implements OnInit {
     return temp; 
   }
     
-  // public lineChartData:Array<any> = [
-  //   // {data: [this.predictData.get(0, label: 'Prediction'},
-  //   {data: this.actualData[0], label: 'Actual'},
-  // ];
   
   public lineChartOptions:any = {
     responsive: true,
@@ -214,14 +253,5 @@ export class CpuChartComponent implements OnInit {
   }
 
  
-  // events
-  public chartClicked(e:any):void {
-    console.log(e);
-  }
- 
-  public chartHovered(e:any):void {
-    console.log(e);
-  }
-  
 
 }

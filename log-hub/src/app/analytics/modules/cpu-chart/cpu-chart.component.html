@@ -1,6 +1,23 @@
+<div class="container-fluid mainContainer">
+    <div class="row">
+       <p class="title2 chartTitle">CPU Chart</p>
+          <button mat-icon-button [matMenuTriggerFor]="frequency" class="fa fa-bars format-button"></button>
+          <mat-menu #frequency="matMenu">
+              <button mat-menu-item (click)="chartOverview()">CPU Overview</button>
+              <button mat-menu-item >Week</button>
+            </mat-menu>
+    </div>
+    <div class="row">
+      <p class="subheading2 component-header ">"An overview of the CPU usage of the hosts in your organization</p>
+    </div>
+    <app-cpu-chart-overview [cpuChartOverview] = "cpuChartOverview"></app-cpu-chart-overview>
+    <div *ngIf="showDetails">
+      <app-cpu-chart-detail></app-cpu-chart-detail>
+    </div>
 
+</div>
 
-<div>
+<!--<div>
   <p class="title2 chartTitle">CPU Chart</p>
   <button mat-icon-button [matMenuTriggerFor]="frequency" class="fa fa-bars format-button"></button>
   <mat-menu #frequency="matMenu">
@@ -8,20 +25,18 @@
       <button mat-menu-item >Week</button>
     </mat-menu>
 </div> 
-<!--Overview Chart-->
 <div>
   <app-cpu-chart-overview 
   [cpuChartOverview] = "cpuChartOverview"
   ></app-cpu-chart-overview>
 </div>
 
-<!--Bubble Details-->
 <div *ngIf="showDetails">
 
 
 
 
-<!-- Individual Host Details
+Individual Host Details
 <div class="individual-cpu-based-section">
     <div class="row" style=" width: 100%; height: 100%; margin-left: 2%">
         <div class="col-md-12 chart-header-section" >
@@ -55,7 +70,6 @@
       
         </div>
       </div>
-</div> -->
-
 </div>
 
+</div>-->
