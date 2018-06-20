@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Gchart } from 'src/app/class/gchart';
+import { AnalyticsService } from '../../services/analytics.service';
 
 @Component({
   selector: 'app-cpu-chart',
@@ -8,7 +9,7 @@ import { Gchart } from 'src/app/class/gchart';
 })
 export class CpuChartComponent implements OnInit {
   
-  constructor() { }
+  
 
   //For overview chart
   private cpuChartOverview:Gchart; 
@@ -26,38 +27,74 @@ export class CpuChartComponent implements OnInit {
   public lineChartData:Array<any>;
   public lineChartLabels:Array<any> ;
   private counter = 0;
+  public showDetails:Boolean = false;
+
+
+  private analyticsService:AnalyticsService
+  constructor(public as:AnalyticsService) { 
+    this.analyticsService = as;
+  }
+
   ngOnInit() {
-   
+    
     this.splicePredictionArray = this.splicingMethod(this.predictionArray, 10);
     this.spliceActualArray = this.splicingMethod(this.actualArray, 10);
     this.spliceLabelArray = this.splicingMethod(this.labelArray, 10);
     this.actualData = this.splicePredictionArray[0];
     this.predictData = this.spliceActualArray[0];
     this.labelData = this.spliceLabelArray[0];
-    console.log(this.actualData);
     this.UpdateChart(this.actualData, this.predictData, this.labelData);
     
-    
-    //Initializing the Scatterplot data
-   
-    var cpuChartOverviewData = [
-      {data: [{
-        x: '0.0', y: '1.0', r: 20
-      }], label: 'Low' , fill:true, backgroundColor: '#4EAB7E' , borderWidth: 2 , pointHoverRadius: 6 , id:"20"},
-      {data: [{
-        x: '5.0', y: '6.0', r: 30
-      }], label: 'Medium' , fill:true, backgroundColor: "#FFC000", borderWidth: 2, pointHoverRadius: 6 , id:"30"},
-      {data: [{
-        x: '10.0', y: '6.0', r: 40
-      }], label: 'High' , fill:true,backgroundColor: '#D44343' , borderWidth: 2, pointHoverRadius: 6 , id:"40"},
+    var lowDataSet = [{
+      x:'0.0', y:'1.0', r:20
+    },
+    {
+      x: '0.0', y: '3.0', r: 10
+    }
     ];
+
+    var mediumDataSet = [{
+      x:'5.0', y:'2.0', r:20
+    },
+    {
+      x:'5.0', y:'3.0', r:20
+    }
+    ];
+
+    var highDataSet = [{
+      x:'10.0', y:'4.0', r:20
+    },
+    {
+      x:'10.0', y:'6.0', r:40
+    }
+    ];
+    
+    //Initializing the Scatterplot data (Get from database)
+    var cpuChartOverviewData = 
+    [{data: lowDataSet,
+      label: 'Low' , 
+      fill:true,
+      },
+      {
+        data: mediumDataSet,
+        label: 'Medium' , 
+        fill:true,
+      },
+      {
+        data: highDataSet,
+        label: 'High',
+        fill:true,
+      }
+    ] ;
     var cpuChartOverviewLabel = ['Low','Medium','High']
     var cpuChartType = "bubble";
     this.cpuChartOverview = new Gchart(cpuChartOverviewData, cpuChartOverviewLabel , cpuChartType);
-
-
     
+    this.analyticsService.currentDetails.subscribe(status => this.showDetails = status);
+    
+    console.log(this.showDetails);
   }
+
 
   public setFrequency()
   {

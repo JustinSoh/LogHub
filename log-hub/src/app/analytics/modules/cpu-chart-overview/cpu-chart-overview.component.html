@@ -1,17 +1,25 @@
+<p style="text-align:left; padding: 0%;width:auto; background: red" >"Ever wondered which hosts has higher level of being infected"</p>
 <div class="col-md-12 chart-header-section" >
   <div class="col-md-11 canvas-section">
     <div >
-    <canvas  style="display: block;" baseChart
-                name="canvas"
-                id="canvas"
-               ></canvas>
+        <canvas baseChart
+        id="canvas"
+        [datasets]="lineChartData"
+        [labels]="lineChartLabels"
+        [options]="lineChartOptions"
+        [colors]="lineChartColors"
+        [legend]="lineChartLegend"
+        [chartType]="lineChartType"
+        (chartHover)="chartHovered($event)"
+        (chartClick)="chartClicked($event)">
+        </canvas>
     </div>
   </div>
 </div>
-<!-- [datasets]="lineChartData"
-[labels]="lineChartLabels"
-[options]="lineChartOptions"
-[colors]="lineChartColors"
-[legend]="lineChartLegend"
-[chartType]="lineChartType"
-(chartHover)="chartHovered($event)" -->
+<!-- 
+
+<canvas  style="display: block;" baseChart
+                name="canvas"
+                id="canvas"
+                (click)="clickFunction($event)"
+               ></canvas> -->

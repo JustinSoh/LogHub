@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { md5 }  from 'node_modules/md5';
+import { hasha }  from 'node_modules/crypto-js'
 import {FormControl, Validators} from '@angular/forms';
 @Component({
   selector: 'app-login-details',
@@ -9,8 +9,9 @@ import {FormControl, Validators} from '@angular/forms';
 export class LoginDetailsComponent implements OnInit {
 
   constructor() { }
-
+  public SHA512;
   ngOnInit() {
+    this.SHA512 = require("crypto-js/sha256");
 
   }
   username = new FormControl('', [Validators.required]);
@@ -22,8 +23,7 @@ export class LoginDetailsComponent implements OnInit {
   
   public hashpw(passwd):string
   {
-    var SHA512 = md5.require("crypto-js/sha512");
-    console.log(SHA512(passwd).toString());
+    this.hashedpw = this.SHA512(passwd).toString();
     console.log(this.hashedpw)
     return this.hashedpw;
     
