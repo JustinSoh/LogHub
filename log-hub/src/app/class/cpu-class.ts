@@ -1,13 +1,16 @@
+import { HostClass } from "./host-class";
+
 export class CpuClass {
     private x: string; 
     private y: string;
     private r: number; 
+    private hosts: Array<HostClass>;
 
-
-	constructor($x: string, $y: string, $r: number) {
+	constructor($x: string, $y: string, $r: number , $hosts: Array<HostClass>) {
 		this.x = $x;
 		this.y = $y;
-		this.r = $r;
+        this.r = $r;
+        this.hosts = $hosts;
 	}
 
     /**
@@ -56,6 +59,24 @@ export class CpuClass {
      */
 	public set $r(value: number) {
 		this.r = value;
+    }
+    
+
+    /**
+     * Getter $hosts
+     * @return {Array<HostClass>}
+     */
+	public get $hosts(): Array<HostClass> {
+		return this.hosts;
 	}
+
+    /**
+     * Setter $hosts
+     * @param {Array<HostClass>} value
+     */
+	public set $hosts(value: Array<HostClass>) {
+		this.hosts = value;
+	}
+
     
 }

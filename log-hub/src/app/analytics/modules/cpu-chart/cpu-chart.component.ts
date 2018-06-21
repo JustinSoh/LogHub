@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Gchart } from 'src/app/class/gchart';
 import { AnalyticsService } from '../../services/analytics.service';
 import { CpuClass } from '../../../class/cpu-class';
+import { HostClass } from '../../../class/host-class';
 
 @Component({
   selector: 'app-cpu-chart',
@@ -29,6 +30,7 @@ export class CpuChartComponent implements OnInit {
   public lineChartLabels:Array<any> ;
   private counter = 0;
   public showDetails:Boolean = false;
+  public clickedData:CpuClass; 
 
 
   private analyticsService:AnalyticsService
@@ -56,36 +58,55 @@ export class CpuChartComponent implements OnInit {
     this.cpuChartOverview = new Gchart(cpuChartOverviewData, cpuChartOverviewLabel , cpuChartType);
     //subscribe to an event on the cpu-chart-overview component
     this.analyticsService.currentDetails.subscribe(status => this.showDetails = status);
+    //subscribe to an event when cpu-chart-overview bubble is clicked 
+    this.analyticsService.currentData.subscribe(data => this.clickedData = data);
+
+
   }
 
   public retrieveDatasetFromDatabase()
   {
     //Initializing the Scatterplot data (Get from database)
     //Low = 0.0, Medium = 5.0 , High = 10.0 (X Value)
-    //6 = Broser , 5 = Game , 4 = Word Processing , 3 = Database , 2 = Spreadsheet , 1 = Multimedia
+    //6 = Browser , 5 = Game , 4 = Word Processing , 3 = Database , 2 = Spreadsheet , 1 = Multimedia
    
-    var cpuClassLow1 = new CpuClass('0.0' , '1.0' , 20);
-    var cpuClassLow2 = new CpuClass('0.0' , '3.0' , 10);
-    var cpuClassMedium1 = new CpuClass('5.0' , '2.0', 20);
-    var cpuClassMedium2 = new CpuClass('5.0' , '3.0' , 20);
-    var cpuClassHigh1 = new CpuClass('10.0' , '4.0', 20);
-    var cpuClassHigh2 = new CpuClass('10.0', '6.0' , 40);
+    //Get all cpu hosts data from database 
+    var host1 = new HostClass("string" , [['6', '1.0'],['3' , '10.0']] , null , null);
+    var host2 = new HostClass("string" , [['6', '1.0'],['2' , '10.0']] , null , null);
+
+
+    //sort the cpu Hosts into same x and y 
+    var arrayOfHosts = new Array<HostClass>();
+    arrayOfHosts.push(host1, host2);
+    this.sortHost(arrayOfHosts);
+
+    var cpuClassLow1 = new CpuClass('0.0' , '1.0' , 20 , null);
+    var cpuClassLow2 = new CpuClass('0.0' , '3.0' , 10  , null);
+    var cpuClassMedium1 = new CpuClass('5.0' , '2.0', 20 , null);
+    var cpuClassMedium2 = new CpuClass('5.0' , '3.0' , 20 , null);
+    var cpuClassHigh1 = new CpuClass('10.0' , '4.0', 20 , null);
+    var cpuClassHigh2 = new CpuClass('10.0', '6.0' , 40 , null);
     
     var arrayOfAllData = new Array<CpuClass>();
-    //Change arrayOfAllData to retrieved data from database
+
+
+    //Push all data into array of all Data
     arrayOfAllData.push(cpuClassLow1 , cpuClassLow2 , cpuClassMedium1 , cpuClassMedium2 , cpuClassHigh1 , cpuClassHigh2);
     var array:any = this.sortData(arrayOfAllData);
 
     var arrayOfLowSet = array[0]; 
-    console.log(arrayOfLowSet);
     var arrayOfMediumSet = array[1];
     var arrayOfHighSet = array[2];
 
     //use this to trasform data into dataset
-    var lowDataSet = this.transformData(arrayOfLowSet);
-    var mediumDataSet = this.transformData(arrayOfMediumSet);
-    var highDataSet = this.transformData(arrayOfHighSet);
+    var lowDataSet:Array<CpuClass> = this.transformData(arrayOfLowSet);
+    var mediumDataSet:Array<CpuClass> = this.transformData(arrayOfMediumSet);
+    var highDataSet:Array<CpuClass> = this.transformData(arrayOfHighSet);
 
+    //sync the dataSet with analytics service to be used in other components 
+    this.analyticsService.$cpuLow = lowDataSet; 
+    this.analyticsService.$cpuMedium = mediumDataSet; 
+    this.analyticsService.$cpuHigh = highDataSet;
 
     //Replace the dataset with data retrieved from database in the format of [{x,y,r}, {x,y,r}];
     var cpuChartOverviewData = 
@@ -108,13 +129,48 @@ export class CpuChartComponent implements OnInit {
     return cpuChartOverviewData;
   }
 
+  private sortHost(dataSet:Array<HostClass>)
+  {
+    var integer = 0;
+    var sortedData = new Array<CpuClass>();
+    var unsortedData:Array<any> = new Array();
+    dataSet.forEach(element => {
+      element.$cpuData.forEach(cpu => {
+        unsortedData.push([cpu[0]+","+cpu[1] , element]);
+      })
+    })
+
+    if(integer == 0)
+    {
+      
+    }
+    //Iterate through the entire array
+    // dataSet.forEach(element => {
+    //   //Iterate through the cpuDataArray
+    //   element.$cpuData.forEach(cat => {
+    //     console.log(cat[0] + "|" + cat[1]);
+    //     //Iterate through the sorted data to check for exisiting array 
+    //     if(integer == 0)
+    //     {
+    //       var cpuClass = new CpuClass(cat[0] , cat[1], 1 , new Array(element));
+    //       sortedData.push(cpuClass);
+    //       // sortedData[1].push(cat);
+    //       integer = 1; 
+    //     }
+    //   })
+    // })
+
+    
+
+    console.log(sortedData);
+  }
+
   private transformData(dataSet:Array<CpuClass>)
   {
     var array = new Array<any>();
     dataSet.forEach(element => {
       var data = {x:element.$x, y:element.$y , r:element.$r};
       array.push(data);
-      console.log(array)
     });
 
     return array;

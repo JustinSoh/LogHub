@@ -2,6 +2,7 @@ import { Component, OnInit , Input } from '@angular/core';
 import { Gchart } from 'src/app/class/gchart';
 import {Chart } from 'node_modules/chart.js';
 import { AnalyticsService } from '../../services/analytics.service';
+import { CpuClass } from '../../../class/cpu-class';
 
 @Component({
   selector: 'app-cpu-chart-overview',
@@ -24,16 +25,20 @@ export class CPUChartOverview implements OnInit {
   public dataArray = [];
   public showDetails:Boolean =false;
   public analyticsService:AnalyticsService;
-
+  public lowDataset:Array<CpuClass>; 
+  public mediumDataset:Array<CpuClass>; 
+  public highDataset:Array<CpuClass>;
   constructor(private as:AnalyticsService) { 
     this.analyticsService = as;
   }
 
   ngOnInit() {
-    console.log(this.cpuChartOverview.$cpuOverviewType);
-    console.log(this.cpuChartOverview.$cpuOverviewLabel);
     //get the data and update the chart with the relevent data
     this.UpdateChart(this.cpuChartOverview.$cpuOverviewData, this.cpuChartOverview.$cpuOverviewLabel, this.cpuChartOverview.$cpuOverviewType);
+    //Get the data from the service that was passed over from Cpu overview 
+    this.lowDataset = this.analyticsService.$cpuLow;
+    this.mediumDataset = this.analyticsService.$cpuMedium
+    this.highDataset = this.analyticsService.$cpuHigh;
     // this.createChart(this.cpuChartOverview.$cpuOverviewData, this.cpuChartOverview.$cpuOverviewLabel, this.cpuChartOverview.$cpuOverviewType);
   }
 
@@ -50,13 +55,51 @@ export class CPUChartOverview implements OnInit {
   //on click of the button
   chartClicked(e:any):void {
     var status = false;
+    //if click on white area, hide the cpu-chart-detail  and sync it with the service
     if(e['active'].length != 0)
     {
       status = true;
+      this.showDetails = status;
+      this.analyticsService.DetailStatus(this.showDetails);
+      
+      //Get the type of data e.g. High , Medium , Low
+      var applicableSet:Array<CpuClass> = this.getApplicableSet(e);
+      //Get the actual data within applicableSet
+      var currentData:CpuClass = this.getSpecificData(applicableSet, e);
+      //Sync the data with the service of what is the actual data 
+      this.analyticsService.DataDetails(currentData);
     }
-    this.showDetails = status;
-    this.analyticsService.DetailStatus(this.showDetails);
+    else {
+      console.log("error");
+    }
+    
+
   }
+  public getSpecificData(applicableSet , e){
+    var indexValue = e['active']['0']._index;
+    var currentData= applicableSet[indexValue];
+    var formatData:CpuClass = new CpuClass(currentData.x , currentData.y , currentData.r);
+    return formatData;
+  }
+
+  public getApplicableSet(e)
+  {
+    if(e['active'][0]._datasetIndex == 0)
+    {
+      return this.lowDataset;
+    }
+    else if(e['active'][0]._datasetIndex == 1)
+    {
+      return this.mediumDataset;
+
+    }
+    else
+    {
+      return this.highDataset;
+
+    }
+  }
+
  
   public chartHovered(e:any):void {
    
