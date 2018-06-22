@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Net.Http;
+using System.Security.Permissions;
 using System.ServiceProcess;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
 
@@ -10,6 +15,7 @@ namespace LogHubEndpointLogsExtractionVer3
     public partial class Service1 : ServiceBase
     {
         private System.Timers.Timer timer1 = null;
+        FileSystemWatcher watcher;
 
         public Service1()
         {
@@ -18,7 +24,11 @@ namespace LogHubEndpointLogsExtractionVer3
 
         protected override void OnStart(string[] args)
         {
-            //Timer
+            //Logs that do not come every 30 seconds
+            trackFileSystemChanges();
+            watcher.EnableRaisingEvents = true;
+
+            //Logs that come every 30 seconds
             timer1 = new System.Timers.Timer();
             this.timer1.Interval = 30000; //Runs every 30 seconds
             this.timer1.Elapsed += new System.Timers.ElapsedEventHandler(this.timer1_Tick);
@@ -33,9 +43,16 @@ namespace LogHubEndpointLogsExtractionVer3
 
         private void timer1_Tick(object sender, ElapsedEventArgs e)
         {
-            Library.WriteErrorLog("Battery{" +getBatteryPercentage()+"}");
+            Library.WriteErrorLog("Battery{" + getBatteryPercentage() + "}");
             Library.WriteErrorLog(getCpuUsage());
             Library.WriteErrorLog("Timer ticked and logs have been sent successfully");
+        }
+
+        static string getBatteryPercentage()
+        {
+            PowerStatus p = SystemInformation.PowerStatus;
+            int a = (int)(p.BatteryLifePercent * 100);
+            return a.ToString();
         }
 
         static string getCpuUsage()
@@ -64,13 +81,61 @@ namespace LogHubEndpointLogsExtractionVer3
 
             return "CPU{" + stringsOfCpu+"}";
         }
-            
-        static string getBatteryPercentage()
+
+        static void getEventLogs()
         {
-            PowerStatus p = SystemInformation.PowerStatus;
-            int a = (int)(p.BatteryLifePercent * 100);
-            return a.ToString();
+            /*
+            string returnedString = "";
+
+            var d = EventLog.GetEventLogs();
+            foreach (EventLog l in d)
+            {
+                returnedString += ("\nLog name: " + l.LogDisplayName);
+                foreach (EventLogEntry entry in l.Entries)
+                {
+                    returnedString += ("\n" + entry.Message);
+                }
+            }
+            return returnedString;
+            */
+            //Holy shit too big
         }
+
+        public void trackFileSystemChanges()
+        {
+            watcher = new FileSystemWatcher();
+
+            // Detects and reports changes in System32 folder
+            watcher.IncludeSubdirectories = true;
+            watcher.Path = @"C:\Windows\Sysnative";
+            watcher.IncludeSubdirectories = true;
+
+            // Watch for changes in LastAccess and LastWrite times, and the renaming of files or directories.
+            watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+            // Watches all files
+            watcher.Filter = "*.*";
+
+            // Add event handlers.
+            watcher.Changed += new FileSystemEventHandler(OnChanged);
+            watcher.Created += new FileSystemEventHandler(OnChanged);
+            watcher.Deleted += new FileSystemEventHandler(OnChanged);
+            watcher.Renamed += new RenamedEventHandler(OnRenamed);
+        }
+
+        private static void OnChanged(object source, FileSystemEventArgs e)
+        {
+            // Specify what is done when a file is changed, created, or deleted.
+            Library.WriteErrorLog("File: " + e.FullPath + " " + e.ChangeType);
+        }
+
+        private static void OnRenamed(object source, RenamedEventArgs e)
+        {
+            // Specify what is done when a file is renamed.
+            Library.WriteErrorLog("File: " + e.OldFullPath + " renamed to " + e.FullPath);
+        }
+
+
+
 
         // 24.5.18
         // Did functions to let LogHub log extraction to run on startup and getCpuUsage()
@@ -94,5 +159,17 @@ namespace LogHubEndpointLogsExtractionVer3
         // Added PID to processes to properly identify them, especially svchost
         // I couldn't find a way to attach their full process names so this is a workaround
         // Also added {} for ease of data extraction for chester
+
+        // 21.6.18
+        // Found and managed to implement printing of all event logs
+        // However, the output was just too huge with a lot of redundant-looking information
+        // I'll need to clarify and ask Mr Evans what important data is needed from event logs
+        // I've found a class to use for detecting changes in the file system, and that's what I'll work on next
+
+        // 22.6.18
+        // Added function to detect the type of changes of files in the System32 directory (Created, changed, deleted, renamed)
+
+        
+
     }
 }
