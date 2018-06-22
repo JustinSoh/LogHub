@@ -3,6 +3,7 @@ import { Gchart } from 'src/app/class/gchart';
 import { AnalyticsService } from '../../services/analytics.service';
 import { CpuClass } from '../../../class/cpu-class';
 import { HostClass } from '../../../class/host-class';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-cpu-chart',
@@ -31,7 +32,7 @@ export class CpuChartComponent implements OnInit {
   private counter = 0;
   public showDetails:Boolean = false;
   public clickedData:CpuClass; 
-
+  public change = "hello";
 
   private analyticsService:AnalyticsService
   constructor(public as:AnalyticsService) { 
@@ -60,39 +61,38 @@ export class CpuChartComponent implements OnInit {
     this.analyticsService.currentDetails.subscribe(status => this.showDetails = status);
     //subscribe to an event when cpu-chart-overview bubble is clicked 
     this.analyticsService.currentData.subscribe(data => this.clickedData = data);
-
+    
 
   }
 
   public retrieveDatasetFromDatabase()
   {
     //Initializing the Scatterplot data (Get from database)
-    //Low = 0.0, Medium = 5.0 , High = 10.0 (X Value)
-    //6 = Browser , 5 = Game , 4 = Word Processing , 3 = Database , 2 = Spreadsheet , 1 = Multimedia
-   
+    
     //Get all cpu hosts data from database 
-    var host1 = new HostClass("string" , [['6', '1.0'],['3' , '10.0']] , null , null);
-    var host2 = new HostClass("string" , [['6', '1.0'],['2' , '10.0']] , null , null);
-
+    var host1 = new HostClass("string" , ['0.0', '1.0'] , '0.8' , null, null );
+    var host2 = new HostClass("string" , ['0.0', '1.0'] , '0.4' , null , null);
+    var host3 = new HostClass("string" , ['10.0' , '6.0'] , '0.5' , null, null);
 
     //sort the cpu Hosts into same x and y 
     var arrayOfHosts = new Array<HostClass>();
-    arrayOfHosts.push(host1, host2);
-    this.sortHost(arrayOfHosts);
+    arrayOfHosts.push(host1, host2 , host3);
+    var sortedList = this.sortHost(arrayOfHosts);
 
-    var cpuClassLow1 = new CpuClass('0.0' , '1.0' , 20 , null);
-    var cpuClassLow2 = new CpuClass('0.0' , '3.0' , 10  , null);
-    var cpuClassMedium1 = new CpuClass('5.0' , '2.0', 20 , null);
-    var cpuClassMedium2 = new CpuClass('5.0' , '3.0' , 20 , null);
-    var cpuClassHigh1 = new CpuClass('10.0' , '4.0', 20 , null);
-    var cpuClassHigh2 = new CpuClass('10.0', '6.0' , 40 , null);
+    // var cpuClassLow1 = new CpuClass('0.0' , '1.0' , 20 , null);
+    // var cpuClassLow2 = new CpuClass('0.0' , '3.0' , 10  , null);
+    // var cpuClassMedium1 = new CpuClass('5.0' , '2.0', 20 , null);
+    // var cpuClassMedium2 = new CpuClass('5.0' , '3.0' , 20 , null);
+    // var cpuClassHigh1 = new CpuClass('10.0' , '4.0', 20 , null);
+    // var cpuClassHigh2 = new CpuClass('10.0', '6.0' , 40 , null);
     
-    var arrayOfAllData = new Array<CpuClass>();
+    // var arrayOfAllData = new Array<CpuClass>();
 
 
-    //Push all data into array of all Data
-    arrayOfAllData.push(cpuClassLow1 , cpuClassLow2 , cpuClassMedium1 , cpuClassMedium2 , cpuClassHigh1 , cpuClassHigh2);
-    var array:any = this.sortData(arrayOfAllData);
+    // //Push all data into array of all Data
+    // arrayOfAllData.push(cpuClassLow1 , cpuClassLow2 , cpuClassMedium1 , cpuClassMedium2 , cpuClassHigh1 , cpuClassHigh2);
+    //In progress of fitting data into here
+    var array:any = this.sortData(sortedList);
 
     var arrayOfLowSet = array[0]; 
     var arrayOfMediumSet = array[1];
@@ -104,10 +104,9 @@ export class CpuChartComponent implements OnInit {
     var highDataSet:Array<CpuClass> = this.transformData(arrayOfHighSet);
 
     //sync the dataSet with analytics service to be used in other components 
-    this.analyticsService.$cpuLow = lowDataSet; 
-    this.analyticsService.$cpuMedium = mediumDataSet; 
-    this.analyticsService.$cpuHigh = highDataSet;
-
+    this.analyticsService.$cpuLow = arrayOfLowSet; 
+    this.analyticsService.$cpuMedium = arrayOfMediumSet; 
+    this.analyticsService.$cpuHigh = arrayOfHighSet;
     //Replace the dataset with data retrieved from database in the format of [{x,y,r}, {x,y,r}];
     var cpuChartOverviewData = 
     [{data: lowDataSet,
@@ -135,15 +134,39 @@ export class CpuChartComponent implements OnInit {
     var sortedData = new Array<CpuClass>();
     var unsortedData:Array<any> = new Array();
     dataSet.forEach(element => {
-      element.$cpuData.forEach(cpu => {
-        unsortedData.push([cpu[0]+","+cpu[1] , element]);
-      })
+      unsortedData.push([element.$cpuData[0]+","+element.$cpuData[1] , element]);
     })
 
     if(integer == 0)
     {
-      
+      //Add the first set into the sorted data
+      sortedData.push(unsortedData[0][0] , unsortedData[0][1]);
+      integer++;
     }
+    
+
+    // var arr = [5, 5, 5, 2, 2, 2, 2, 2, 9, 4];
+    var counts = new Array();
+    var listOfLabels = new Array<string>(); 
+    for (var i = 0; i < unsortedData.length; i++) {
+      var num = unsortedData[i][0];
+      listOfLabels.push(num);
+      var array = new Array<HostClass>();
+      if(counts[num] != undefined)
+      {
+        array = counts[num];
+        array.push(unsortedData[i][1]);      
+      }
+      counts[num] = counts[num] ? counts[num] = array  : new Array<HostClass>(unsortedData[i][1]) ;
+    }
+
+    // console.log([counts , listOfLabels]);
+    var unique = listOfLabels.filter(function(elem, index, self) {
+      return index === self.indexOf(elem);
+    })
+    
+    return ([counts , unique]);
+
     //Iterate through the entire array
     // dataSet.forEach(element => {
     //   //Iterate through the cpuDataArray
@@ -162,7 +185,6 @@ export class CpuChartComponent implements OnInit {
 
     
 
-    console.log(sortedData);
   }
 
   private transformData(dataSet:Array<CpuClass>)
@@ -176,11 +198,33 @@ export class CpuChartComponent implements OnInit {
     return array;
   }
 
-  private sortData(dataSet:Array<CpuClass>){
+  private sortData(dataSet:any){
     var lowSet = new Array<CpuClass>();
     var mediumSet = new Array<CpuClass>();
     var highSet = new Array<CpuClass>();
-    dataSet.forEach(element => {
+    var uniqueValue = dataSet[1];
+    var data = dataSet[0];
+
+    //Working on this
+    var cpuArray:Array<CpuClass> = new Array<CpuClass>();
+
+    //get all the values out from the compiled list and create cpu class
+    uniqueValue.forEach(uv => {
+      var x = uv.split(",")[0];
+      var y = uv.split(",")[1];
+      var r = data[uv].length * 10;
+      var array:Array<HostClass> = data[uv];
+      var cpuClass:CpuClass = new CpuClass(x , y , r , array);
+      cpuArray.push(cpuClass);
+    })
+
+      // var cpuClass1 = new CpuClass(data[element])
+      // actualData.push(data[element].length);
+  
+
+
+
+    cpuArray.forEach(element => {
       if(element.$x == '5.0')
       {
         mediumSet.push(element);
@@ -195,7 +239,6 @@ export class CpuChartComponent implements OnInit {
         highSet.push(element);
       }
     });
-
     return [lowSet, mediumSet, highSet];
   }
 

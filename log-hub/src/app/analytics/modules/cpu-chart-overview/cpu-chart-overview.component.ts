@@ -61,16 +61,19 @@ export class CPUChartOverview implements OnInit {
       status = true;
       this.showDetails = status;
       this.analyticsService.DetailStatus(this.showDetails);
-      
       //Get the type of data e.g. High , Medium , Low
       var applicableSet:Array<CpuClass> = this.getApplicableSet(e);
       //Get the actual data within applicableSet
       var currentData:CpuClass = this.getSpecificData(applicableSet, e);
-      //Sync the data with the service of what is the actual data 
+      //Sync the data with the service of what is the actual data
       this.analyticsService.DataDetails(currentData);
+      
+
     }
     else {
-      console.log("error");
+      status = false;
+      this.showDetails = false
+      this.analyticsService.DetailStatus(this.showDetails);
     }
     
 
@@ -78,7 +81,7 @@ export class CPUChartOverview implements OnInit {
   public getSpecificData(applicableSet , e){
     var indexValue = e['active']['0']._index;
     var currentData= applicableSet[indexValue];
-    var formatData:CpuClass = new CpuClass(currentData.x , currentData.y , currentData.r);
+    var formatData:CpuClass = new CpuClass(currentData.x , currentData.y , currentData.r , currentData.hosts);
     return formatData;
   }
 
@@ -142,7 +145,7 @@ export class CPUChartOverview implements OnInit {
           var dataSet = tooltipItem.datasetIndex;
           var index = tooltipItem.index;
           var retrieveData = chartData.datasets[dataSet];
-          var numberOfUser = retrieveData.data[index]['r'];
+          var numberOfUser = retrieveData.data[index]['r'] / 10;
           var uriskLevel = tooltipItem.xLabel;
           var criskLevel;
           if(uriskLevel == 0)

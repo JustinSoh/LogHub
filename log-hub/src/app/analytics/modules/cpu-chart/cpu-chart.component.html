@@ -11,9 +11,7 @@
       <p class="subheading2 component-header ">"An overview of the CPU usage of the hosts in your organization</p>
     </div>
     <app-cpu-chart-overview [cpuChartOverview] = "cpuChartOverview"></app-cpu-chart-overview>
-    <div *ngIf="showDetails">
-      <app-cpu-chart-detail></app-cpu-chart-detail>
-    </div>
+    <app-cpu-chart-detail  *ngIf="showDetails"></app-cpu-chart-detail>
 
 </div>
 
