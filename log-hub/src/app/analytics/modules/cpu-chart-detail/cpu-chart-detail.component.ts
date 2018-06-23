@@ -3,7 +3,7 @@ import { AnalyticsService } from 'src/app/analytics/services/analytics.service';
 import { CpuClass } from 'src/app/class/cpu-class';
 import { OnChanges } from '@angular/core/src/metadata/lifecycle_hooks';
 import { HostClass } from 'src/app/class/host-class';
-
+import * as Chart from 'chart.js'
 @Component({
   selector: 'app-cpu-chart-detail',
   templateUrl: './cpu-chart-detail.component.html',
@@ -16,20 +16,53 @@ export class CpuChartDetailComponent implements OnInit {
   private testing = "testing";
   public barChartData: any[];
   public barChartOptions;
-  public title: String;
-  public risk:String;
+  public chart: any;
+  public dataset; 
+  public mapping:Map<number, string>;
   constructor(private as: AnalyticsService) {
     this.analyticsService = as;
   }
 
 
 
-  ngOnInit() {
+  public ngOnInit() {
     this.analyticsService.currentData.subscribe(data => {
       this.currentData = data;
-      this.updateChart(this.currentData);
+      // this.updateChart(this.currentData);
+      if (this.chart != null) {
+        this.updateChart(this.currentData);
+      }
+      else {
+        this.createChart(this.currentData);
+      }
     });
 
+  
+
+  }
+
+  createChart(currentData: CpuClass) {
+    //Convert the current data into cpu class 
+    var convertedData = this.convertData(currentData.$hosts);
+    var hostList = new Array<string>();
+    //Get all the unique host for x label 
+    var dataSet: Array<any> = this.getUniqueHost(convertedData[0]);
+    //converts the hostname into a map value and get an array of x and y
+    var fullList = this.mapHost(dataSet, convertedData[0]);
+    //create an array of all the key for xlabel
+    this.dataset = fullList[0];
+    var title = this.getTitleOfChart(currentData.$y);
+    var risk = this.getRiskOfChart(currentData.$x);
+
+    this.chart = new Chart("canvas", {
+      type: "scatter",
+      data: {
+        datasets: this.updateDataset(fullList[0])
+      },
+      options: this.changeChartOptions(title, risk, fullList),
+    })
+
+    
   }
 
   updateChart(currentData: CpuClass) {
@@ -41,23 +74,41 @@ export class CpuChartDetailComponent implements OnInit {
     //converts the hostname into a map value and get an array of x and y
     var fullList = this.mapHost(dataSet, convertedData[0]);
     //create an array of all the key for xlabel
-
-    this.barChartData = [
-      { data: fullList, label: 'Hosts' },
-    ];
-
+    this.dataset = fullList[0];
+    
 
     //Set barchartoptions 
-    this.title = this.getTitleOfChart(currentData.$y);
-    this.risk = this.getRiskOfChart(currentData.$x);
-    this.barChartOptions = this.changeChartOptions(this.title, this.risk);
-    console.log(this.title);
+    var title = this.getTitleOfChart(currentData.$y);
+    var risk = this.getRiskOfChart(currentData.$x);
+    this.chart.data.datasets = this.updateDataset(fullList[0]);
+    this.chart.options = this.changeChartOptions(title, risk, fullList);
+    this.chart.update();
+
+
+
+
+
+
     // this.barChartData= [
     //   {data: ['0.2','0.8'], label: 'Hosts'},
     // ];
   }
 
-  changeChartOptions(title:String, risk:String) {
+  updateDataset(fullList) {
+    return [{
+      label: "Hosts",
+      data: fullList,
+      borderColor: '#0072FF',
+      pointBackgroundColor: '#0072FF',
+      pointBorderColor: '#0072FF',
+      backgroundColor: '#0072FF',
+      pointRadius: 15,
+      pointHoverRadius: 15
+    },];
+  }
+
+  changeChartOptions(title: String, risk: String, fullList) {
+    console.log(title);
     var options = {
       responsive: true,
       maintainAspectRatio: true,
@@ -67,14 +118,77 @@ export class CpuChartDetailComponent implements OnInit {
       scaleShowValues: true,
       title: {
         display: true,
-        text: "Hosts whose " + title.toLowerCase() + " usage is at " + risk.toLowerCase() + " risk",
+        text: "Hosts whose " + title + " usage is at " + risk + " risk",
         fontSize: 18,
         fontWeight: 'Bold',
         fontColor: 'black',
-        padding: 30,
+        padding: 40,
         position: 'top',
       },
-    };
+      scales: {
+        xAxes: [{
+          scaleLabel: {
+            display:true,
+            labelString: "Hostname",
+          },
+          ticks: {
+            callback: function (value, index, values) {
+              console.log(title)
+              for (let entry of Array.from(fullList[1].entries())) {
+                if (value == entry[0]) {
+                  return entry[1];
+                }
+              }
+            },
+            min: 1,
+            stepSize: 1,
+            fontSize: 12,
+            fontStyle: "bold",
+            fontColor: 'black',
+            padding: 30,
+            autoSkip: false,
+            
+            
+          },
+         
+        }],
+        yAxes: [{
+          ticks: {
+            min: 0,
+            stepSize: 0.1,
+            fontSize: 12,
+            fontStyle: "bold",
+            fontColor: 'black',
+            padding: 30,
+            autoSkip: false,
+            max: 1,
+            
+          },
+          scaleLabel: {
+            display:true,
+            labelString: "Intensity within " + risk + " level",
+          },
+        }]
+      },
+      tooltips: {
+        fontSize: 20,
+        callbacks: {
+          label: function (tooltipItem, chartData) {
+            var hostValue = tooltipItem.xLabel;
+            for (let entry of Array.from(fullList[1].entries())) {
+              if (hostValue == entry[0]) {
+                hostValue = entry[1];
+              }
+            }
+
+            var riskLevel = tooltipItem.yLabel;
+            return "The host " + hostValue + " has a risk level of " + riskLevel + " when it comes to " + title + " usage";
+          }
+        }
+      },
+     
+    }
+    console.log(title);
     return options;
   }
 
@@ -101,7 +215,7 @@ export class CpuChartDetailComponent implements OnInit {
 
   getRiskOfChart(xValue) {
     if (xValue == 0) {
-      return  "Low";
+      return "Low";
     }
 
     else if (xValue == 5) {
@@ -116,6 +230,7 @@ export class CpuChartDetailComponent implements OnInit {
   mapHost(data, dataSet: Array<any>) {
     var integer = 1;
     var mapping: Map<number, string> = new Map<number, string>();
+    this.mapping = mapping;
     data.forEach(d => {
       mapping.set(integer, d);
       integer++;
@@ -132,7 +247,7 @@ export class CpuChartDetailComponent implements OnInit {
       }
     }
     console.log(finalArray);
-    return finalArray;
+    return [finalArray, mapping];
 
     //Method to retrieve from map 
     //   for (let entry of Array.from(mapping.entries())) {
@@ -174,8 +289,30 @@ export class CpuChartDetailComponent implements OnInit {
 
 
   // events
-  public chartClicked(e: any): void {
-    console.log(e);
+  public chartClicked(e: any, content): void {
+   this.dataset.forEach(data => {
+     var index = this.chart.getElementAtEvent(e)[0]._index;
+     var index = index + 1; 
+     if(index == data.x)
+     {
+       var key = data.x;
+       var value;
+       for (let entry of Array.from(this.mapping.entries())) {
+        if(key == entry[0])
+        {
+          value = entry[1];
+        }
+       };
+
+       this.currentData.$hosts.forEach(data => {
+         if(data.$hostId == value)
+         {
+           console.log(data);
+         }
+       })
+       
+     }
+   })
   }
 
   public chartHovered(e: any): void {
@@ -188,8 +325,8 @@ export class CpuChartDetailComponent implements OnInit {
       pointBackgroundColor: '#4EAB7E',
       pointBorderColor: '#4EAB7E',
       backgroundColor: '#4EAB7E',
-      pointRadius: 6,
-      pointHoverRadius: 6
+      pointRadius: 15,
+      pointHoverRadius: 15
     },]
 
 }

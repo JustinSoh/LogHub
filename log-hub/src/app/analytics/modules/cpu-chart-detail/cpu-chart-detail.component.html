@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="row">
-      <canvas baseChart
+      <!-- <canvas baseChart
       [datasets]="barChartData"
       [labels]="barChartLabels"
       [options]="barChartOptions"
@@ -8,6 +8,11 @@
       [chartType]="barChartType"
       [colors]="lineChartColors"
       (chartHover)="chartHovered($event)"
-      (chartClick)="chartClicked($event)"></canvas>
+      (chartClick)="chartClicked($event)"></canvas> -->
+
+      <canvas
+      id="canvas"
+      (click)="chartClicked($event)"
+      ></canvas>
   </div>
 </div>

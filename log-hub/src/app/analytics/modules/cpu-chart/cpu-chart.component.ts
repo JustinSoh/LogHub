@@ -4,6 +4,7 @@ import { AnalyticsService } from '../../services/analytics.service';
 import { CpuClass } from '../../../class/cpu-class';
 import { HostClass } from '../../../class/host-class';
 import { element } from 'protractor';
+import { CpuChartDetailComponent } from 'src/app/analytics/modules/cpu-chart-detail/cpu-chart-detail.component';
 
 @Component({
   selector: 'app-cpu-chart',
@@ -58,7 +59,10 @@ export class CpuChartComponent implements OnInit {
     //used to pass data over to the cpu-chart-overview component
     this.cpuChartOverview = new Gchart(cpuChartOverviewData, cpuChartOverviewLabel , cpuChartType);
     //subscribe to an event on the cpu-chart-overview component
-    this.analyticsService.currentDetails.subscribe(status => this.showDetails = status);
+    this.analyticsService.currentDetails.subscribe(status => 
+      {
+        this.showDetails = status;
+      });
     //subscribe to an event when cpu-chart-overview bubble is clicked 
     this.analyticsService.currentData.subscribe(data => this.clickedData = data);
     
@@ -72,11 +76,12 @@ export class CpuChartComponent implements OnInit {
     //Get all cpu hosts data from database 
     var host1 = new HostClass("string" , ['0.0', '1.0'] , '0.8' , null, null );
     var host2 = new HostClass("string1" , ['0.0', '1.0'] , '0.4' , null , null);
-    var host3 = new HostClass("string" , ['10.0' , '6.0'] , '0.5' , null, null);
+    var host3 = new HostClass("string2" , ['0.0', '1.0'] , '0.4' , null , null);
+    var host4 = new HostClass("string" , ['10.0' , '6.0'] , '0.5' , null, null);
 
     //sort the cpu Hosts into same x and y 
     var arrayOfHosts = new Array<HostClass>();
-    arrayOfHosts.push(host1, host2 , host3);
+    arrayOfHosts.push(host1, host2 , host3 , host4);
     var sortedList = this.sortHost(arrayOfHosts);
 
     // var cpuClassLow1 = new CpuClass('0.0' , '1.0' , 20 , null);
