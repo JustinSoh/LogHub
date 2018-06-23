@@ -71,7 +71,7 @@ export class CpuChartComponent implements OnInit {
     
     //Get all cpu hosts data from database 
     var host1 = new HostClass("string" , ['0.0', '1.0'] , '0.8' , null, null );
-    var host2 = new HostClass("string" , ['0.0', '1.0'] , '0.4' , null , null);
+    var host2 = new HostClass("string1" , ['0.0', '1.0'] , '0.4' , null , null);
     var host3 = new HostClass("string" , ['10.0' , '6.0'] , '0.5' , null, null);
 
     //sort the cpu Hosts into same x and y 
