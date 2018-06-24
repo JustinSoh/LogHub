@@ -17,8 +17,8 @@ export class CpuChartDetailComponent implements OnInit {
   public barChartData: any[];
   public barChartOptions;
   public chart: any;
-  public dataset; 
-  public mapping:Map<number, string>;
+  public dataset;
+  public mapping: Map<number, string>;
   constructor(private as: AnalyticsService) {
     this.analyticsService = as;
   }
@@ -36,9 +36,6 @@ export class CpuChartDetailComponent implements OnInit {
         this.createChart(this.currentData);
       }
     });
-
-  
-
   }
 
   createChart(currentData: CpuClass) {
@@ -62,7 +59,7 @@ export class CpuChartDetailComponent implements OnInit {
       options: this.changeChartOptions(title, risk, fullList),
     })
 
-    
+
   }
 
   updateChart(currentData: CpuClass) {
@@ -75,7 +72,7 @@ export class CpuChartDetailComponent implements OnInit {
     var fullList = this.mapHost(dataSet, convertedData[0]);
     //create an array of all the key for xlabel
     this.dataset = fullList[0];
-    
+
 
     //Set barchartoptions 
     var title = this.getTitleOfChart(currentData.$y);
@@ -108,7 +105,6 @@ export class CpuChartDetailComponent implements OnInit {
   }
 
   changeChartOptions(title: String, risk: String, fullList) {
-    console.log(title);
     var options = {
       responsive: true,
       maintainAspectRatio: true,
@@ -128,12 +124,11 @@ export class CpuChartDetailComponent implements OnInit {
       scales: {
         xAxes: [{
           scaleLabel: {
-            display:true,
+            display: true,
             labelString: "Hostname",
           },
           ticks: {
             callback: function (value, index, values) {
-              console.log(title)
               for (let entry of Array.from(fullList[1].entries())) {
                 if (value == entry[0]) {
                   return entry[1];
@@ -147,10 +142,10 @@ export class CpuChartDetailComponent implements OnInit {
             fontColor: 'black',
             padding: 30,
             autoSkip: false,
-            
-            
+
+
           },
-         
+
         }],
         yAxes: [{
           ticks: {
@@ -162,10 +157,10 @@ export class CpuChartDetailComponent implements OnInit {
             padding: 30,
             autoSkip: false,
             max: 1,
-            
+
           },
           scaleLabel: {
-            display:true,
+            display: true,
             labelString: "Intensity within " + risk + " level",
           },
         }]
@@ -186,9 +181,8 @@ export class CpuChartDetailComponent implements OnInit {
           }
         }
       },
-     
+
     }
-    console.log(title);
     return options;
   }
 
@@ -246,7 +240,6 @@ export class CpuChartDetailComponent implements OnInit {
         }
       }
     }
-    console.log(finalArray);
     return [finalArray, mapping];
 
     //Method to retrieve from map 
@@ -289,32 +282,49 @@ export class CpuChartDetailComponent implements OnInit {
 
 
   // events
+  //What happens when the point is clicked 
   public chartClicked(e: any, content): void {
-   this.dataset.forEach(data => {
-     var index = this.chart.getElementAtEvent(e)[0]._index;
-     var index = index + 1; 
-     if(index == data.x)
-     {
-       var key = data.x;
-       var value;
-       for (let entry of Array.from(this.mapping.entries())) {
-        if(key == entry[0])
-        {
-          value = entry[1];
-        }
-       };
-
-       this.currentData.$hosts.forEach(data => {
-         if(data.$hostId == value)
-         {
-           console.log(data);
-         }
-       })
-       
-     }
-   })
+    var dataClicked = this.currentPoint(e);
+    var showHost = false;
+    if (dataClicked != undefined) {
+      showHost = true;
+      this.analyticsService.HostDetails(showHost);
+      this.analyticsService.HostData(dataClicked);
+    }
+    else {
+      showHost = false; 
+      this.analyticsService.HostDetails(showHost);
+    }
   }
 
+  currentPoint(e) {
+    var currentPoint: HostClass;
+    try {
+      this.dataset.forEach(data => {
+        var index = this.chart.getElementAtEvent(e)[0]._index;
+        var index = index + 1;
+        if (index == data.x) {
+          var key = data.x;
+          var value;
+          for (let entry of Array.from(this.mapping.entries())) {
+            if (key == entry[0]) {
+              value = entry[1];
+            }
+          };
+          this.currentData.$hosts.forEach(data => {
+            if (data.$hostId == value) {
+              currentPoint = data;
+            }
+          })
+
+        }
+      })
+      return currentPoint;
+    }
+    catch (exception) {
+      console.log("Error");
+    }
+  }
   public chartHovered(e: any): void {
     console.log(e);
   }

@@ -18,10 +18,7 @@ export class CpuChartComponent implements OnInit {
   //For overview chart
   private cpuChartOverview:Gchart; 
 
-  private predictionArray = [3,4,3,4,5,3,5,4,2,3,4,5,3,2,2,1,1,2,3,4,5,3,2,5,3,4,3,2,1,2];
-  private actualArray = [2,3,4,5,6,4,3,3,2,1,5,4,3,6,7,8,9,4,2,1,2,4,5,3,1,3,5,8,6,3];
-  private labelArray = ['a','b','c','d','e','f','g','h','i','j','aa','bb','cc','dd','ee','ff','gg','hh','ii','jj','aaa','bbb','ccc','ddd','eee','fff','ggg','hhh','iii','jjj']
-  private splicePredictionArray; 
+ private splicePredictionArray; 
   private spliceActualArray;
   private spliceLabelArray;
   private arrays = []
@@ -34,13 +31,13 @@ export class CpuChartComponent implements OnInit {
   public showDetails:Boolean = false;
   public clickedData:CpuClass; 
   public change = "hello";
-
+  public showHost:Boolean = false;
   private analyticsService:AnalyticsService
   constructor(public as:AnalyticsService) { 
     this.analyticsService = as;
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     
     // this.splicePredictionArray = this.splicingMethod(this.predictionArray, 10);
     // this.spliceActualArray = this.splicingMethod(this.actualArray, 10);
@@ -59,29 +56,61 @@ export class CpuChartComponent implements OnInit {
     //used to pass data over to the cpu-chart-overview component
     this.cpuChartOverview = new Gchart(cpuChartOverviewData, cpuChartOverviewLabel , cpuChartType);
     //subscribe to an event on the cpu-chart-overview component
-    this.analyticsService.currentDetails.subscribe(status => 
+    
+    await this.analyticsService.currentDetails.subscribe(status => {
+      this.showDetails = status;
+      if(this.showDetails == true)
       {
-        this.showDetails = status;
-      });
+        var details = document.getElementById("details");
+        if(details != null)
+        {
+          details.scrollIntoView({behavior: "smooth"});
+        }
+      }
+    }
+    );
+  
     //subscribe to an event when cpu-chart-overview bubble is clicked 
     this.analyticsService.currentData.subscribe(data => this.clickedData = data);
-    
-
+    //subscribe to see if the host details has been called 
+    this.analyticsService.currentHost.subscribe(data => {
+      this.showHost = data
+      if(this.showHost == true)
+      {
+        var hosts = document.getElementById("hosts");
+        if(hosts != null)
+        {
+          hosts.scrollIntoView({behavior:"smooth"});
+        }
+      }
+    });
   }
+
 
   public retrieveDatasetFromDatabase()
   {
     //Initializing the Scatterplot data (Get from database)
     
     //Get all cpu hosts data from database 
-    var host1 = new HostClass("string" , ['0.0', '1.0'] , '0.8' , null, null );
-    var host2 = new HostClass("string1" , ['0.0', '1.0'] , '0.4' , null , null);
-    var host3 = new HostClass("string2" , ['0.0', '1.0'] , '0.4' , null , null);
-    var host4 = new HostClass("string" , ['10.0' , '6.0'] , '0.5' , null, null);
+    var predictionArray1 = [3,4,3,4,5,3,5,4,2,3,4,5,3,2,2,1,1,2,3,4,5,3,2,5,3,4,3,2,1,2];
+    var actualArray1 = [2,3,4,5,6,4,3,3,2,1,5,4,3,6,7,8,9,4,2,1,2,4,5,3,1,3,5,8,6,3];
+    var labelArray1 = ['a','b','c','d','e','f','g','h','i','j','aa','bb','cc','dd','ee','ff','gg','hh','ii','jj','aaa','bbb','ccc','ddd','eee','fff','ggg','hhh','iii','jjj']
+
+    var predictionArray2 = [2,3,4,4,5,4,3,2,4,5,5,4];
+    var actualArray2 = [3,4,5,6,7,8,9,10,4,5,4,3];
+    var labelArray2 = ['a','b','c','d','e','f','g','h','i','j','aa','bb'];
+
+    var predictionArray3 = [10,11,12,13,14,16,14,15,16,16,12,13,14];
+    var actualArray3 = [12,14,16,17,19,20,15,17,19,21,22,21,22];
+    var labelArray3 = ['a','b','c','d','e','f','g','h','i','j','aa','bb','cc'];
+
+    var host1 = new HostClass("string" , ['0.0', '1.0'] , '0.8' , predictionArray1, actualArray1 , labelArray1 );
+    var host2 = new HostClass("string1" , ['0.0', '1.0'] , '0.4' , predictionArray2 , actualArray2 , labelArray2);
+    var host3 = new HostClass("string" , ['10.0' , '6.0'] , '0.5' , predictionArray3, actualArray3 , labelArray3);
 
     //sort the cpu Hosts into same x and y 
     var arrayOfHosts = new Array<HostClass>();
-    arrayOfHosts.push(host1, host2 , host3 , host4);
+    arrayOfHosts.push(host1, host2 , host3);
     var sortedList = this.sortHost(arrayOfHosts);
 
     // var cpuClassLow1 = new CpuClass('0.0' , '1.0' , 20 , null);
@@ -168,28 +197,8 @@ export class CpuChartComponent implements OnInit {
     // console.log([counts , listOfLabels]);
     var unique = listOfLabels.filter(function(elem, index, self) {
       return index === self.indexOf(elem);
-    })
-    
+    }) 
     return ([counts , unique]);
-
-    //Iterate through the entire array
-    // dataSet.forEach(element => {
-    //   //Iterate through the cpuDataArray
-    //   element.$cpuData.forEach(cat => {
-    //     console.log(cat[0] + "|" + cat[1]);
-    //     //Iterate through the sorted data to check for exisiting array 
-    //     if(integer == 0)
-    //     {
-    //       var cpuClass = new CpuClass(cat[0] , cat[1], 1 , new Array(element));
-    //       sortedData.push(cpuClass);
-    //       // sortedData[1].push(cat);
-    //       integer = 1; 
-    //     }
-    //   })
-    // })
-
-    
-
   }
 
   private transformData(dataSet:Array<CpuClass>)
@@ -222,13 +231,6 @@ export class CpuChartComponent implements OnInit {
       var cpuClass:CpuClass = new CpuClass(x , y , r , array);
       cpuArray.push(cpuClass);
     })
-
-      // var cpuClass1 = new CpuClass(data[element])
-      // actualData.push(data[element].length);
-  
-
-
-
     cpuArray.forEach(element => {
       if(element.$x == '5.0')
       {
@@ -312,14 +314,6 @@ export class CpuChartComponent implements OnInit {
     else{
       console.log("end");
     }
-    // let _lineChartData:Array<any> = new Array(this.lineChartData.length);
-    // for (let i = 0; i < this.lineChartData.length; i++) {
-    //   _lineChartData[i] = {data: new Array(this.lineChartData[i].data.length), label: this.lineChartData[i].label};
-    //   for (let j = 0; j < this.lineChartData[i].data.length; j++) {
-    //     _lineChartData[i].data[j] = Math.floor((Math.random() * 100) + 1);
-    //   }
-    // }
-    // this.lineChartData = _lineChartData;
   }
 
   public previousSet():void {
@@ -336,14 +330,6 @@ export class CpuChartComponent implements OnInit {
     else{
       console.log("end");
     }
-    // let _lineChartData:Array<any> = new Array(this.lineChartData.length);
-    // for (let i = 0; i < this.lineChartData.length; i++) {
-    //   _lineChartData[i] = {data: new Array(this.lineChartData[i].data.length), label: this.lineChartData[i].label};
-    //   for (let j = 0; j < this.lineChartData[i].data.length; j++) {
-    //     _lineChartData[i].data[j] = Math.floor((Math.random() * 100) + 1);
-    //   }
-    // }
-    // this.lineChartData = _lineChartData;
   }
 
   private UpdateChart(actualData, predictData, labelData)
