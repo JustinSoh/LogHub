@@ -45,6 +45,7 @@ namespace LogHubEndpointLogsExtractionVer3
         {
             Library.WriteErrorLog("Battery{" + getBatteryPercentage() + "}");
             Library.WriteErrorLog(getCpuUsage());
+            Library.WriteErrorLog(getEventLogs());
             Library.WriteErrorLog("Timer ticked and logs have been sent successfully");
         }
 
@@ -82,9 +83,8 @@ namespace LogHubEndpointLogsExtractionVer3
             return "CPU{" + stringsOfCpu+"}";
         }
 
-        static void getEventLogs()
+        static string getEventLogs()
         {
-            /*
             string returnedString = "";
 
             var d = EventLog.GetEventLogs();
@@ -97,8 +97,6 @@ namespace LogHubEndpointLogsExtractionVer3
                 }
             }
             return returnedString;
-            */
-            //Holy shit too big
         }
 
         public void trackFileSystemChanges()
