@@ -1,6 +1,6 @@
-import { Component, OnInit , Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Gchart } from 'src/app/class/gchart';
-import {Chart } from 'node_modules/chart.js';
+import { Chart } from 'node_modules/chart.js';
 import { AnalyticsService } from '../../services/analytics.service';
 import { CpuClass } from '../../../class/cpu-class';
 
@@ -12,23 +12,23 @@ import { CpuClass } from '../../../class/cpu-class';
 export class CPUChartOverview implements OnInit {
 
   //On init of the component, have to pass in a gchart object
-  @Input () cpuChartOverview:Gchart;
-  public lineChartLegend:boolean = true;
-  public lineChartType:String;
-  public lineChartData:Array<any>;
-  public lineChartLabels:Array<any>;
+  @Input() cpuChartOverview: Gchart;
+  public lineChartLegend: boolean = true;
+  public lineChartType: String;
+  public lineChartData: Array<any>;
+  public lineChartLabels: Array<any>;
   public lineChartColors;
   public lineChartOptions;
   public chartLoaded: Boolean = false;
-  public chart: any = null; 
+  public chart: any = null;
   public typeOfChart = null;
   public dataArray = [];
-  public showDetails:Boolean =false;
-  public analyticsService:AnalyticsService;
-  public lowDataset:Array<CpuClass>; 
-  public mediumDataset:Array<CpuClass>; 
-  public highDataset:Array<CpuClass>;
-  constructor(private as:AnalyticsService) { 
+  public showDetails: Boolean = false;
+  public analyticsService: AnalyticsService;
+  public lowDataset: Array<CpuClass>;
+  public mediumDataset: Array<CpuClass>;
+  public highDataset: Array<CpuClass>;
+  constructor(private as: AnalyticsService) {
     this.analyticsService = as;
   }
 
@@ -43,8 +43,7 @@ export class CPUChartOverview implements OnInit {
   }
 
   //update the chart with settings
-  public UpdateChart(data , label , type)
-  {
+  public UpdateChart(data, label, type) {
     this.lineChartType = type;
     this.lineChartData = data;
     this.lineChartOptions = this.bubbleChartOptions;
@@ -53,65 +52,65 @@ export class CPUChartOverview implements OnInit {
 
 
   //on click of the button
-  chartClicked(e:any):void {
+  chartClicked(e: any): void {
     var status = false;
+    this.analyticsService.DetailStatus(this.showDetails);
+
     //if click on white area, hide the cpu-chart-detail  and sync it with the service
-    if(e['active'].length != 0)
-    {
+    if (e['active'].length != 0) {
       status = true;
       this.showDetails = status;
       this.analyticsService.DetailStatus(this.showDetails);
-      
       //Get the type of data e.g. High , Medium , Low
-      var applicableSet:Array<CpuClass> = this.getApplicableSet(e);
+      var applicableSet: Array<CpuClass> = this.getApplicableSet(e);
       //Get the actual data within applicableSet
-      var currentData:CpuClass = this.getSpecificData(applicableSet, e);
-      //Sync the data with the service of what is the actual data 
+      var currentData: CpuClass = this.getSpecificData(applicableSet, e);
+      //Sync the data with the service of what is the actual data
       this.analyticsService.DataDetails(currentData);
+
+
     }
     else {
-      console.log("error");
+      status = false;
+      this.showDetails = false
+      this.analyticsService.DetailStatus(this.showDetails);
     }
-    
+
 
   }
-  public getSpecificData(applicableSet , e){
+  public getSpecificData(applicableSet, e) {
     var indexValue = e['active']['0']._index;
-    var currentData= applicableSet[indexValue];
-    var formatData:CpuClass = new CpuClass(currentData.x , currentData.y , currentData.r);
+    var currentData = applicableSet[indexValue];
+    var formatData: CpuClass = new CpuClass(currentData.x, currentData.y, currentData.r, currentData.hosts);
     return formatData;
   }
 
-  public getApplicableSet(e)
-  {
-    if(e['active'][0]._datasetIndex == 0)
-    {
+  public getApplicableSet(e) {
+    if (e['active'][0]._datasetIndex == 0) {
       return this.lowDataset;
     }
-    else if(e['active'][0]._datasetIndex == 1)
-    {
+    else if (e['active'][0]._datasetIndex == 1) {
       return this.mediumDataset;
 
     }
-    else
-    {
+    else {
       return this.highDataset;
 
     }
   }
 
- 
-  public chartHovered(e:any):void {
-   
+
+  public chartHovered(e: any): void {
+
   }
-  
+
   //The options for the charts
-  private bubbleChartOptions:any = {
+  private bubbleChartOptions: any = {
     responsive: true,
-    maintainAspectRatio: true, 
+    maintainAspectRatio: true,
     ticks: {
       autoSkip: false
-    }, 
+    },
     scaleShowValues: true,
     title: {
       display: false,
@@ -132,149 +131,138 @@ export class CPUChartOverview implements OnInit {
     layout: {
       padding: {
         top: 70,
-        right:60
+        right: 60
 
       }
     },
     tooltips: {
       callbacks: {
-        label: function(tooltipItem, chartData){
+        label: function (tooltipItem, chartData) {
           var dataSet = tooltipItem.datasetIndex;
           var index = tooltipItem.index;
           var retrieveData = chartData.datasets[dataSet];
-          var numberOfUser = retrieveData.data[index]['r'];
+          var numberOfUser = retrieveData.data[index]['r'] / 10;
           var uriskLevel = tooltipItem.xLabel;
           var criskLevel;
-          if(uriskLevel == 0)
-          {
+          if (uriskLevel == 0) {
             criskLevel = "Low";
           }
-        
-          else if(uriskLevel == 5)
-          {
-            criskLevel =  "Medium";
+
+          else if (uriskLevel == 5) {
+            criskLevel = "Medium";
           }
-        
-          else if(uriskLevel == 10)
-          {
+
+          else if (uriskLevel == 10) {
             criskLevel = "High";
           }
           var activityNo = tooltipItem.yLabel;
           var activityName = null;
-          if(activityNo ==6)
-          {
+          if (activityNo == 6) {
             activityName = "use a browser";
           }
-          if(activityNo == 5)
-          {
+          if (activityNo == 5) {
             activityName = "play a Game";
           }
-          if(activityNo == 4)
-          {
+          if (activityNo == 4) {
             activityName = "do Word Processing";
           }
-          if(activityNo == 3)
-          {
+          if (activityNo == 3) {
             activityName = "interact with a Database";
           }
-          if( activityNo == 2)
-          {
+          if (activityNo == 2) {
             activityName = "use a Spreadsheet";
           }
-          if( activityNo == 1)
-          {
+          if (activityNo == 1) {
             activityName = "engage in Multimedia";
           }
           // console.log(tooltipItem);
           // console.log(chartData);
           return "There are " + numberOfUser + " users at " + criskLevel + " risk level when they " + activityName;
-       
+
+        }
       }
-    }
     },
     scales: {
       xAxes: [{
-          ticks: {
-              // Include a dollar sign in the ticks
-              callback: function(value, index, values) {
-                  if(index == 0)
-                  {
-                    return 'Low';
-                  }
-                  if(index == 5)
-                  {
-                    return 'Medium';
-
-                  }
-                  if(index == 10)
-                  {
-                    return 'High';
-
-                  }
-                   
-              },
-              min: 0,
-              max: 10,
-              autoSkip:true,
-              display: true,
-              padding: 30,
-              fontSize: 12,
-              fontWeight: 'Bold',
-              fontColor: 'black'
-
- 
-          }
-      }],
-      yAxes: [
-        {
-          ticks: {
-            stepSize: 1,
-            padding: 30,
-            fontSize: 12,
-            fontWeight: 'Bold',
-            fontColor: 'black',
-            autoSkip: false,
-            max: 6, 
-            min: 0,
-            display: true,
-            callback: function(label, index, labels) {
-              if(label ==6)
-               {
-                 return "Browser";
-               }
-               if(label == 5)
-               {
-                 return "Game";
-               }
-               if(label == 4)
-               {
-                 return "Word Processing";
-               }
-               if(label == 3)
-               {
-                 return "Database";
-               }
-               if( label == 2)
-               {
-                 return "Spreadsheet";
-               }
-               if( label == 1)
-               {
-                 return "Multimedia";
-               }
-             
+        scaleLabel: {
+          display: true,
+          labelString: "Risk Category",
+        },
+        ticks: {
+          // Include a dollar sign in the ticks
+          callback: function (value, index, values) {
+            if (index == 0) {
+              return 'Low';
             }
+            if (index == 5) {
+              return 'Medium';
+
+            }
+            if (index == 10) {
+              return 'High';
+
+            }
+
           },
-        
-      
+          min: 0,
+          max: 10,
+          autoSkip: true,
+          display: true,
+          padding: 30,
+          fontSize: 12,
+          fontStyle: 'Bold',
+          fontColor: 'black'
+
+
         }
+      }],
+      yAxes: [{
+        scaleLabel: {
+          display: true,
+          labelString: "Category Type",
+        },
+        ticks: {
+          stepSize: 1,
+          padding: 30,
+          fontSize: 12,
+          fontStyle: 'Bold',
+          fontColor: 'black',
+          autoSkip: false,
+          max: 6,
+          min: 0,
+          display: true,
+          callback: function (label, index, labels) {
+            if (label == 6) {
+              return "Browser";
+            }
+            if (label == 5) {
+              return "Game";
+            }
+            if (label == 4) {
+              return "Word Processing";
+            }
+            if (label == 3) {
+              return "Database";
+            }
+            if (label == 2) {
+              return "Spreadsheet";
+            }
+            if (label == 1) {
+              return "Multimedia";
+            }
+
+          }
+        },
+
+
+      }
       ]
     }
-    
+
   };
-  
+
   //The colour for the charts
-  private colors:Array<any> = [
+  private colors: Array<any> = [
     { // grey
       borderColor: '#4EAB7E',
       pointBackgroundColor: '#4EAB7E',
@@ -282,7 +270,7 @@ export class CPUChartOverview implements OnInit {
       backgroundColor: '#4EAB7E',
       pointRadius: 6,
       pointHoverRadius: 6
-    }, 
+    },
     {
       borderColor: '#FFC000',
       pointBackgroundColor: '#FFC000',
@@ -354,7 +342,7 @@ export class CPUChartOverview implements OnInit {
   //              {
   //                return "Multimedia";
   //              }
-             
+
   //             }
   //     this.chart.options.hover.mode = 'point';
   //     this.chart.options.hover.intersect = true;
@@ -369,12 +357,12 @@ export class CPUChartOverview implements OnInit {
   //       {
   //         criskLevel = "Low";
   //       }
-      
+
   //       else if(uriskLevel == 5)
   //       {
   //         criskLevel =  "Medium";
   //       }
-      
+
   //       else if(uriskLevel == 10)
   //       {
   //         criskLevel = "High";
@@ -409,7 +397,7 @@ export class CPUChartOverview implements OnInit {
   //       // console.log(chartData);
   //       return "There are " + numberOfUser + " users at " + criskLevel + " risk level when they " + activityName;
   //     }
-     
+
   //     // this.chart.
   //     // this.chart.options.events.click = this.doSomething();
   //     // var canvas:HTMLCanvasElement = 'canvas';
@@ -420,10 +408,10 @@ export class CPUChartOverview implements OnInit {
   //     // );
   //       // => activePoints is an array of points on the canvas that are at the same position as the click event.
   //     this.chart.update();
-     
+
   // }
 
-  
+
   // public createChart(data , label , type)
   // {
   //   if(this.chart != null)
@@ -432,25 +420,25 @@ export class CPUChartOverview implements OnInit {
   //     {
   //       this.typeOfChart = "bubble";
   //       this.createBubbleChart(data , label , type);
-        
+
   //     }
   //   }
   //   if(this.chart == null)
   //   {
   //     if(type == 'bubble')
   //     {
-        
+
   //       this.createBubbleChart(data , label , type);
   //       console.log("what is going on");
   //     }
   //   }
- 
-      
+
+
   // }
 
- 
 
 
- 
+
+
 
 }

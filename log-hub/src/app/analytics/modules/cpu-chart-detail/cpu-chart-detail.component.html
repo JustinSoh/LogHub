@@ -1,3 +1,18 @@
-<p>
-  cpu-chart-detail works!
-</p>
+<div class="container-fluid">
+  <div class="row">
+      <!-- <canvas baseChart
+      [datasets]="barChartData"
+      [labels]="barChartLabels"
+      [options]="barChartOptions"
+      [legend]="barChartLegend"
+      [chartType]="barChartType"
+      [colors]="lineChartColors"
+      (chartHover)="chartHovered($event)"
+      (chartClick)="chartClicked($event)"></canvas> -->
+
+      <canvas
+      id="canvas"
+      (click)="chartClicked($event)"
+      ></canvas>
+  </div>
+</div>

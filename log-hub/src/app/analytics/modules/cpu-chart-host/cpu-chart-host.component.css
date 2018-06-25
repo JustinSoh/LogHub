@@ -1,0 +1,40 @@
+
+
+
+.next-button {
+    vertical-align: middle; 
+    height: auto;
+    display:inline-block;
+    position: relative;
+    bottom:50%;
+    outline: none;
+    border: 0;
+}
+
+.next-button-detail {
+    background-color: white;
+    color: #0072FF;
+    text-align: center;
+    position: relative;
+    font-size: 20px;
+    outline: none;
+    border: 0;
+}
+
+.disabled-detail {
+    text-align: center;
+    position: relative;
+    font-size: 20px;
+    outline: none;
+    border: 0;
+    display: none;
+}
+
+
+.canvas-section {
+    display:inline-block;
+}
+
+.chart-header-section {
+    display: inline-block;
+}

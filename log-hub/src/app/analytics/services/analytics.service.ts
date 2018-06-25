@@ -1,14 +1,28 @@
 import { Injectable,EventEmitter } from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import { CpuClass } from '../../class/cpu-class';
+import { HostClass } from 'src/app/class/host-class';
 @Injectable({
   providedIn: 'root'
 })
 export class AnalyticsService {
+
+  //To set boolean to show cpu-chart details
   private detailsStatus = new BehaviorSubject<Boolean>(false);
   public currentDetails = this.detailsStatus.asObservable();
+  
+  //To set currentDataset
   private currentDataset = new BehaviorSubject<CpuClass>(null);
   public currentData = this.currentDataset.asObservable();
+
+  //To show the host portion
+  private hostStatus = new BehaviorSubject<Boolean>(false);
+  public currentHost = this.hostStatus.asObservable();
+
+  //To get the hostData 
+  private hostData = new BehaviorSubject<HostClass>(null);
+  public currentHostData = this.hostData.asObservable();
+
   private cpuLow : Array<CpuClass>;
   private cpuMedium : Array<CpuClass>;
   private cpuHigh : Array<CpuClass>;
@@ -24,6 +38,16 @@ export class AnalyticsService {
   DataDetails(value:CpuClass)
   {
     this.currentDataset.next(value);
+  }
+
+  HostDetails(value:Boolean)
+  {
+    this.hostStatus.next(value);
+  }
+
+  HostData(value:HostClass)
+  {
+    this.hostData.next(value);
   }
 
 

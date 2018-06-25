@@ -1,16 +1,23 @@
 export class HostClass {
     private hostId: string; 
     private cpuData: any;
+    private cpuRiskLevel: string;
     private predictedArray: Array<number>;
     private actualArray: Array<number>; 
+    private labels: Array<string>;
+    //Low = 0.0, Medium = 5.0 , High = 10.0 (X Value)
+    //6 = Browser , 5 = Game , 4 = Word Processing , 3 = Database , 2 = Spreadsheet , 1 = Multimedia
+    //Cpu risk level is the level of the risk in a particular category 
 
 
-
-	constructor($hostId: string, $cpuData: any, $predictedArray: Array<number>, $actualArray: Array<number>) {
+	constructor($hostId: string, $cpuData: any, $cpuRiskLevel: string, $predictedArray: Array<number>, $actualArray: Array<number>, $labels: Array<string>) {
 		this.hostId = $hostId;
 		this.cpuData = $cpuData;
+		this.cpuRiskLevel = $cpuRiskLevel;
 		this.predictedArray = $predictedArray;
-		this.actualArray = $actualArray;
+        this.actualArray = $actualArray;
+		this.labels = $labels;
+        
 	}
 
     /**
@@ -46,6 +53,22 @@ export class HostClass {
 	}
 
     /**
+     * Getter $cpuRiskLevel
+     * @return {string}
+     */
+	public get $cpuRiskLevel(): string {
+		return this.cpuRiskLevel;
+	}
+
+    /**
+     * Setter $cpuRiskLevel
+     * @param {string} value
+     */
+	public set $cpuRiskLevel(value: string) {
+		this.cpuRiskLevel = value;
+	}
+
+    /**
      * Getter $predictedArray
      * @return {Array<number>}
      */
@@ -75,9 +98,26 @@ export class HostClass {
      */
 	public set $actualArray(value: Array<number>) {
 		this.actualArray = value;
-	}
-	
+    }
     
+
+    /**
+     * Getter $labels
+     * @return {Array<string>}
+     */
+	public get $labels(): Array<string> {
+		return this.labels;
+	}
+
+    /**
+     * Setter $labels
+     * @param {Array<string>} value
+     */
+	public set $labels(value: Array<string>) {
+		this.labels = value;
+	}
+    
+
 
 
 }

@@ -28,6 +28,7 @@ import { OverviewChartComponent } from './analytics/modules/overview-chart/overv
 import { ChartsModule } from 'node_modules/ng2-charts';
 import { CPUChartOverview } from './analytics/modules/cpu-chart-overview/cpu-chart-overview.component';
 import { CpuChartDetailComponent } from './analytics/modules/cpu-chart-detail/cpu-chart-detail.component';
+import { CpuChartHostComponent } from './analytics/modules/cpu-chart-host/cpu-chart-host.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +46,8 @@ import { CpuChartDetailComponent } from './analytics/modules/cpu-chart-detail/cp
     CpuChartComponent,
     OverviewChartComponent,
     CPUChartOverview,
-    CpuChartDetailComponent
+    CpuChartDetailComponent,
+    CpuChartHostComponent
   ],
   imports: [
     BrowserModule,
