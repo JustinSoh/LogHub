@@ -16,6 +16,7 @@ namespace LogHubEndpointLogsExtractionVer3
     {
         private System.Timers.Timer timer1 = null;
         FileSystemWatcher watcher;
+        static AutoResetEvent signal;
 
         public Service1()
         {
@@ -27,6 +28,7 @@ namespace LogHubEndpointLogsExtractionVer3
             //Logs that do not come every 30 seconds
             trackFileSystemChanges();
             watcher.EnableRaisingEvents = true;
+            getEventLogs();
 
             //Logs that come every 30 seconds
             timer1 = new System.Timers.Timer();
@@ -45,7 +47,6 @@ namespace LogHubEndpointLogsExtractionVer3
         {
             Library.WriteErrorLog("Battery{" + getBatteryPercentage() + "}");
             Library.WriteErrorLog(getCpuUsage());
-            Library.WriteErrorLog(getEventLogs());
             Library.WriteErrorLog("Timer ticked and logs have been sent successfully");
         }
 
@@ -83,20 +84,51 @@ namespace LogHubEndpointLogsExtractionVer3
             return "CPU{" + stringsOfCpu+"}";
         }
 
-        static string getEventLogs()
+        static void getEventLogs()
         {
-            string returnedString = "";
+            EventLog mySecurityLog = new EventLog("Security");
+            mySecurityLog.EntryWritten += new EntryWrittenEventHandler(onSecurityEntryWritten);
+            mySecurityLog.EnableRaisingEvents = true;
 
-            var d = EventLog.GetEventLogs();
-            foreach (EventLog l in d)
-            {
-                returnedString += ("\nLog name: " + l.LogDisplayName);
-                foreach (EventLogEntry entry in l.Entries)
-                {
-                    returnedString += ("\n" + entry.Message);
-                }
-            }
-            return returnedString;
+            EventLog mySystemLog = new EventLog("System");
+            mySystemLog.EntryWritten += new EntryWrittenEventHandler(onSystemEntryWritten);
+            mySystemLog.EnableRaisingEvents = true;
+        }
+
+        private static void onSecurityEntryWritten(object source, EntryWrittenEventArgs e)
+        {
+            string watchLog = "Security";
+            string logName = watchLog;
+            int e1 = 0;
+            EventLog log = new EventLog(logName);
+            e1 = log.Entries.Count - 1; // last entry
+
+            string logType = Convert.ToString(log.Entries[e1].EntryType);
+            string logCategory = Convert.ToString(log.Entries[e1].Category); 
+            string eventID = log.Entries[e1].EventID.ToString();
+            string logMachine = log.Entries[e1].MachineName;
+            
+            string compiledErrorLog = "Log Type: " + logType + "\nCategory: " + logCategory + "\nEvent ID: " + eventID +  "\nMachine: " + logMachine;
+
+            Library.WriteErrorLog("Security Event Log{\n" + compiledErrorLog + "}");
+        }
+
+        private static void onSystemEntryWritten(object source, EntryWrittenEventArgs e)
+        {
+            string watchLog = "System";
+            string logName = watchLog;
+            int e1 = 0;
+            EventLog log = new EventLog(logName);
+            e1 = log.Entries.Count - 1; // last entry
+
+            string logType = Convert.ToString(log.Entries[e1].EntryType);
+            string logCategory = Convert.ToString(log.Entries[e1].Category);
+            string eventID = log.Entries[e1].EventID.ToString();
+            string logMachine = log.Entries[e1].MachineName;
+
+            string compiledErrorLog = "Log Type: " + logType + "\nCategory: " + logCategory + "\nEvent ID: " + eventID + "\nMachine: " + logMachine;
+
+            Library.WriteErrorLog("System Event Log{\n" + compiledErrorLog + "}");
         }
 
         public void trackFileSystemChanges()
@@ -167,7 +199,9 @@ namespace LogHubEndpointLogsExtractionVer3
         // 22.6.18
         // Added function to detect the type of changes of files in the System32 directory (Created, changed, deleted, renamed)
 
-        
+        // 28.6.18
+        // Edited getEventLogs() function to only send Security & System event viewer logs as they come
+        // I also only extracted the important information from the logs so they don't look messy (type, category, eventID, machine name)
 
     }
 }
