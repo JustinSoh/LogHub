@@ -12,8 +12,9 @@ export class FilteredGraphsComponent implements OnInit {
   toggle: boolean = false;
   toggle2: boolean = false;
   chart: any;
+  chart2: any;
   closeResult: string;
-  
+
   labelSet = ["Browser", "Game", "Word Processing", "Database", "Spreadsheet", "Multimedia"];
   dataSet = [4, 59, 2, 35, 11, 21];
   text = "CPU Usage by application";
@@ -47,7 +48,7 @@ export class FilteredGraphsComponent implements OnInit {
     this.modalService.open(content);
   }
 
-  
+
   applicationClick() {
     this.toggle = false;
     this.createBarChart();
@@ -185,6 +186,7 @@ export class FilteredGraphsComponent implements OnInit {
         }]
       },
       options: {
+        maintainAspectRatio: false,
         title: {
           text: "Application Logs",
           display: true
@@ -214,6 +216,7 @@ export class FilteredGraphsComponent implements OnInit {
         }]
       },
       options: {
+        maintainAspectRatio: false,
         title: {
           text: "CPU Usage by time",
           display: true
@@ -243,6 +246,7 @@ export class FilteredGraphsComponent implements OnInit {
         }]
       },
       options: {
+        maintainAspectRatio: false,
         title: {
           text: "Battery Usage by time",
           display: true
@@ -257,12 +261,36 @@ export class FilteredGraphsComponent implements OnInit {
       }
     })
   }
+
+  createDoughnut() {
+    this.chart2 = new Chart('canvas2', {
+      type: 'doughnut',
+      data: {
+        labels: ["Lorem", "ipsum", "carpe", "diem", "Hakuna"],
+        datasets: [
+          {
+            label: "Lorem (ipsum)",
+            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+            data: [2478,5267,734,784,433]
+          }
+        ]
+      },
+      options: {
+        title: {
+          display: true,
+          text: 'Some information here'
+        }
+      }
+    })
+  }
+
   constructor(private modalService: NgbModal) {
 
   }
 
   ngOnInit() {
     this.createBarChart();
+    this.createDoughnut();
   }
 
 }
