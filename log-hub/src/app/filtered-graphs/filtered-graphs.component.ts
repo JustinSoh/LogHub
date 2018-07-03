@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import * as Chart from 'chart.js'
 
@@ -11,6 +11,7 @@ export class FilteredGraphsComponent implements OnInit {
   model = "apps";
   toggle: boolean = false;
   toggle2: boolean = false;
+  toggler: boolean = false;
   chart: any;
   chart2: any;
   closeResult: string;
@@ -102,6 +103,14 @@ export class FilteredGraphsComponent implements OnInit {
       dataset.label = this.label3;
     })
     this.chart.update();
+  }
+
+  info() {
+    if (this.toggler) {
+      this.cpuClick();
+    } else {
+      this.batteryClick();
+    }
   }
 
   cpuClick() {
@@ -263,24 +272,210 @@ export class FilteredGraphsComponent implements OnInit {
   }
 
   createDoughnut() {
+    this.toggler = true;
+    if (this.chart2 != null) {
+      this.chart2.destroy();
+    }
     this.chart2 = new Chart('canvas2', {
+      plugins: [{
+        afterUpdate: function (chart) {
+          if (chart.config.options.elements.center) {
+            var helpers = Chart.helpers;
+            var centerConfig = chart.config.options.elements.center;
+            var globalConfig = Chart.defaults.global;
+            var ctx = chart.chart.ctx;
+
+            var fontStyle = helpers.getValueOrDefault(centerConfig.fontStyle, globalConfig.defaultFontStyle);
+            var fontFamily = helpers.getValueOrDefault(centerConfig.fontFamily, globalConfig.defaultFontFamily);
+
+            if (centerConfig.fontSize)
+              var fontSize = centerConfig.fontSize;
+            // figure out the best font size, if one is not specified
+            else {
+              ctx.save();
+              var fontSize = helpers.getValueOrDefault(centerConfig.minFontSize, 1);
+              var maxFontSize = helpers.getValueOrDefault(centerConfig.maxFontSize, 256);
+              var maxText = helpers.getValueOrDefault(centerConfig.maxText, centerConfig.text);
+
+              do {
+                ctx.font = helpers.fontString(fontSize, fontStyle, fontFamily);
+                var textWidth = ctx.measureText(maxText).width;
+
+                // check if it fits, is within configured limits and that we are not simply toggling back and forth
+                if (textWidth < chart.innerRadius * 2 && fontSize < maxFontSize)
+                  fontSize += 1;
+                else {
+                  // reverse last step
+                  fontSize -= 1;
+                  break;
+                }
+              } while (true)
+              ctx.restore();
+            }
+
+            // save properties
+            chart.center = {
+              font: helpers.fontString(fontSize, fontStyle, fontFamily),
+              fillStyle: helpers.getValueOrDefault(centerConfig.fontColor, globalConfig.defaultFontColor)
+            };
+          }
+        },
+        afterDraw: function (chart) {
+          if (chart.center) {
+            var centerConfig = chart.config.options.elements.center;
+            var ctx = chart.chart.ctx;
+
+            ctx.save();
+            ctx.font = chart.center.font;
+            ctx.fillStyle = chart.center.fillStyle;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            var centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
+            var centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
+            ctx.fillText(centerConfig.text, centerX, centerY);
+            ctx.restore();
+          }
+        },
+      }],
       type: 'doughnut',
       data: {
-        labels: ["Lorem", "ipsum", "carpe", "diem", "Hakuna"],
         datasets: [
           {
-            label: "Lorem (ipsum)",
-            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-            data: [2478,5267,734,784,433]
+            data: [67, 33],
+            backgroundColor: ["#FF6684", "#ccc"]
           }
         ]
       },
       options: {
+        tooltips: {
+          enabled: false
+        },
+        hover: {
+          mode: null
+        },
+        elements: {
+          center: {
+            // the longest text that could appear in the center
+            maxText: '100%',
+            text: '67%',
+            fontColor: '#FF6684',
+            fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+            fontStyle: 'normal',
+            // fontSize: 12,
+            // if a fontSize is NOT specified, we will scale (within the below limits) maxText to take up the maximum space in the center
+            // if these are not specified either, we default to 1 and 256
+            minFontSize: 1,
+            maxFontSize: 256,
+          }
+        },
         title: {
           display: true,
-          text: 'Some information here'
+          text: 'Average CPU usage over the last 24 hours'
         }
-      }
+      },
+    })
+  }
+
+  createDoughnut2() {
+    this.toggler = false;
+    this.chart2.destroy();
+    this.chart2 = new Chart('canvas2', {
+      plugins: [{
+        afterUpdate: function (chart) {
+          if (chart.config.options.elements.center) {
+            var helpers = Chart.helpers;
+            var centerConfig = chart.config.options.elements.center;
+            var globalConfig = Chart.defaults.global;
+            var ctx = chart.chart.ctx;
+
+            var fontStyle = helpers.getValueOrDefault(centerConfig.fontStyle, globalConfig.defaultFontStyle);
+            var fontFamily = helpers.getValueOrDefault(centerConfig.fontFamily, globalConfig.defaultFontFamily);
+
+            if (centerConfig.fontSize)
+              var fontSize = centerConfig.fontSize;
+            // figure out the best font size, if one is not specified
+            else {
+              ctx.save();
+              var fontSize = helpers.getValueOrDefault(centerConfig.minFontSize, 1);
+              var maxFontSize = helpers.getValueOrDefault(centerConfig.maxFontSize, 256);
+              var maxText = helpers.getValueOrDefault(centerConfig.maxText, centerConfig.text);
+
+              do {
+                ctx.font = helpers.fontString(fontSize, fontStyle, fontFamily);
+                var textWidth = ctx.measureText(maxText).width;
+
+                // check if it fits, is within configured limits and that we are not simply toggling back and forth
+                if (textWidth < chart.innerRadius * 2 && fontSize < maxFontSize)
+                  fontSize += 1;
+                else {
+                  // reverse last step
+                  fontSize -= 1;
+                  break;
+                }
+              } while (true)
+              ctx.restore();
+            }
+
+            // save properties
+            chart.center = {
+              font: helpers.fontString(fontSize, fontStyle, fontFamily),
+              fillStyle: helpers.getValueOrDefault(centerConfig.fontColor, globalConfig.defaultFontColor)
+            };
+          }
+        },
+        afterDraw: function (chart) {
+          if (chart.center) {
+            var centerConfig = chart.config.options.elements.center;
+            var ctx = chart.chart.ctx;
+
+            ctx.save();
+            ctx.font = chart.center.font;
+            ctx.fillStyle = chart.center.fillStyle;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            var centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
+            var centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
+            ctx.fillText(centerConfig.text, centerX, centerY);
+            ctx.restore();
+          }
+        },
+      }],
+      type: 'doughnut',
+      data: {
+        datasets: [
+          {
+            data: [47, 53],
+            backgroundColor: ["#FF6684", "#ccc"]
+          }
+        ]
+      },
+      options: {
+        tooltips: {
+          enabled: false
+        },
+        hover: {
+          mode: null
+        },
+        elements: {
+          center: {
+            // the longest text that could appear in the center
+            maxText: '100%',
+            text: '47%',
+            fontColor: '#FF6684',
+            fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+            fontStyle: 'normal',
+            // fontSize: 12,
+            // if a fontSize is NOT specified, we will scale (within the below limits) maxText to take up the maximum space in the center
+            // if these are not specified either, we default to 1 and 256
+            minFontSize: 1,
+            maxFontSize: 256,
+          }
+        },
+        title: {
+          display: true,
+          text: 'Average battery usage over the last 24 hours'
+        }
+      },
     })
   }
 
@@ -292,5 +487,6 @@ export class FilteredGraphsComponent implements OnInit {
     this.createBarChart();
     this.createDoughnut();
   }
-
 }
+
+

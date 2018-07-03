@@ -1,5 +1,6 @@
-<div style="width: 1200px">
+<div>
   <div class="container" style="margin-top: 7%">
+    <div class="header">Frequency Charts</div>
     <ng-template #content let-c="close" let-d="dismiss">
       <div class="modal-header">
         <h4 class="model-title">Details on {{ category }}</h4>
@@ -35,8 +36,6 @@
             <button class="dropdown-item" (click)="applicationClick()">Application</button>
             <button class="dropdown-item" (click)="eventClick()">Event</button>
             <button class="dropdown-item" (click)="processClick()">Process</button>
-            <button class="dropdown-item" (click)="cpuClick()">CPU Usage</button>
-            <button class="dropdown-item" (click)="batteryClick()">Battery Usage</button>
           </div>
         </div>
         <div ngbDropdown class="d-inline-block" *ngIf="toggle" style="margin-left: 3%">
@@ -60,8 +59,21 @@
     </div>
   </div>
   <div class="container2">
+    <div class="header2">Usage Overview</div>
+    <div class="row" id="btn">
+      <div class="col">
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>CPU/Battery</button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button class="dropdown-item" (click)="createDoughnut()">CPU Usage</button>
+            <button class="dropdown-item" (click)="createDoughnut2()">Battery Usage</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="doughnut-container">
-      <canvas id="canvas2" width="800" height="450" class="chartjs-render-monitor"></canvas>
+      <canvas #canvas2 id="canvas2" width="800" height="450" class="chartjs-render-monitor"></canvas>
+      <div class="info" (click)="info()">more information</div>
     </div>
   </div>
 </div>
