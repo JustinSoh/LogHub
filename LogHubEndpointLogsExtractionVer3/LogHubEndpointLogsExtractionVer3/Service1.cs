@@ -14,8 +14,14 @@ namespace LogHubEndpointLogsExtractionVer3
 {
     public partial class Service1 : ServiceBase
     {
-        private System.Timers.Timer timer1 = null;
+        //Initilization of variables
+        private System.Timers.Timer thirtySecondTimer = null;
+        private System.Timers.Timer oneSecondTimer = null;
         FileSystemWatcher watcher;
+        private static PerformanceCounter diskRead = new PerformanceCounter();
+        private static PerformanceCounter diskWrite = new PerformanceCounter();
+        static double readCounter = 0;
+        static double writeCounter = 0;
 
         public Service1()
         {
@@ -24,29 +30,58 @@ namespace LogHubEndpointLogsExtractionVer3
 
         protected override void OnStart(string[] args)
         {
-            //Logs that do not come every 30 seconds
+            // Disk Read stuff
+            diskRead.CategoryName = "PhysicalDisk";
+            diskRead.CounterName = "Disk Reads/sec";
+            diskRead.InstanceName = "_Total";
+
+            // Disk Write stuff
+            diskWrite.CategoryName = "PhysicalDisk";
+            diskWrite.CounterName = "Disk Writes/sec";
+            diskWrite.InstanceName = "_Total";
+
+            // Logs that do not come every 30 seconds
             trackFileSystemChanges();
             watcher.EnableRaisingEvents = true;
+            getEventLogs();
 
-            //Logs that come every 30 seconds
-            timer1 = new System.Timers.Timer();
-            this.timer1.Interval = 30000; //Runs every 30 seconds
-            this.timer1.Elapsed += new System.Timers.ElapsedEventHandler(this.timer1_Tick);
-            timer1.Enabled = true;
+            // Logs that come every 30 seconds
+            thirtySecondTimer = new System.Timers.Timer();
+            this.thirtySecondTimer.Interval = 30000; //Runs every 30 seconds
+            this.thirtySecondTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.thirtySecondTimer_tick);
+            thirtySecondTimer.Enabled = true;
             Library.WriteErrorLog("LogHub has started.");
 
         }
 
         protected override void OnStop()
         {
+            Library.WriteErrorLog("LogHub has stopped.");
         }
 
-        private void timer1_Tick(object sender, ElapsedEventArgs e)
+        private void thirtySecondTimer_tick(object sender, ElapsedEventArgs e)
         {
+            // Prints Battery & CPU usage data
             Library.WriteErrorLog("Battery{" + getBatteryPercentage() + "}");
             Library.WriteErrorLog(getCpuUsage());
-            Library.WriteErrorLog(getEventLogs());
-            Library.WriteErrorLog("Timer ticked and logs have been sent successfully");
+
+            // Returns the total number of disk reads + writes every 30 seconds
+            oneSecondTimer = new System.Timers.Timer();
+            this.oneSecondTimer.Interval = 1000; //Runs every second
+            this.oneSecondTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.oneSecondTimer_tick);
+            oneSecondTimer.Enabled = true;
+            Library.WriteErrorLog("Total Disk Reads{" + readCounter + "KB}");
+            Library.WriteErrorLog("Total Disk Writes{" + writeCounter + "KB}");
+
+            // Restarts read/write counters
+            readCounter = 0;
+            writeCounter = 0;
+        }
+
+        private void oneSecondTimer_tick(object sender, ElapsedEventArgs e)
+        {
+            readCounter += Convert.ToDouble(diskRead.NextValue());
+            writeCounter += Convert.ToDouble(diskWrite.NextValue());
         }
 
         static string getBatteryPercentage()
@@ -83,20 +118,51 @@ namespace LogHubEndpointLogsExtractionVer3
             return "CPU{" + stringsOfCpu+"}";
         }
 
-        static string getEventLogs()
+        static void getEventLogs()
         {
-            string returnedString = "";
+            EventLog mySecurityLog = new EventLog("Security");
+            mySecurityLog.EntryWritten += new EntryWrittenEventHandler(onSecurityEntryWritten);
+            mySecurityLog.EnableRaisingEvents = true;
 
-            var d = EventLog.GetEventLogs();
-            foreach (EventLog l in d)
-            {
-                returnedString += ("\nLog name: " + l.LogDisplayName);
-                foreach (EventLogEntry entry in l.Entries)
-                {
-                    returnedString += ("\n" + entry.Message);
-                }
-            }
-            return returnedString;
+            EventLog mySystemLog = new EventLog("System");
+            mySystemLog.EntryWritten += new EntryWrittenEventHandler(onSystemEntryWritten);
+            mySystemLog.EnableRaisingEvents = true;
+        }
+
+        private static void onSecurityEntryWritten(object source, EntryWrittenEventArgs e)
+        {
+            string watchLog = "Security";
+            string logName = watchLog;
+            int e1 = 0;
+            EventLog log = new EventLog(logName);
+            e1 = log.Entries.Count - 1; // last entry
+
+            string logType = Convert.ToString(log.Entries[e1].EntryType);
+            string logCategory = Convert.ToString(log.Entries[e1].Category); 
+            string eventID = log.Entries[e1].EventID.ToString();
+            string logMachine = log.Entries[e1].MachineName;
+            
+            string compiledErrorLog = "Log Type: " + logType + "\nCategory: " + logCategory + "\nEvent ID: " + eventID +  "\nMachine: " + logMachine;
+
+            Library.WriteErrorLog("Security Event Log{\n" + compiledErrorLog + "}");
+        }
+
+        private static void onSystemEntryWritten(object source, EntryWrittenEventArgs e)
+        {
+            string watchLog = "System";
+            string logName = watchLog;
+            int e1 = 0;
+            EventLog log = new EventLog(logName);
+            e1 = log.Entries.Count - 1; // last entry
+
+            string logType = Convert.ToString(log.Entries[e1].EntryType);
+            string logCategory = Convert.ToString(log.Entries[e1].Category);
+            string eventID = log.Entries[e1].EventID.ToString();
+            string logMachine = log.Entries[e1].MachineName;
+
+            string compiledErrorLog = "Log Type: " + logType + "\nCategory: " + logCategory + "\nEvent ID: " + eventID + "\nMachine: " + logMachine;
+
+            Library.WriteErrorLog("System Event Log{\n" + compiledErrorLog + "}");
         }
 
         public void trackFileSystemChanges()
@@ -156,7 +222,7 @@ namespace LogHubEndpointLogsExtractionVer3
         // 20.6.18
         // Added PID to processes to properly identify them, especially svchost
         // I couldn't find a way to attach their full process names so this is a workaround
-        // Also added {} for ease of data extraction for chester
+        // Also added {} for ease of data extraction for Chester
 
         // 21.6.18
         // Found and managed to implement printing of all event logs
@@ -167,7 +233,12 @@ namespace LogHubEndpointLogsExtractionVer3
         // 22.6.18
         // Added function to detect the type of changes of files in the System32 directory (Created, changed, deleted, renamed)
 
-        
+        // 28.6.18
+        // Edited getEventLogs() function to only send Security & System event viewer logs as they come
+        // I also only extracted the important information from the logs so they don't look messy (type, category, eventID, machine name)
+
+        // 1.7.18
+        // Added a function to extract number of reads and writes to all disks
 
     }
 }
