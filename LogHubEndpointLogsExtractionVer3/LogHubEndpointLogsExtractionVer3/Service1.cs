@@ -127,6 +127,10 @@ namespace LogHubEndpointLogsExtractionVer3
             EventLog mySystemLog = new EventLog("System");
             mySystemLog.EntryWritten += new EntryWrittenEventHandler(onSystemEntryWritten);
             mySystemLog.EnableRaisingEvents = true;
+
+            EventLog myApplicationLog = new EventLog("Application");
+            myApplicationLog.EntryWritten += new EntryWrittenEventHandler(onApplicationEntryWritten);
+            myApplicationLog.EnableRaisingEvents = true;
         }
 
         private static void onSecurityEntryWritten(object source, EntryWrittenEventArgs e)
@@ -141,8 +145,9 @@ namespace LogHubEndpointLogsExtractionVer3
             string logCategory = Convert.ToString(log.Entries[e1].Category); 
             string eventID = log.Entries[e1].EventID.ToString();
             string logMachine = log.Entries[e1].MachineName;
-            
-            string compiledErrorLog = "Log Type: " + logType + "\nCategory: " + logCategory + "\nEvent ID: " + eventID +  "\nMachine: " + logMachine;
+            string logDescription = log.Entries[e1].Message;
+
+            string compiledErrorLog = "Log Type: " + logType + "\nCategory: " + logCategory + "\nEvent ID: " + eventID +  "\nMachine: " + logMachine + "\nDescription: " +logDescription;
 
             Library.WriteErrorLog("Security Event Log{\n" + compiledErrorLog + "}");
         }
@@ -159,10 +164,30 @@ namespace LogHubEndpointLogsExtractionVer3
             string logCategory = Convert.ToString(log.Entries[e1].Category);
             string eventID = log.Entries[e1].EventID.ToString();
             string logMachine = log.Entries[e1].MachineName;
+            string logDescription = log.Entries[e1].Message;
 
-            string compiledErrorLog = "Log Type: " + logType + "\nCategory: " + logCategory + "\nEvent ID: " + eventID + "\nMachine: " + logMachine;
+            string compiledErrorLog = "Log Type: " + logType + "\nCategory: " + logCategory + "\nEvent ID: " + eventID + "\nMachine: " + logMachine + "\nDescription: " + logDescription;
 
             Library.WriteErrorLog("System Event Log{\n" + compiledErrorLog + "}");
+        }
+
+        private static void onApplicationEntryWritten(object source, EntryWrittenEventArgs e)
+        {
+            string watchLog = "Application";
+            string logName = watchLog;
+            int e1 = 0;
+            EventLog log = new EventLog(logName);
+            e1 = log.Entries.Count - 1; // last entry
+
+            string logType = Convert.ToString(log.Entries[e1].EntryType);
+            string logCategory = Convert.ToString(log.Entries[e1].Category);
+            string eventID = log.Entries[e1].EventID.ToString();
+            string logMachine = log.Entries[e1].MachineName;
+            string logDescription = log.Entries[e1].Message;
+
+            string compiledErrorLog = "Log Type: " + logType + "\nCategory: " + logCategory + "\nEvent ID: " + eventID + "\nMachine: " + logMachine + "\nDescription: " + logDescription;
+
+            Library.WriteErrorLog("Application Event Log{\n" + compiledErrorLog + "}");
         }
 
         public void trackFileSystemChanges()
@@ -239,6 +264,9 @@ namespace LogHubEndpointLogsExtractionVer3
 
         // 1.7.18
         // Added a function to extract number of reads and writes to all disks
+
+        // 10.7.18
+        // Appended Event Viewer descriptions and added Application Event Logs as per Chester's request.
 
     }
 }
