@@ -147,7 +147,7 @@ namespace LogHubEndpointLogsExtractionVer3
             string logMachine = log.Entries[e1].MachineName;
             string logDescription = log.Entries[e1].Message;
 
-            string compiledErrorLog = "Log Type: " + logType + "\nCategory: " + logCategory + "\nEvent ID: " + eventID +  "\nMachine: " + logMachine + "\nDescription: " +logDescription;
+            string compiledErrorLog = "Log Type: " + logType + "\nCategory: " + logCategory + "\nEvent ID: " + eventID +  "\nMachine: " + logMachine + "\nDescription:<" +logDescription+">";
 
             Library.WriteErrorLog("Security Event Log{\n" + compiledErrorLog + "}");
         }
@@ -166,7 +166,7 @@ namespace LogHubEndpointLogsExtractionVer3
             string logMachine = log.Entries[e1].MachineName;
             string logDescription = log.Entries[e1].Message;
 
-            string compiledErrorLog = "Log Type: " + logType + "\nCategory: " + logCategory + "\nEvent ID: " + eventID + "\nMachine: " + logMachine + "\nDescription: " + logDescription;
+            string compiledErrorLog = "Log Type: " + logType + "\nCategory: " + logCategory + "\nEvent ID: " + eventID + "\nMachine: " + logMachine + "\nDescription:<" + logDescription + ">";
 
             Library.WriteErrorLog("System Event Log{\n" + compiledErrorLog + "}");
         }
@@ -185,7 +185,7 @@ namespace LogHubEndpointLogsExtractionVer3
             string logMachine = log.Entries[e1].MachineName;
             string logDescription = log.Entries[e1].Message;
 
-            string compiledErrorLog = "Log Type: " + logType + "\nCategory: " + logCategory + "\nEvent ID: " + eventID + "\nMachine: " + logMachine + "\nDescription: " + logDescription;
+            string compiledErrorLog = "Log Type: " + logType + "\nCategory: " + logCategory + "\nEvent ID: " + eventID + "\nMachine: " + logMachine + "\nDescription:<" + logDescription + ">";
 
             Library.WriteErrorLog("Application Event Log{\n" + compiledErrorLog + "}");
         }
