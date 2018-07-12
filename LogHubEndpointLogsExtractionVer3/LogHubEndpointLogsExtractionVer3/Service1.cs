@@ -22,6 +22,8 @@ namespace LogHubEndpointLogsExtractionVer3
         private static PerformanceCounter diskWrite = new PerformanceCounter();
         static double readCounter = 0;
         static double writeCounter = 0;
+        static double totalCPU;
+        static double CpuCounter;
 
         public Service1()
         {
@@ -111,11 +113,16 @@ namespace LogHubEndpointLogsExtractionVer3
 
             foreach (var counter in counters)
             {
-                stringsOfCpu += (processes[i].ProcessName + "(" + +processes[i].Id +"): " + (Math.Round(counter.NextValue(), 1) / processorCount) + ";\n");
+                CpuCounter = Math.Round(counter.NextValue(), 1);
+                stringsOfCpu += (processes[i].ProcessName + "(" + +processes[i].Id +"): " + CpuCounter / processorCount) + ";\n";
+                if (processes[i].ProcessName.Equals("Idle"))
+                {
+                    totalCPU = 100 - (CpuCounter/processorCount);
+                }
                 ++i;   
             }
 
-            return "CPU{" + stringsOfCpu+"}";
+            return "CPU{" + stringsOfCpu+ "Total used: " + totalCPU +"}";
         }
 
         static void getEventLogs()
@@ -214,13 +221,13 @@ namespace LogHubEndpointLogsExtractionVer3
         private static void OnChanged(object source, FileSystemEventArgs e)
         {
             // Specify what is done when a file is changed, created, or deleted.
-            Library.WriteErrorLog("File: " + e.FullPath + " " + e.ChangeType);
+            Library.WriteErrorLog("File:{" + e.FullPath + " " + e.ChangeType + "}");
         }
 
         private static void OnRenamed(object source, RenamedEventArgs e)
         {
             // Specify what is done when a file is renamed.
-            Library.WriteErrorLog("File: " + e.OldFullPath + " renamed to " + e.FullPath);
+            Library.WriteErrorLog("File:{" + e.OldFullPath + " renamed to " + e.FullPath +"}");
         }
 
 
@@ -267,6 +274,10 @@ namespace LogHubEndpointLogsExtractionVer3
 
         // 10.7.18
         // Appended Event Viewer descriptions and added Application Event Logs as per Chester's request.
+
+        // 12.7.18
+        // Added total CPU used per given duration as per Justin's request.
+        // Also added the once forgotten {} delimiters on the file changed methods
 
     }
 }
