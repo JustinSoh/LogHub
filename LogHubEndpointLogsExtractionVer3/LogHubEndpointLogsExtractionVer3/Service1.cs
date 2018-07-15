@@ -50,7 +50,7 @@ namespace LogHubEndpointLogsExtractionVer3
             // Logs that come every 30 seconds
             thirtySecondTimer = new System.Timers.Timer();
             //this.thirtySecondTimer.Interval = 30000; //Runs every 30 seconds
-            this.thirtySecondTimer.Interval = 500; //Runs every half a second
+            this.thirtySecondTimer.Interval = 5000; //Runs every 5 seconds
             this.thirtySecondTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.thirtySecondTimer_tick);
             thirtySecondTimer.Enabled = true;
             Library.WriteErrorLog("LogHub has started.");
@@ -281,7 +281,7 @@ namespace LogHubEndpointLogsExtractionVer3
         // Also added the once forgotten {} delimiters on the file changed methods
 
         // 15.7.18
-        // Altered 30 second timer to send logs every half a second.
+        // Altered 30 second timer to send logs every 5 seconds.
         // I will monitor the effects of this change and may revert or decrease the timer duration.
 
     }
