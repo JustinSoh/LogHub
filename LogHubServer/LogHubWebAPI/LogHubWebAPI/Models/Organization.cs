@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 
 namespace LogHubWebAPI.Models
 {
-    public class User
+    public class Organization
     {
-        public string UserId { get; set; }
-        public string Password { get; set; }
-        public string Email { get; set; }
         public string OrganizationId { get; set; }
+        public string OrganizationName { get; set; }
     }
 }
