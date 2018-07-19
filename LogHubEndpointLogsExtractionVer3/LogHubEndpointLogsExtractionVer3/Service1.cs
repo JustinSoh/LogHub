@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Management;
 using System.Net.Http;
 using System.Security.Permissions;
 using System.ServiceProcess;
@@ -46,11 +47,13 @@ namespace LogHubEndpointLogsExtractionVer3
             trackFileSystemChanges();
             watcher.EnableRaisingEvents = true;
             getEventLogs();
+            checkUsbInsert();
+            checkUsbRemove();
 
             // Logs that come every 30 seconds
             thirtySecondTimer = new System.Timers.Timer();
             //this.thirtySecondTimer.Interval = 30000; //Runs every 30 seconds
-            this.thirtySecondTimer.Interval = 5000; //Runs every 5 seconds
+            this.thirtySecondTimer.Interval = 20000; //Runs every 20 seconds
             this.thirtySecondTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.thirtySecondTimer_tick);
             thirtySecondTimer.Enabled = true;
             Library.WriteErrorLog("LogHub has started.");
@@ -79,6 +82,9 @@ namespace LogHubEndpointLogsExtractionVer3
             // Restarts read/write counters
             readCounter = 0;
             writeCounter = 0;
+
+            // Gets Established Connections
+            Library.WriteErrorLog("Established Connections{\n" + getEstablishedConnections() + "}");
         }
 
         private void oneSecondTimer_tick(object sender, ElapsedEventArgs e)
@@ -231,7 +237,49 @@ namespace LogHubEndpointLogsExtractionVer3
             Library.WriteErrorLog("File:{" + e.OldFullPath + " renamed to " + e.FullPath +"}");
         }
 
+        private static string getEstablishedConnections()
+        {
+            string cmd = "/c netstat -an | findstr ESTA";
+            System.Diagnostics.Process proc = new System.Diagnostics.Process();
+            proc.StartInfo.FileName = "cmd.exe";
+            proc.StartInfo.Arguments = cmd;
+            proc.StartInfo.UseShellExecute = false;
+            proc.StartInfo.RedirectStandardOutput = true;
+            proc.StartInfo.CreateNoWindow = true;
+            proc.Start();
+            string establishedConnections = proc.StandardOutput.ReadToEnd();
+            proc.Close();
 
+            return establishedConnections;
+        }
+
+        private static void checkUsbInsert()
+        {
+            ManagementEventWatcher watcher = new ManagementEventWatcher();
+            WqlEventQuery query = new WqlEventQuery("SELECT * FROM Win32_VolumeChangeEvent WHERE EventType = 2");
+            watcher.EventArrived += new EventArrivedEventHandler(watcher_InsertArrived);
+            watcher.Query = query;
+            watcher.Start();
+        }
+
+        private static void watcher_InsertArrived(Object sender, EventArrivedEventArgs e)
+        {
+            Library.WriteErrorLog("USB{Inserted}");
+        }
+
+        private static void checkUsbRemove()
+        {
+            ManagementEventWatcher watcher = new ManagementEventWatcher();
+            WqlEventQuery query = new WqlEventQuery("SELECT * FROM Win32_VolumeChangeEvent WHERE EventType = 3");
+            watcher.EventArrived += new EventArrivedEventHandler(watcher_RemoveArrived);
+            watcher.Query = query;
+            watcher.Start();
+        }
+
+        private static void watcher_RemoveArrived(Object sender, EventArrivedEventArgs e)
+        {
+            Library.WriteErrorLog("USB{Removed}");
+        }
 
 
         // 24.5.18
@@ -284,5 +332,8 @@ namespace LogHubEndpointLogsExtractionVer3
         // Altered 30 second timer to send logs every 5 seconds.
         // I will monitor the effects of this change and may revert or decrease the timer duration.
 
+        // 19.7.18
+        // Added function to get established connections from host with port number, to external IPs
+        // Added function to detect insertion/removal of external devices
     }
 }
