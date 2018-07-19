@@ -29,6 +29,7 @@ namespace LogHubEndpointLogsExtractionVer3
         public Service1()
         {
             InitializeComponent();
+            Library.startConection();
         }
 
         protected override void OnStart(string[] args)
