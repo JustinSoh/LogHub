@@ -12,44 +12,44 @@
     </div> 
     <div *ngIf="settings" class="settings"> 
         <mat-card class="settingsClass">
-            <h3 class="title2" style="display:inline-block; margin-bottom: 2%">Set Bandwidth Threshold</h3>
+            <h3 class="subheading" style=" display:inline-block; margin-bottom: 2%">Set Bandwidth Threshold</h3>
+            <button mat-icon-button class="fa fa-times format-button" (click)="closeSetting()"></button> 
             <div class="row">
-              <form class="bandwidth-settings col-sm-6">
-                <p class="text subheader">Set Low Threshold</p>
+              <form class="bandwidth-settings col-sm-12">
+                <p class="text subheader">Set Low Threshold </p>
                 <mat-form-field class="inputClass">
-                    <input matInput class="inputClass" type="number" name="lowFrom" placeholder="From"  [(ngModel)]="lowFrom" (keyup.enter)="testing()">
+                    <input matInput class="inputClass" type="number" min="0"  max="100"  name="lowFrom" placeholder="From(%)"  [(ngModel)]="lowFrom" (keyup.enter)="testing()">
                 </mat-form-field>
                 <div style="margin-left: 2%; margin-right: 2%; display: inline-block;"></div>
                 <mat-form-field class="inputClass"> 
                     <input matInput class="inputClass" type="number" name="lowTo" [(ngModel)]="lowTo" id="lowTo" placeholder="To" (keyup.enter)="testing()" >
                 </mat-form-field>
                 
-                <p class="text subheader" style="margin-top:2%;">Set Medium Threshold</p>
+                <p class="text subheader" style="margin-top:2%;">Set Medium Threshold </p>
                 <mat-form-field class="inputClass">
-                    <input matInput class="inputClass" id="mediumFrom" name="mediumFrom" [(ngModel)]="mediumFrom" placeholder="From" (keyup.enter)="testing()">
+                    <input matInput class="inputClass" type="number" id="mediumFrom" name="mediumFrom" [(ngModel)]="mediumFrom" placeholder="From(%)" (keyup.enter)="testing()">
                 </mat-form-field>
                 <div style="margin-left: 2%; margin-right: 2%; display: inline-block;"></div>
                 <mat-form-field class="inputClass"> 
-                    <input matInput class="inputClass" id="mediumTo" name="mediumTo" [(ngModel)]="mediumTo" placeholder="To"  (keyup.enter)="testing()">
+                    <input matInput class="inputClass" type="number" id="mediumTo" name="mediumTo" [(ngModel)]="mediumTo" placeholder="To(%)"  (keyup.enter)="testing()">
                 </mat-form-field>
                
 
                 <p class="text subheader" style="margin-top:2%;">Set High Threshold</p>
                 <mat-form-field class="inputClass">
-                    <input matInput class="inputClass" id="mediumFrom" placeholder="From" name="highFrom" [(ngModel)]="highFrom">
+                    <input matInput class="inputClass" type="number" id="mediumFrom" placeholder="From(%)" name="highFrom" [(ngModel)]="highFrom">
                 </mat-form-field>
                 <div style="margin-left: 2%; margin-right: 2%; display: inline-block;"></div>
                 <mat-form-field class="inputClass"> 
-                    <input matInput class="inputClass" id="mediumTo" placeholder="To" name="highTo" [(ngModel)]="highTo">
+                    <input matInput class="inputClass" type="number" id="mediumTo" placeholder="To(%)" name="highTo" [(ngModel)]="highTo">
                 </mat-form-field>
-                
+                <p style="color:#D44343 ; text-align: center" *ngIf="error">{{errorMessage}}</p>
                 <div>
-                  <button mat-button class="submitButton" (click)="submitSettings()">Submit</button>
+                  <button mat-button type="button" class="submitButton" (click)="submitSettings()">Submit</button>
                 </div>
                 <!-- <p class="text subheader" >Set Medium Threshold</p>
                 <p class="text subheader" >Set High Threshold</p> -->
               </form>
-              <canvas class="col-sm-6" style="background: red" id="newChart"></canvas>
             </div>
         </mat-card>
     </div>  

@@ -31,6 +31,7 @@ import { CpuChartDetailComponent } from './analytics/modules/cpu-chart-detail/cp
 import { CpuChartHostComponent } from './analytics/modules/cpu-chart-host/cpu-chart-host.component';
 import { BandwidthComponent } from './analytics/bandwidth/bandwidth.component';
 import {MatCardModule} from '@angular/material/card';
+import {ViewEncapsulation } from '@angular/core';
 
 @NgModule({
   declarations: [

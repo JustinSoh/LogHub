@@ -36,15 +36,19 @@
 }
 
 .format-button{
-    outline: none;
-    border: 0;
+    outline: none !important;
+    border: none !important;
     background-color: white;
-    margin-left: 8px;
-    margin-right: 8px;
-    border-radius:30px;
+    margin-left: 2%;
+    margin-right: 2%;
     color: #0072FF;
     min-width: 5%;
     display: inline-block;
+}
+
+.format-button:active {
+    outline: none; 
+    border: none;
 }
 
 #bandwidthChart {
@@ -52,11 +56,11 @@
 }
 
 .settings {
-    width: 600px ; 
-    height: 300px; 
+    width: 20% ; 
+    height: 30%; 
     z-index: 2;
     position: fixed;
-    top: 50%;
+    top: 35%;
     left: 50%;
     /* bring your own prefixes */
     transform: translate(-50%, -50%);
@@ -66,7 +70,7 @@
 
 .inputClass {
     width: auto;
-    max-width: 80px;
+    max-width: 48%;
     display: inline-block
 }
 
@@ -74,4 +78,9 @@
     width: 100%;
     background-color: #0072FF;
     color: white;
+}
+
+::ng-deep .matInput{
+    width: 100px !important; 
+    color: orange;
 }
