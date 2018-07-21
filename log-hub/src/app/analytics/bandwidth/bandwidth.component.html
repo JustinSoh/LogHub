@@ -1,0 +1,62 @@
+
+<div class="col-sm-4" style="margin-top:2% ; margin-left: 1%" ng-controller="flipCtrl">
+<mat-card class="card-style">
+    <div>
+      <h3 class="title2" style="display:inline-block">Bandwidth Utilization</h3>
+      <button mat-button class="fa fa-bars format-button" (click)="flip()"></button>
+    </div> 
+    <div class="face front"> 
+        <p class="text subheader" >Current utilization of bandwidth</p>
+        <canvas id="bandwidthChart">
+        </canvas>
+    </div> 
+    <div *ngIf="settings" class="settings"> 
+        <mat-card class="settingsClass">
+            <h3 class="title2" style="display:inline-block; margin-bottom: 2%">Set Bandwidth Threshold</h3>
+            <div class="row">
+              <form class="bandwidth-settings col-sm-6">
+                <p class="text subheader">Set Low Threshold</p>
+                <mat-form-field class="inputClass">
+                    <input matInput class="inputClass" type="number" name="lowFrom" placeholder="From"  [(ngModel)]="lowFrom" (keyup.enter)="testing()">
+                </mat-form-field>
+                <div style="margin-left: 2%; margin-right: 2%; display: inline-block;"></div>
+                <mat-form-field class="inputClass"> 
+                    <input matInput class="inputClass" type="number" name="lowTo" [(ngModel)]="lowTo" id="lowTo" placeholder="To" (keyup.enter)="testing()" >
+                </mat-form-field>
+                
+                <p class="text subheader" style="margin-top:2%;">Set Medium Threshold</p>
+                <mat-form-field class="inputClass">
+                    <input matInput class="inputClass" id="mediumFrom" name="mediumFrom" [(ngModel)]="mediumFrom" placeholder="From" (keyup.enter)="testing()">
+                </mat-form-field>
+                <div style="margin-left: 2%; margin-right: 2%; display: inline-block;"></div>
+                <mat-form-field class="inputClass"> 
+                    <input matInput class="inputClass" id="mediumTo" name="mediumTo" [(ngModel)]="mediumTo" placeholder="To"  (keyup.enter)="testing()">
+                </mat-form-field>
+               
+
+                <p class="text subheader" style="margin-top:2%;">Set High Threshold</p>
+                <mat-form-field class="inputClass">
+                    <input matInput class="inputClass" id="mediumFrom" placeholder="From" name="highFrom" [(ngModel)]="highFrom">
+                </mat-form-field>
+                <div style="margin-left: 2%; margin-right: 2%; display: inline-block;"></div>
+                <mat-form-field class="inputClass"> 
+                    <input matInput class="inputClass" id="mediumTo" placeholder="To" name="highTo" [(ngModel)]="highTo">
+                </mat-form-field>
+                
+                <div>
+                  <button mat-button class="submitButton" (click)="submitSettings()">Submit</button>
+                </div>
+                <!-- <p class="text subheader" >Set Medium Threshold</p>
+                <p class="text subheader" >Set High Threshold</p> -->
+              </form>
+              <canvas class="col-sm-6" style="background: red" id="newChart"></canvas>
+            </div>
+        </mat-card>
+    </div>  
+    <!-- <h1 [ngClass]="{'center': true , 'low': setLow, 'medium': setMedium, 'high': setHigh}">{{bandwidth}}</h1>
+    <div class="col-sm-12">
+        <mat-card-subtitle>Percentage: {{data}}</mat-card-subtitle>
+    </div> -->
+</mat-card>
+</div>
+

@@ -29,6 +29,9 @@ import { ChartsModule } from 'node_modules/ng2-charts';
 import { CPUChartOverview } from './analytics/modules/cpu-chart-overview/cpu-chart-overview.component';
 import { CpuChartDetailComponent } from './analytics/modules/cpu-chart-detail/cpu-chart-detail.component';
 import { CpuChartHostComponent } from './analytics/modules/cpu-chart-host/cpu-chart-host.component';
+import { BandwidthComponent } from './analytics/bandwidth/bandwidth.component';
+import {MatCardModule} from '@angular/material/card';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,7 +50,8 @@ import { CpuChartHostComponent } from './analytics/modules/cpu-chart-host/cpu-ch
     OverviewChartComponent,
     CPUChartOverview,
     CpuChartDetailComponent,
-    CpuChartHostComponent
+    CpuChartHostComponent,
+    BandwidthComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,7 +69,9 @@ import { CpuChartHostComponent } from './analytics/modules/cpu-chart-host/cpu-ch
     RouterModule,
     AppRoutingModule,
     MatMenuModule,
-    ChartsModule
+    ChartsModule,
+    MatCardModule
+
   ],
   providers: [AppRoutingModule],
   bootstrap: [AppComponent],

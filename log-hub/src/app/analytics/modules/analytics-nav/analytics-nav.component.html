@@ -1,31 +1,52 @@
+<app-template></app-template>
+<div class="container-fluid">
+  <div class="row content">
+      <div class="col-sm-12" >
+          <div class="well">
+            <h4 class="headline">Real Time Analysis</h4>
+            <app-bandwidth></app-bandwidth>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<!-- 
 <div class="navigation-section">
   <div class="navigation-button-div">
     <button mat-button [matMenuTriggerFor]="chartType" class="main-button"  [ngClass]="{'active': chartBoolean, 'main-button': !chartBoolean}">{{Chart}}</button>
-    <!-- <button mat-button [matMenuTriggerFor]="compareChart" class="main-button" [ngClass]="{'active': compareBoolean , 'main-button': !compareBoolean}" >{{Compare}}</button> -->
+    <button mat-button [matMenuTriggerFor]="compareChart" class="main-button" [ngClass]="{'active': compareBoolean , 'main-button': !compareBoolean}" >{{Compare}}</button>
     <button mat-button  class="main-button" *ngIf="showCompareOutlet"[routerLink]="[ { outlets:{analyticsComparePath: null}}]"(click)="clearRouterOutlet('Compare with')">Clear</button>
   </div>
   <mat-menu #chartType="matMenu">
     <button mat-menu-item [routerLink]="[ { outlets:{analyticsMainPath: ['overview']}}]" (click)="activateChart('Overview')">Overview</button>
     <button mat-menu-item [routerLink]="[ { outlets:{analyticsMainPath: ['cpu']}}]" (click)="activateChart('CPU Chart')">CPU Chart</button>
-    <!-- <button mat-menu-item (click)="activateChart('Overview')">Overview</button>
-    <button mat-menu-item (click)="activateChart('CPU Chart')">CPU Chart</button>  -->
+    <button mat-menu-item (click)="activateChart('Overview')">Overview</button>
+    <button mat-menu-item (click)="activateChart('CPU Chart')">CPU Chart</button> 
   </mat-menu>
-  <!-- <mat-menu #compareChart="matMenu">
+  <mat-menu #compareChart="matMenu">
       <button mat-menu-item [routerLink]="[ { outlets:{analyticsComparePath: ['overview']}}]" (click)="showRouterOutlet('Overview')">Overview</button>
       <button mat-menu-item [routerLink]="[ { outlets:{analyticsComparePath: ['cpu']}}]" (click)="showRouterOutlet('CPU Chart')">CPU Chart</button>
-  </mat-menu> -->
-</div>
+  </mat-menu>
+</div> -->
 
 
-<div class="container-fluid row" >
+<!-- <div class="container-fluid row" >
 
   <div class="col-md-12" *ngIf="!showCompareOutlet" style="display: inline-block; ">
     <router-outlet *ngIf="showCompareOutlet == false" name="analyticsMainPath"></router-outlet>
-    <!-- <router-outlet  class="col-md-6" name="analyticsComparePath"></router-outlet> -->
+    <router-outlet  class="col-md-6" name="analyticsComparePath"></router-outlet>
   </div>
   <div class="col-md-6" *ngIf="showCompareOutlet" style="display: inline-block;">
     <router-outlet  *ngIf="showCompareOutlet" name="analyticsMainPath"></router-outlet>
-    <!-- <router-outlet  class="col-md-6" name="analyticsComparePath"></router-outlet> -->
+    <router-outlet  class="col-md-6" name="analyticsComparePath"></router-outlet>
   </div>
   <div class="col-md-6"  *ngIf="showCompareOutlet"  style="display: inline-block; ">
       <router-outlet name="analyticsComparePath"></router-outlet>
@@ -34,4 +55,4 @@
 </div> 
 <div style="padding: 5% 0% 5% 0%"> 
 
-</div>
+</div> -->

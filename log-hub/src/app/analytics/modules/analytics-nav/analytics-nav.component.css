@@ -32,3 +32,8 @@ button {
 .compare-section {
     width:100%; 
 }
+
+.container-fluid {
+    height: auto;
+    overflow-y: auto;
+}

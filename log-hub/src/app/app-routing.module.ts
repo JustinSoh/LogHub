@@ -26,6 +26,7 @@ import { AnalyticsMainComponent } from './analytics/analytics-main/analytics-mai
 import { MainComponent } from './main/main.component';
 import { OverviewChartComponent } from './analytics/modules/overview-chart/overview-chart.component';
 import { CpuChartComponent } from './analytics/modules/cpu-chart/cpu-chart.component';
+import { AnalyticsNavComponent } from './analytics/modules/analytics-nav/analytics-nav.component';
 
 const routes: Routes = [
   {path: "" , redirectTo: "login" , pathMatch:"full"},
@@ -37,18 +38,8 @@ const routes: Routes = [
     { path: "confirmation", component: EmailConfirmationComponent , outlet: 'loginPath' },
     { path: "forgotPassword",component: ForgetPasswordComponent , outlet: 'loginPath'},
   ] },
-  { path: "home", component: MainComponent , children: [
-    {path: "", component: TemplateComponent , outlet: 'mainPath'},
-    {path: "analytics", component: AnalyticsMainComponent , outlet: 'mainPath', children: [
-      {path: "overview" , component: OverviewChartComponent, outlet: 'analyticsMainPath'},
-      {path: "cpu" , component: CpuChartComponent, outlet: 'analyticsMainPath'},
-      {path: "overview" , component: OverviewChartComponent, outlet: 'analyticsComparePath'},
-      {path: "cpu" , component: CpuChartComponent, outlet: 'analyticsComparePath'},
-      ],
-    } 
-    
-    
-  ]}
+  { path: "home", component: MainComponent},
+  { path: "home/analytics" , component: AnalyticsNavComponent }
   
   // { path: "home", component: MainComponent , children: [
   //   {path: "", component: AnalyticsMainComponent , outlet: 'mainPath'} //Change this to the main page next time
