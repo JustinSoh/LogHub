@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { hasha }  from 'node_modules/crypto-js'
 import {FormControl, Validators} from '@angular/forms';
+import { Router } from '@angular/router';
+import { WebapiService } from '../../services/webapi.service';
 @Component({
   selector: 'app-login-details',
   templateUrl: './login-details.component.html',
@@ -8,7 +10,12 @@ import {FormControl, Validators} from '@angular/forms';
 })
 export class LoginDetailsComponent implements OnInit {
 
-  constructor() { }
+  private router:Router;
+  private webApi:WebapiService 
+  constructor(router:Router , webapi:WebapiService) { 
+    this.router = router;
+    this.webApi = webapi;
+  }
   public SHA512;
   ngOnInit() {
     this.SHA512 = require("crypto-js/sha256");
@@ -44,7 +51,14 @@ export class LoginDetailsComponent implements OnInit {
       //do some test 
       this.usernameB = true;
       this.finalValidation()
+
     }
+  }
+
+  logIn()
+  {
+    this.webApi.getAllUsers()
+    //this.router.navigate(['/', 'home']);
   }
 
   passwordHash(passwd)

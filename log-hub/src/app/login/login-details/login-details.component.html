@@ -36,7 +36,7 @@
     </form>
     <div class="bottom-section">
         <a [routerLink]="['/login', { outlets:{loginPath: ['forgotPassword']}}]" class="text forget-button" (click)="forgetPassword()">Forget password?</a>
-        <button *ngIf="validatedBoolean" routerLink="/home" mat-button class="login-button col-md-4" >Log In</button> 
+        <button *ngIf="validatedBoolean" (click)="logIn()" mat-button class="login-button col-md-4" >Log In</button> 
         <button *ngIf="!validatedBoolean" mat-button class="login-button col-md-4">Log In</button> 
     </div>
   

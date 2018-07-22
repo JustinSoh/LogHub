@@ -32,6 +32,9 @@ import { CpuChartHostComponent } from './analytics/modules/cpu-chart-host/cpu-ch
 import { BandwidthComponent } from './analytics/bandwidth/bandwidth.component';
 import {MatCardModule} from '@angular/material/card';
 import {ViewEncapsulation } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { WebapiService } from './services/webapi.service';
+
 
 @NgModule({
   declarations: [
@@ -71,7 +74,8 @@ import {ViewEncapsulation } from '@angular/core';
     AppRoutingModule,
     MatMenuModule,
     ChartsModule,
-    MatCardModule
+    MatCardModule,
+    HttpClientModule,
 
   ],
   providers: [AppRoutingModule],
