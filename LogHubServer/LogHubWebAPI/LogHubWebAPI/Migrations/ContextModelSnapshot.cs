@@ -36,6 +36,8 @@ namespace LogHubWebAPI.Migrations
                     b.Property<string>("UserId")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("BandwidthSetting");
+
                     b.Property<string>("Email");
 
                     b.Property<string>("OrganizationId");
