@@ -10,26 +10,15 @@ using System;
 namespace LogHubWebAPI.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20180715235514_InitialCreate2")]
+    partial class InitialCreate2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.3-rtm-10026")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("LogHubWebAPI.Models.Organization", b =>
-                {
-                    b.Property<string>("OrganizationId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("OrganizationName");
-
-                    b.HasKey("OrganizationId");
-
-                    b.ToTable("Organizations");
-                });
 
             modelBuilder.Entity("LogHubWebAPI.Models.User", b =>
                 {
@@ -37,8 +26,6 @@ namespace LogHubWebAPI.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Email");
-
-                    b.Property<string>("OrganizationId");
 
                     b.Property<string>("Password");
 

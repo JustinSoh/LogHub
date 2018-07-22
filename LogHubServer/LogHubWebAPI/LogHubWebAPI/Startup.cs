@@ -34,8 +34,6 @@ namespace LogHubWebAPI
             var connection = @"Server=tcp:loghubserver.database.windows.net,1433;Initial Catalog=loghubdb;Persist Security Info=False;User ID=hoggerpop;Password=P0ti@nak;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
             services.AddDbContext<Context>(options => options.UseSqlServer(connection));
             services.AddMvc();
-            services.AddCors();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,10 +52,6 @@ namespace LogHubWebAPI
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
-
-
-            app.UseCors(builder =>
-            builder.WithOrigins("https://localhost:50492" , "http://localhost:50492" , "https://localhost:4200", "http://localhost:4200"));
 
             app.UseMvc();
         }

@@ -10,8 +10,8 @@ using System;
 namespace LogHubWebAPI.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20180722161934_added-setting")]
-    partial class addedsetting
+    [Migration("20180716025332_added-organization")]
+    partial class addedorganization
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,8 +36,6 @@ namespace LogHubWebAPI.Migrations
                 {
                     b.Property<string>("UserId")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("BandwidthSetting");
 
                     b.Property<string>("Email");
 
