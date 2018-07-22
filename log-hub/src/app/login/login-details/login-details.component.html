@@ -34,10 +34,11 @@
             </div>
         </mat-form-field>
     </form>
+    <p *ngIf="!validatedBoolean" class="col-md-12" style="text-align: center; color: #D44343">Invalid Credentials</p> 
     <div class="bottom-section">
         <a [routerLink]="['/login', { outlets:{loginPath: ['forgotPassword']}}]" class="text forget-button" (click)="forgetPassword()">Forget password?</a>
-        <button *ngIf="validatedBoolean" (click)="logIn()" mat-button class="login-button col-md-4" >Log In</button> 
-        <button *ngIf="!validatedBoolean" mat-button class="login-button col-md-4">Log In</button> 
+        <button  (click)="logIn()" mat-button class="login-button col-md-4" >Log In</button> 
+        
     </div>
   
 </div>

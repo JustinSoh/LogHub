@@ -1,0 +1,104 @@
+export class User {
+    private userId: string;
+    private password: string; 
+    private organizationId: string;
+    private email: string; 
+    private bandwidthSetting: Array<any>;
+
+
+	constructor($userId: string, $password: string, $organizationId: string, $email: string, $bandwidthSetting: Array<any>) {
+		this.userId = $userId;
+		this.password = $password;
+		this.organizationId = $organizationId;
+		this.email = $email;
+		this.bandwidthSetting = $bandwidthSetting;
+	}
+    
+
+    /**
+     * Getter $userId
+     * @return {string}
+     */
+	public get $userId(): string {
+		return this.userId;
+	}
+
+    /**
+     * Setter $userId
+     * @param {string} value
+     */
+	public set $userId(value: string) {
+		this.userId = value;
+	}
+
+
+    /**
+     * Getter $password
+     * @return {string}
+     */
+	public get $password(): string {
+		return this.password;
+	}
+
+    /**
+     * Setter $password
+     * @param {string} value
+     */
+	public set $password(value: string) {
+		this.password = value;
+	}
+
+    /**
+     * Getter $organizationId
+     * @return {string}
+     */
+	public get $organizationId(): string {
+		return this.organizationId;
+	}
+
+    /**
+     * Setter $organizationId
+     * @param {string} value
+     */
+	public set $organizationId(value: string) {
+		this.organizationId = value;
+	}
+
+    /**
+     * Getter $email
+     * @return {string}
+     */
+	public get $email(): string {
+		return this.email;
+	}
+
+    /**
+     * Setter $email
+     * @param {string} value
+     */
+	public set $email(value: string) {
+		this.email = value;
+    }
+    
+
+    /**
+     * Getter $bandwidthSetting
+     * @return {Array<any>}
+     */
+	public get $bandwidthSetting(): Array<any> {
+		return this.bandwidthSetting;
+	}
+
+    /**
+     * Setter $bandwidthSetting
+     * @param {Array<any>} value
+     */
+	public set $bandwidthSetting(value: Array<any>) {
+		this.bandwidthSetting = value;
+	}
+
+
+
+
+
+}
