@@ -52,10 +52,10 @@ export class BandwidthComponent implements OnInit, OnChanges {
     if (num <= this.lowTo) {
       return "Low"
     }
-    else if (num < this.mediumTo) {
+    else if (num <= this.mediumTo) {
       return "Medium"
     }
-    else if (num < this.highTo) {
+    else if (num <= this.highTo) {
       return "High"
     }
     else {
