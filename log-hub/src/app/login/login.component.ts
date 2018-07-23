@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
     this.loginBoolean = true;
     this.showLogin = true;
     
+    
   }
 
   loginActivated()

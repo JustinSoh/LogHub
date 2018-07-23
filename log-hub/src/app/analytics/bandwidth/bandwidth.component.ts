@@ -3,12 +3,13 @@ import { Chart } from 'node_modules/chart.js';
 import { FormsModule } from '@angular/forms'
 import { ViewEncapsulation } from '@angular/core';
 import { TouchSequence } from '../../../../node_modules/@types/selenium-webdriver';
+import { WebapiService } from '../../services/webapi.service';
+import { User } from '../../class/user';
 
 @Component({
   selector: 'app-bandwidth',
   templateUrl: './bandwidth.component.html',
   styleUrls: ['./bandwidth.component.css'],
-  encapsulation: ViewEncapsulation.None
 
 
 })
@@ -36,13 +37,64 @@ export class BandwidthComponent implements OnInit, OnChanges {
   private error: boolean = false;
   private errorMessage: string;
   private input = 79;
-  constructor() { }
+  private webApi :WebapiService;
+  private currentUser: User;
+  constructor(webapi:WebapiService) {
+    this.webApi = webapi;
 
-  ngOnInit() {
+   }
 
-    var currentBw = this.getCurrentBwBasedOnData(this.input);
-    this.setCurrentBandwidth(currentBw, this.input);
+  async ngOnInit() {
 
+   
+    this.webApi.user.subscribe(data => {
+        this.currentUser = data;
+    })
+    if(this.currentUser != null)
+    {
+      var currentSetting = this.currentUser.$bandwidthSetting;
+      if(currentSetting == "string")
+      {
+        console.log("testing");
+        this.currentUser.$bandwidthSetting =  this.lowFrom + "," + this.lowTo + "," + this.mediumFrom + "," + this.mediumTo + "," + this.highFrom + "," + this.highTo
+        console.log("testing");
+        
+      }
+      else {
+          var currentSetArray = currentSetting.split(",")
+          this.lowFrom = Number.parseInt(currentSetArray[0])
+          this.lowTo = Number.parseInt(currentSetArray[1])
+          this.mediumFrom = Number.parseInt(currentSetArray[2])
+          this.mediumTo = Number.parseInt(currentSetArray[3])
+          this.highFrom = Number.parseInt(currentSetArray[4])
+          this.highTo = Number.parseInt(currentSetArray[5])
+      }
+      var currentBw = this.getCurrentBwBasedOnData(this.input);
+      this.setCurrentBandwidth(currentBw, this.input);
+    }
+    else {
+      this.currentUser =  await this.webApi.getUser("string1"); 
+      var currentSetting = this.currentUser.$bandwidthSetting;
+      if(currentSetting == "string")
+      {
+        console.log("testing");
+        this.currentUser.$bandwidthSetting =  this.lowFrom + "," + this.lowTo + "," + this.mediumFrom + "," + this.mediumTo + "," + this.highFrom + "," + this.highTo
+        console.log("testing");
+        
+      }
+      else {
+          var currentSetArray = currentSetting.split(",")
+          this.lowFrom = Number.parseInt(currentSetArray[0])
+          this.lowTo = Number.parseInt(currentSetArray[1])
+          this.mediumFrom = Number.parseInt(currentSetArray[2])
+          this.mediumTo = Number.parseInt(currentSetArray[3])
+          this.highFrom = Number.parseInt(currentSetArray[4])
+          this.highTo = Number.parseInt(currentSetArray[5])
+      }
+      var currentBw = this.getCurrentBwBasedOnData(this.input);
+      this.setCurrentBandwidth(currentBw, this.input);
+    }
+    
   }
   ngOnChanges() {
     var currentBw = this.getCurrentBwBasedOnData(this.input);
@@ -82,15 +134,28 @@ export class BandwidthComponent implements OnInit, OnChanges {
       && this.highFrom >= 0 && this.highFrom <= 100
     ) {
       if (total == 100) {
-        this.error = false;
-        this.errorMessage = "";
-        this.lowThreshold = this.lowTo;
-        this.mediumThreshold = this.mediumTo;
-        this.highTreshold - this.highTo;
-
-        var currentBw = this.getCurrentBwBasedOnData(this.input);
-        this.chart = this.updateCurrentBandwidth(currentBw, this.input);
-        this.settings = false;
+        
+        if(this.lowFrom < this.lowTo && this.lowTo < this.mediumFrom && this.mediumFrom < this.mediumTo && this.mediumTo < this.highFrom && this.highFrom < this.highTo)
+        {
+          this.error = false;
+          this.errorMessage = "";
+          this.lowThreshold = this.lowTo;
+          this.mediumThreshold = this.mediumTo;
+          this.highTreshold - this.highTo;
+          
+          var Setting:Array<any> = new Array<any>();
+         
+          this.currentUser.$bandwidthSetting =  this.lowFrom + "," + this.lowTo + "," + this.mediumFrom + "," + this.mediumTo + "," + this.highFrom + "," + this.highTo
+          this.webApi.updateUser(this.currentUser.$userId , this.currentUser);
+          var currentBw = this.getCurrentBwBasedOnData(this.input);
+          this.chart = this.updateCurrentBandwidth(currentBw, this.input);
+          this.settings = false;
+          
+        }
+        else {
+          this.errorMessage = "Values are incorrect"
+          this.error = true;
+        }
       }
       else {
         this.errorMessage = "Values do not add up to 100%"
@@ -266,6 +331,7 @@ export class BandwidthComponent implements OnInit, OnChanges {
     var options = {
       responsive: true,
       maintainAspectRatio: true,
+      segmentShowStroke: false,
       legend: {
         display: false
       },
@@ -275,6 +341,11 @@ export class BandwidthComponent implements OnInit, OnChanges {
           color: color, //Default black
           fontStyle: 'Helvetica', //Default Arial
           sidePadding: 40 //Default 20 (as a percentage)
+          
+        },
+        arc: {
+          borderWidth: 3, 
+          borderColor: "#1a1a1a"
         }
       },
       tooltips: {

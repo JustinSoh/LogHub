@@ -3,10 +3,10 @@ export class User {
     private password: string; 
     private organizationId: string;
     private email: string; 
-    private bandwidthSetting: Array<any>;
+    private bandwidthSetting:string;
 
 
-	constructor($userId: string, $password: string, $organizationId: string, $email: string, $bandwidthSetting: Array<any>) {
+	constructor($userId: string, $password: string, $organizationId: string, $email: string, $bandwidthSetting: string) {
 		this.userId = $userId;
 		this.password = $password;
 		this.organizationId = $organizationId;
@@ -85,7 +85,7 @@ export class User {
      * Getter $bandwidthSetting
      * @return {Array<any>}
      */
-	public get $bandwidthSetting(): Array<any> {
+	public get $bandwidthSetting():string {
 		return this.bandwidthSetting;
 	}
 
@@ -93,7 +93,7 @@ export class User {
      * Setter $bandwidthSetting
      * @param {Array<any>} value
      */
-	public set $bandwidthSetting(value: Array<any>) {
+	public set $bandwidthSetting(value: string) {
 		this.bandwidthSetting = value;
 	}
 

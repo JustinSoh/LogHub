@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { WebapiService } from '../../../services/webapi.service';
 
 @Component({
   selector: 'app-analytics-nav',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AnalyticsNavComponent implements OnInit {
 
-  constructor() { }
+  private webApi:WebapiService;
+  constructor(webapi:WebapiService) {
+    this.webApi = webapi;
+   }
 
   ngOnInit() {
+    
   }
 
   public showCompareOutlet = false;

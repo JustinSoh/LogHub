@@ -3,6 +3,12 @@
     margin-top: 1%;
     margin-left: 2%;
     width: 98%;
+    height: 2vh !important;
+}
+
+.container-fluid {
+    background-color: #1a1a1a;
+    min-height: 94vh !important;
 }
 
 .main-button {
@@ -36,4 +42,9 @@ button {
 .container-fluid {
     height: auto;
     overflow-y: auto;
+}
+
+.header {
+    margin-top: 2%; 
+    color:#FAFAFA;
 }

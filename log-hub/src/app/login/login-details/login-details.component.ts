@@ -6,7 +6,7 @@ import { WebapiService } from '../../services/webapi.service';
 @Component({
   selector: 'app-login-details',
   templateUrl: './login-details.component.html',
-  styleUrls: ['./login-details.component.css']
+  styleUrls: ['./login-details.component.css'],
 })
 export class LoginDetailsComponent implements OnInit {
 
@@ -62,6 +62,7 @@ export class LoginDetailsComponent implements OnInit {
       if(this.username.value == element.$userId && this.hashedpw == element.$password)
       {
         this.validatedBoolean = true;
+        this.webApi.currentUserMethod(element);
         this.router.navigate(['/', 'home']);
       }
       else {

@@ -1,3 +1,9 @@
+body {
+    background-color: #1A1A1A;
+}
+
+
+
 .login-canvas {
     border-radius: 4px;
     margin: 0px auto;
@@ -9,14 +15,13 @@
     right: 0;
 }
 .white-area {
-    background-color: white;
+    background-color: #1a1a1a;
     height: 13%;
     border-radius: 30px;
     margin-bottom: 7%;
     vertical-align: bottom;
 }
 .blue-area {
-    background-color: #FAFAFA;
     height: 85%;
     border-radius: 30px;
 }
@@ -25,7 +30,8 @@
     position: relative; 
     padding: 0%;
     margin: 0%;
-    top: 10%;
+    top: 15%;
+    text-align: center;
 
 }
 
@@ -48,11 +54,25 @@
     color: #00A8FF;
 }
 .custom-button{
-    color: black;
+    color: #FAFAFA;
 }
 
 .button-active {
     color: #0072FF;
+}
+
+.title-name {
+    color: #0072FF;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.title-name2 {
+    font-size: 40px;
+    color: #FAFAFA;
+   
+
+    
 }
 
 .dividing-line {
@@ -70,6 +90,20 @@
 
 a {
     text-decoration: none;
+}
+
+.icon {
+    font-size: 50px;
+    color: black;
+    border-radius: 50%;
+
+}
+
+.logo {
+    text-align: center;
+    font-size: 2em;
+    position: relative; 
+    bottom: 15px;
 }
 
 

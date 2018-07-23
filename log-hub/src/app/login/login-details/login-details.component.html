@@ -1,44 +1,49 @@
 <div class="login-section">
     <form class="login-form">
-        <mat-form-field class="username-field">
+        <div >
+        <div class="username-field">
           <div style="display: inline-block; width:100%;">
             <input 
-                style="color:black" 
+                style="color:#fafafa" 
                 placeholder="username" 
-                class ="input login-input" 
+                class ="input login-input form-control" 
                 [formControl]="username"
                 type="string" 
                 name="username" 
                 (input)="validateUser()"
                 required
-                matInput>
+                autocomplete="off"
+                (keyup.enter)="logIn()"
+                >
           </div>
-        </mat-form-field>
-
-        <br>
-        <mat-form-field class="password-field">
+        </div>
+        </div>
+        <div class="password-field">
             <div style="display: inline-block; width: 100%">
                 <input 
                   id="password"
                   name="password"
                   [formControl]="password"
-                  style="color:black" 
+                  style="color:#fafafa" 
                   placeholder="password" 
-                  class="input password-input"
+                  class="input password-input form-control"
                   type="password"
                   name="password"
                   (input)="passwordHash(password.value)"
                   required
-                  matInput 
+                  autocomplete="off"
+                  (keyup.enter)="logIn()"
+                   
                   >
             </div>
-        </mat-form-field>
+        </div>
     </form>
-    <p *ngIf="!validatedBoolean" class="col-md-12" style="text-align: center; color: #D44343">Invalid Credentials</p> 
     <div class="bottom-section">
-        <a [routerLink]="['/login', { outlets:{loginPath: ['forgotPassword']}}]" class="text forget-button" (click)="forgetPassword()">Forget password?</a>
-        <button  (click)="logIn()" mat-button class="login-button col-md-4" >Log In</button> 
-        
+        <button  (click)="logIn()" mat-button class="login-button col-md-12" >Log In</button> 
+        <br>
+        <!-- <a [routerLink]="['/login', { outlets:{loginPath: ['forgotPassword']}}]" class="text forget-button" (click)="forgetPassword()">Forget password?</a> -->
+        <p *ngIf="!validatedBoolean" class="col-md-12" style="text-align: center; color: #D44343; padding: 1% 0% 1% 0%; margin:0px">Invalid Username or Password</p> 
+
     </div>
   
 </div>

@@ -1,12 +1,12 @@
 .navbar-dark {
-    background-color: #FAFAFA;
+    background-color: #262626;
 }
 .navbar-dark .navbar-nav .nav-link{
-    color: black;
+    color: #FAFAFA;
 }
 
 .navbar-dark .navbar-brand{
-    color: black;
+    color: #FAFAFA;
 }
 
 a:hover {
@@ -23,7 +23,7 @@ a:hover {
 }
 
 .title-name2 {
-    color: black
+    color: #FAFAFA
 }
 
 .links-bar {
