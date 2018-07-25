@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { WebapiService } from '../services/webapi.service';
 
 @Component({
   selector: 'app-main',
@@ -6,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./main.component.css']
 })
 export class MainComponent implements OnInit {
-
-  constructor() { }
+  private webApi:WebapiService
+  constructor(webApi:WebapiService) {
+    this.webApi = webApi
+   }
 
   ngOnInit() {
+   
   }
 
 }

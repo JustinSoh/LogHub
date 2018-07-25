@@ -1,71 +1,164 @@
-.modal-body>p {
-    margin-bottom: -3px;
-}
-
 .container {
-    border: 1px solid;
-    border-radius: 30px;
     float: left;
-    width: 65%; 
-    margin-left: 5%;
+    width: 68%;
+    height: 230px;
+    margin-top: 1%;
+    margin-left: 2%;
 }
 
-.chart-container { 
-    width: 900px;
-    height: 400px;
+.webpage-information {
+    float: left;
+    margin-top: 2%;
+    margin-left: 2%;
+    width: 68%;
 }
-
-.row {
-    margin-top: 5%;
-}
-
-.doughnut-container {
+.line-canvas-container { 
     width: 100%;
     height: 100%;
 }
 
-.container2 {
-    margin-top: 7%;
-    margin-left: 2%;
-    width: 23%;
-    float: left;
-    border: 1px solid;
-    border-radius: 30px;
+.cpu-container {
+    width: 100%;
+    height: 100%;
 }
 
-canvas {
-    color: yellow
+.doughnut-canvas-container {
+    width: 50%;
+    margin-left: -10%;
+    float: left;
+}
+
+.container2 {
+    margin-top: 2%;
+    margin-left: 3%;
+    width: 23%;
+    float: left;
+    border: 2px solid;
+    border-color: rgb(54, 54, 54);
 }
 
 .header {
-    background-color: rgb(40, 72, 255);
     color: white;
     font-size: 20px;
-    border-radius:  30px 30px 0px 0px;
-    width: 103.5%;
-    margin-left: -1.75%;
-    padding: 5px 5px 5px 20px;
+    font-weight: bold;
+    padding-left: 10px;
 }
 
-.header2 {
-    background-color: rgb(40, 72, 255);
+.subtext {
+    color: rgb(136, 136, 136);
+    padding-left: 10px;
+    font-size: 14px;
+    margin-top: -10px;
+}
+
+.cpu-info {
     color: white;
+    float: left;
+}
+
+.cpu-average-percentage {
+    font-size: 38px;
+}
+
+.cpu-average-percentage > span {
+    font-size: 18px;
+}
+
+.average-usage-text {
+    font-size: 14px;
+    color: rgb(136, 136, 136);
+    margin-top: -10px;
+}
+
+.cpu-first, .cpu-second {
+    float: left;
+    width: 33%;
+    color: white;
+    padding-left: 10px;
+}
+
+.cpu-third {
+    width: auto;
+    color: white;
+    float: left;
+    padding-left: 10px;
+}
+
+.ranking-headers {
+    font-size: 16px;
+}
+
+.ranking-percentage {
+    color: rgb(136, 136, 136);
+}
+
+.event-log-header {
+    color: white;
+    padding-left: 10px;
+    font-size: 16px;
+    margin-top: -10px;
+}
+
+.event-log-description {
+    color: rgb(136, 136, 136);
+    padding-left: 10px;
+    font-size: 14px;
+    margin-top: -20px;
+    line-height: 18px;
+}
+
+h2 {
+    display: flex;
+    align-items: left;
+    justify-content: left;
+    margin-top: 20px;
+} 
+
+h2 > span { 
+    color: rgb(136, 136, 136);
+    font-size: 14px;
+    padding-right: 10px;
+}
+
+h2:after {
+  background: rgb(54, 54, 54);
+  height: 1px;
+  margin-top: 10px;
+  flex: 1;
+  content: '';
+}
+
+h2:before {
+    background: none
+}
+
+i {
+    font-size: 12px;
+    color: rgb(136, 136, 136);
+}
+
+.threat-level-container {
+    float: left;
+    margin-top: 2%;
+    margin-left: 2%;
+    width: 68%;
+}
+
+.event-threat, .cpu-threat {
+    float: left;
+    width: 33%;
+}
+
+.chrome-threat {
+    float: left;
+    width: auto;
+}
+
+.threat-headers {
     font-size: 20px;
-    border-radius: 30px 30px 0px 0px;
-    width: 100%;
-    padding: 5px 5px 5px 20px;
+    color: white;
 }
 
-#btn {
-    margin-left: 1%;
-}
-
-.info {
-    text-align: center;
-    margin-top: 5%;
-}
-
-.info:hover {
-    text-decoration: underline;
-    cursor: pointer;
+.threat-level {
+    font-size: 30px;
 }

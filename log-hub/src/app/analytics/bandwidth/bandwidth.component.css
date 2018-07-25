@@ -38,11 +38,10 @@
 .format-button{
     outline: none !important;
     border: none !important;
-    background-color: white;
     margin-left: 2%;
     margin-right: 2%;
-    color: #0072FF;
-    min-width: 5%;
+    color: #FAFAFA;
+    width:auto;
     display: inline-block;
 }
 
@@ -55,6 +54,11 @@
     text-align: left;
 }
 
+.color {
+    color: #FAFAFA;
+}
+
+
 .settings {
     width: 20% ; 
     height: 30%; 
@@ -64,23 +68,57 @@
     left: 50%;
     /* bring your own prefixes */
     transform: translate(-50%, -50%);
-    background-color: grey;
+    background-color: #262626 !important;
     border-radius: 3px
 }
 
-.inputClass {
-    width: auto;
-    max-width: 48%;
-    display: inline-block
+.settingsClass {
+    background-color: #262626 !important;
+
 }
+
+.inputClass {
+    width: 40%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    border: 0px; 
+    outline: 0px;
+    display: inline-block;
+    background-color: #1a1a1a;
+    color: #fafafa;
+}
+.inputClass:focus {
+    width: 40%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    border: 0px; 
+    outline: 0px;
+    display: inline-block;
+    background-color: #1a1a1a;
+    color: #fafafa;
+}
+
 
 .submitButton {
     width: 100%;
-    background-color: #0072FF;
-    color: white;
+    color: #fafafa;
+    
+    background: #0072FF
+}
+
+.textField {
+    vertical-align: middle; 
+    text-align: center;
+    line-height: 50px;
+    
 }
 
 ::ng-deep .matInput{
     width: 100px !important; 
     color: orange;
+}
+
+.card-style {
+    border-radius: 30px;
+    background: #262626;
 }

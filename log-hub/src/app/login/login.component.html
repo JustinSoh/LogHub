@@ -1,5 +1,6 @@
+<!-- <div class="container-fluid">
 <div class="row">
-  <div class="col-md-5"></div>
+  <div class="col-md-5" ></div>
 
   <div class="login-canvas col-md-4">
     <div class="white-area">
@@ -10,10 +11,29 @@
       </div>
     </div>
     <div class="blue-area">
-        <!-- <app-login-details *ngIf="showLogin"></app-login-details>
-        <app-registration-details *ngIf="showRegistration"></app-registration-details> -->
         <router-outlet name="loginPath"></router-outlet>
     </div>
   </div> 
   <div class="col-md-5"></div>
+</div>
+</div> -->
+<div class="container-fluid" style="background-color: #1a1a1a; height: 100vh; width: 100vw">
+    <div class="row">
+        <div class="col-md-5" ></div>
+      
+        <div class="login-canvas col-md-4">
+          <div class="white-area">
+            <div class="type-header row ">
+                  <a disabled class="navbar-brand logo col-sm-12"  href="#"><span class="title-name">LOG</span><span class="title-name2">HUB</span></a>
+                  <!-- <a [routerLink]="['/login', { outlets:{loginPath: ['loginDetails']}}]" id="login-button" class="headline custom-button" [ngClass]="{'button-active': loginBoolean}" (click)="loginActivated()">Login</a> -->
+                  <!-- <p class="headline dividing-line">/</p> -->
+                  <!-- <a [routerLink]="['/login', { outlets:{loginPath: ['register']}}]" id="register-button" class="headline custom-button" [ngClass]="{'button-active': registerBoolean}" (click)="registrationActivated()">   Register</a> -->
+            </div>
+          </div>
+          <div class="blue-area">
+              <router-outlet name="loginPath"></router-outlet>
+          </div>
+        </div> 
+        <div class="col-md-5"></div>
+      </div>
 </div>

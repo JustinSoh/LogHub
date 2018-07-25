@@ -6,7 +6,7 @@ import { WebapiService } from '../../services/webapi.service';
 @Component({
   selector: 'app-login-details',
   templateUrl: './login-details.component.html',
-  styleUrls: ['./login-details.component.css']
+  styleUrls: ['./login-details.component.css'],
 })
 export class LoginDetailsComponent implements OnInit {
 
@@ -25,7 +25,7 @@ export class LoginDetailsComponent implements OnInit {
   password = new FormControl('', [Validators.required]);
   private hashedpw = "";
   public forgetBoolean;
-  public validatedBoolean;
+  public validatedBoolean = true;
   public require:any;
   
   public hashpw(passwd):string
@@ -50,15 +50,26 @@ export class LoginDetailsComponent implements OnInit {
     {
       //do some test 
       this.usernameB = true;
-      this.finalValidation()
+      //this.finalValidation()
 
     }
   }
 
-  logIn()
+  async logIn()
   {
-    this.webApi.getAllUsers()
-    //this.router.navigate(['/', 'home']);
+    var listOfUser = await this.webApi.getAllUsers();
+    listOfUser.forEach(element => {
+      if(this.username.value == element.$userId && this.hashedpw == element.$password)
+      {
+        this.validatedBoolean = true;
+        this.webApi.currentUserMethod(element);
+        this.router.navigate(['/', 'home']);
+      }
+      else {
+        this.validatedBoolean = false;
+      }
+    });
+    //
   }
 
   passwordHash(passwd)
@@ -67,7 +78,7 @@ export class LoginDetailsComponent implements OnInit {
     if(this.password.valid)
     {
       this.passwordB = true;
-      this.finalValidation();
+      //this.finalValidation();
     }
   }
 

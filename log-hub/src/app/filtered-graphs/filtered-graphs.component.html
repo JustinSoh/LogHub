@@ -1,79 +1,75 @@
 <div>
-  <div class="container" style="margin-top: 7%">
-    <div class="header">Frequency Charts</div>
-    <ng-template #content let-c="close" let-d="dismiss">
-      <div class="modal-header">
-        <h4 class="model-title">Details on {{ category }}</h4>
-        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>
-          <span style="font-size: 14px">{{ modalLabel }}</span>
-          <span style="font-size: 14px; font-weight: bold"> {{ category }}:</span>
-          <span style="font-size: 16px"> {{ currentData }}</span>
+  <div class="container2">
+    <div class="cpu-container">
+      <div class="cpu">
+        <p class="header" style="padding-top: 5px">CPU
+          <i class="fa fa-info-circle" aria-hidden="true"></i>
         </p>
-        <hr>
-        <h2>Files</h2>
-        <p>lorem.exe</p>
-        <p>ipsum.exe</p>
-        <p>dium.dll</p>
-        <p>file.txt</p>
-        <p>idk.dll</p>
-        <br>
-        <a href="#">view all files related to {{category}}</a>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">Close</button>
-      </div>
-    </ng-template>
-    <div class="row">
-      <div class="col">
-        <div ngbDropdown class="d-inline-block">
-          <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Type of logs</button>
-          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-            <button class="dropdown-item" (click)="applicationClick()">Application</button>
-            <button class="dropdown-item" (click)="eventClick()">Event</button>
-            <button class="dropdown-item" (click)="processClick()">Process</button>
-          </div>
+        <p class="subtext">Average activity of the selected session</p>
+        <div class="doughnut-canvas-container">
+          <canvas id="doughnut-canvas" class="chartjs-render-monitor"></canvas>
         </div>
-        <div ngbDropdown class="d-inline-block" *ngIf="toggle" style="margin-left: 3%">
-          <button class="btn btn-outline-primary" id="dropdownBasic2" ngbDropdownToggle>Sort CPU usage by</button>
-          <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
-            <button class="dropdown-item" (click)="cpuClick()">Time</button>
-            <button class="dropdown-item" (click)="cpuAppClick()">Application</button>
-          </div>
+        <div class="cpu-info">
+          <span class="cpu-average-percentage">{{cpuAverage}}
+            <span>%</span>
+          </span>
+          <p class="average-usage-text">Average CPU Usage</p>
         </div>
-        <div ngbDropdown class="d-inline-block" *ngIf="toggle2" style="margin-left: 3%">
-          <button class="btn btn-outline-primary" id="dropdownBasic2" ngbDropdownToggle>Sort battery usage by</button>
-          <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
-            <button class="dropdown-item" (click)="batteryClick()">Time</button>
-            <button class="dropdown-item" (click)="batteryAppClick()">Application</button>
-          </div>
+        <div class="cpu-first">
+          <span class="ranking-headers">{{cpuFirst}}</span>
+          <p class="ranking-percentage">{{firstPercentage}}</p>
+        </div>
+        <div class="cpu-second">
+          <span class="ranking-headers">{{cpuSecond}}</span>
+          <p class="ranking-percentage">{{secondPercentage}}</p>
+        </div>
+        <div class="cpu-third">
+          <span class="ranking-headers">{{cpuThird}}</span>
+          <p class="ranking-percentage">{{thirdPercentage}}</p>
+          <br>
         </div>
       </div>
-    </div>
-    <div class="chart-container">
-      <canvas id="canvas" width="300" height="123" class="chartjs-render-monitor" (click)="graphClick($event, content)"></canvas>
+      <div class="event">
+        <p class="header">Event Viewer
+          <i class="fa fa-info-circle" aria-hidden="true"></i>
+        </p>
+        <p class="subtext">Recently logged events</p>
+        <p class="event-log-header">{{firstTitle}}</p>
+        <p class="event-log-description">{{firstDesc}}</p>
+        <p class="event-log-header">{{secondTitle}}</p>
+        <p class="event-log-description">{{secondDesc}}</p>
+        <p class="event-log-header">{{thirdTitle}}</p>
+        <p class="event-log-description">{{thirdDesc}}</p>
+      </div>
     </div>
   </div>
-  <div class="container2">
-    <div class="header2">Usage Overview</div>
-    <div class="row" id="btn">
-      <div class="col">
-        <div ngbDropdown class="d-inline-block">
-          <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>CPU/Battery</button>
-          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-            <button class="dropdown-item" (click)="createDoughnut()">CPU Usage</button>
-            <button class="dropdown-item" (click)="createDoughnut2()">Battery Usage</button>
-          </div>
-        </div>
-      </div>
+  <div class="webpage-information">
+    <span class="subtext" style="padding: 0">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</span>
+    <h2>
+      <span>CPU USAGE</span>
+    </h2>
+  </div>
+  <div class="container">
+    <div class="line-canvas-container">
+      <canvas id="canvas" class="chartjs-render-monitor"></canvas>
     </div>
-    <div class="doughnut-container">
-      <canvas #canvas2 id="canvas2" width="800" height="450" class="chartjs-render-monitor"></canvas>
-      <div class="info" (click)="info()">more information</div>
+  </div>
+  <div class="threat-level-container">
+    <h2 style="margin-top: 0">
+      <span>RISK LEVELS</span>
+    </h2>
+    <div class="event-threat">
+      <p class="threat-headers">Event</p>
+      <p class="threat-level" style="color: #86B34D">{{eventRisk}}</p>
+    </div>
+    <div class="cpu-threat">
+      <p class="threat-headers">CPU</p>
+      <p class="threat-level" style="color: #E66C40">{{cpuRisk}}</p>
+    </div>
+    <div class="chrome-threat">
+      <p class="threat-headers">Chrome</p>
+      <p class="threat-level" style="color: #D03F4C">{{chromeRisk}}</p>
     </div>
   </div>
 </div>

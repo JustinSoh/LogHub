@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Management;
+using System.Net;
 using System.Net.Http;
+using System.Net.Sockets;
 using System.Security.Permissions;
 using System.ServiceProcess;
 using System.Threading;
@@ -58,6 +60,10 @@ namespace LogHubEndpointLogsExtractionVer3
             this.thirtySecondTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.thirtySecondTimer_tick);
             thirtySecondTimer.Enabled = true;
             Library.WriteErrorLog("LogHub has started.");
+
+            // Get hostname & ip address
+            Library.WriteErrorLog("Hostname: " + getHostname());
+            getIpAddress();
 
         }
 
@@ -282,6 +288,33 @@ namespace LogHubEndpointLogsExtractionVer3
             Library.WriteErrorLog("USB{Removed}");
         }
 
+        static string getHostname()
+        {
+            string cmd = "/c hostname";
+            System.Diagnostics.Process proc = new System.Diagnostics.Process();
+            proc.StartInfo.FileName = "cmd.exe";
+            proc.StartInfo.Arguments = cmd;
+            proc.StartInfo.UseShellExecute = false;
+            proc.StartInfo.RedirectStandardOutput = true;
+            proc.StartInfo.CreateNoWindow = true;
+            proc.Start();
+            string hostname = proc.StandardOutput.ReadToEnd();
+            proc.Close();
+            return hostname;
+        }
+
+        static void getIpAddress()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    Library.WriteErrorLog("IPv4: " + ip.ToString());
+                }
+            }
+        }
+
 
         // 24.5.18
         // Did functions to let LogHub log extraction to run on startup and getCpuUsage()
@@ -336,5 +369,9 @@ namespace LogHubEndpointLogsExtractionVer3
         // 19.7.18
         // Added function to get established connections from host with port number, to external IPs
         // Added function to detect insertion/removal of external devices
+
+        // 23.7.18
+        // Added function to send hostname and ip address of workstation.
+        // They will be sent every time Loghub starts.
     }
 }
