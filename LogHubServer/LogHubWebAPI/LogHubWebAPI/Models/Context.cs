@@ -13,7 +13,7 @@ namespace LogHubWebAPI.Models
 
         public DbSet<User> Users { get; set; }
         public DbSet<Organization> Organizations { get; set; }
-      
+        public DbSet<OverallBandwidth> OverallBandwidth { get; set; }
 
       
     }

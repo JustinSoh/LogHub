@@ -57,8 +57,7 @@ namespace LogHubWebAPI
 
 
             app.UseCors(builder =>
-            builder.WithOrigins("https://localhost:50492" , "http://localhost:50492" , "https://localhost:4200", "http://localhost:4200"));
-
+            builder.WithHeaders("GET" , "POST", "PUT" , "DELETE"));
             app.UseMvc();
         }
     }
