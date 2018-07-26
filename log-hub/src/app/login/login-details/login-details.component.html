@@ -41,6 +41,8 @@
     <div class="bottom-section">
         <button  (click)="logIn()" mat-button class="login-button col-md-12" >Log In</button> 
         <br>
+        <br>
+        <a id="register-button" class="text custom-button" [routerLink]="['/login', { outlets:{loginPath: ['register']}}]">Create an account now?</a>
         <!-- <a [routerLink]="['/login', { outlets:{loginPath: ['forgotPassword']}}]" class="text forget-button" (click)="forgetPassword()">Forget password?</a> -->
         <p *ngIf="!validatedBoolean" class="col-md-12" style="text-align: center; color: #D44343; padding: 1% 0% 1% 0%; margin:0px">Invalid Username or Password</p> 
 

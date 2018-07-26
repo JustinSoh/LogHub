@@ -19,4 +19,14 @@ export class OrganizationService {
   getOrgs() {
     return this.orgs;
   }
+
+  convertOrg(data)
+  {
+    var organizationId = data['organizationID']
+    var organizationName = data['organizationName']
+    var pin = data['securePinCode']
+  
+    var user = new Organization(organizationId , organizationName , pin);
+    return user
+  }
 }

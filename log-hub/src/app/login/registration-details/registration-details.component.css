@@ -1,0 +1,48 @@
+.container-fluid{
+    width: 100%; 
+    min-height: 20vh;
+    height: 100%;
+    background-color: #1a1a1a;
+}
+
+.form-control {
+    background-color: #262626;
+    border: 0px;
+    color: #1a1a1a;
+}
+
+.errorClass {
+    color: #fafafa;
+}
+
+.custom-select {
+    background-color: #262626;
+    outline: none !important;
+    border: 0px solid transparent;
+    box-shadow: none !important;
+    color: #616A72;
+}
+
+input {
+    outline: none !important;
+    border: 0px solid transparent;
+    box-shadow: none !important;
+}
+
+.text {
+    margin-top: 2% !important; 
+    color: #fafafa !important;
+}
+
+.bottom-section{
+    width:100%;
+    margin-top:3%;
+    display: inline-block;
+}
+
+
+.login-button {
+    float:right;
+    background-color: #0072FF;
+    color: #fafafa;
+}

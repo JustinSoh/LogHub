@@ -3,6 +3,7 @@ import { hasha }  from 'node_modules/crypto-js'
 import {FormControl, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { WebapiService } from '../../services/webapi.service';
+import { UserService } from '../../services/user.service';
 @Component({
   selector: 'app-login-details',
   templateUrl: './login-details.component.html',
@@ -12,9 +13,11 @@ export class LoginDetailsComponent implements OnInit {
 
   private router:Router;
   private webApi:WebapiService 
-  constructor(router:Router , webapi:WebapiService) { 
+  private userService:UserService;
+  constructor(router:Router , webapi:WebapiService , userService:UserService) { 
     this.router = router;
     this.webApi = webapi;
+    this.userService = userService;
   }
   public SHA512;
   ngOnInit() {
@@ -57,22 +60,24 @@ export class LoginDetailsComponent implements OnInit {
 
   async logIn()
   {
-    var listOfUser = await this.webApi.getAllUsers();
-    listOfUser.forEach(element => {
-      if(this.username.value == element.$userId && this.hashedpw == element.$password)
-      {
-        this.validatedBoolean = true;
-        this.webApi.currentUserMethod(element);
-        this.router.navigate(['/', 'home']);
-      }
-      else {
-        this.validatedBoolean = false;
-      }
+    var listOfUser = this.userService.getUsers().subscribe(data => {
+      console.log(data);
     });
+    // listOfUser.forEach(element => {
+    //   if(this.username.value == element.$userId && this.hashedpw == element.$password)
+    //   {
+    //     this.validatedBoolean = true;
+    //     this.webApi.currentUserMethod(element);
+    //     this.router.navigate(['/', 'home']);
+    //   }
+    //   else {
+    //     this.validatedBoolean = false;
+    //   }
+    // });
     //
   }
 
-  passwordHash(passwd)
+  public passwordHash(passwd)
   {
     this.hashpw(passwd);
     if(this.password.valid)

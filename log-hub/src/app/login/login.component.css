@@ -18,7 +18,6 @@ body {
     background-color: #1a1a1a;
     height: 13%;
     border-radius: 30px;
-    margin-bottom: 7%;
     vertical-align: bottom;
 }
 .blue-area {
@@ -27,10 +26,8 @@ body {
 }
 
 .type-header {
-    position: relative; 
     padding: 0%;
     margin: 0%;
-    top: 15%;
     text-align: center;
 
 }

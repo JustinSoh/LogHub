@@ -14,7 +14,7 @@ export class ChangeDetailsComponent implements OnInit {
   errorMessage = "";
   passwordBoolean = false
   constructor() { }
-  hashedCode = new LoginDetailsComponent(null,null);
+  hashedCode = new LoginDetailsComponent(null,null , null);
   ngOnInit() {
   }
   

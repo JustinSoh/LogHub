@@ -18,5 +18,24 @@ export class UserService {
   getUsers() {
     return this.users;
   }
+
+  formatUsers(allUserUn) {
+    var allUser = Array<User>();
+    this.users.forEach(element => {
+      allUser.push(this.convertUser(element))
+    });
+    return allUser
+  }
+
+  convertUser(data)
+  {
+    var userId = data['userId']
+    var password = data['password']
+    var email = data['email']
+    var organizationId = data['organizationId']
+    var bandwidthSetting = data['bandwidthSetting']
+    var user = new User(userId, password , email , organizationId , bandwidthSetting);
+    return user;
+  }
 }
 

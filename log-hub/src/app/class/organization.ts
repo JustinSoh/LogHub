@@ -1,31 +1,35 @@
 export class Organization {
     private organizationId: string;
     private organizationName: string;
+    private securePinCode: string;
 
-	constructor($organizationId: string, $organizationName: string) {
-        this.organizationId = $organizationId;
-        this.organizationName = $organizationName;
+
+	constructor($organizationId: string, $organizationName: string, $securePinCode: string) {
+		this.organizationId = $organizationId;
+		this.organizationName = $organizationName;
+		this.securePinCode = $securePinCode;
 	}
     
+
     /**
-     * Getter $orgId
+     * Getter $organizationId
      * @return {string}
      */
 	public get $organizationId(): string {
-		return this.organizationId
+		return this.organizationId;
 	}
 
     /**
-     * Setter $orgId
+     * Setter $organizationId
      * @param {string} value
      */
 	public set $organizationId(value: string) {
 		this.organizationId = value;
 	}
-
+    
 
     /**
-     * Getter $orgname
+     * Getter $organizationName
      * @return {string}
      */
 	public get $organizationName(): string {
@@ -33,10 +37,27 @@ export class Organization {
 	}
 
     /**
-     * Setter $orgname
+     * Setter $organizationName
      * @param {string} value
      */
 	public set $organizationName(value: string) {
 		this.organizationName = value;
 	}
+
+    /**
+     * Getter $securePinCode
+     * @return {number}
+     */
+	public get $securePinCode(): string {
+		return this.securePinCode;
+	}
+
+    /**
+     * Setter $securePinCode
+     * @param {number} value
+     */
+	public set $securePinCode(value: string) {
+		this.securePinCode = value;
+	}
+
 }

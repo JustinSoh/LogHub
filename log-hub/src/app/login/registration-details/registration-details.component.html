@@ -1,3 +1,80 @@
-<p>
-  registration-details works!
-</p>
+<div class="container-fluid">
+    <p class="title1" style="color: #fafafa ">Account Creation</p>
+    <form class="login-form">
+        <div class="username-field row">
+          <div style="display: inline-block;" class="col-sm-12">
+            <input 
+                style="color:#fafafa" 
+                placeholder="Username" 
+                class ="input login-input form-control" 
+                [formControl]="username" 
+                type="string" 
+                name="username" 
+                required
+                autocomplete="off"
+                (keyup.enter)="logIn()"
+                appForbiddenName="bob"
+                [ngClass]="{'has-error':error }"
+                >
+          </div>
+          
+        </div>
+        
+        <div class="password-field">
+            <div style="display: inline-block; width: 100%; margin-top: 2%; ">
+                <input 
+                  id="password"
+                  [formControl]="password"
+                  style="color:#fafafa" 
+                  placeholder="Password" 
+                  class="input password-input form-control"
+                  type="password"
+                  name="password"
+                  (input)="passwordHash(password.value)"
+                  required
+                  autocomplete="off"
+                  (keyup.enter)="logIn()"
+                   
+                  >
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 2%">
+          <div class="organization-field col-sm-8" >
+              <div style="display: inline-block; width:100%;">
+                  <select class="custom-select mr-sm-2"  [formControl]="organizationName" type="string" name="organizationName" (change)="logIn()"  >
+                      <option [selected]="true" [value]=null>Select Organization ...</option>
+                      <option *ngFor="let name of organizationNames" [value]="name.$organizationId" required >{{name.$organizationName}}</option>
+                    </select> 
+              </div>
+          </div>
+          <div class="pin-field col-sm-4">
+              <div style="display: inline-block; width: 100%; ">
+                  <input 
+                    id="pin"
+                    [formControl]="pin"
+                    style="color:#fafafa" 
+                    placeholder="Pin" 
+                    class="input password-input form-control"
+                    type="password"
+                    name="pin"
+                    (input)="pinHash(pin.value)"
+                    required
+                    autocomplete="off"
+                    (keyup.enter)="logIn()"
+                    >
+              </div>
+          </div>
+        </div>
+        
+    </form>
+
+    <div class="bottom-section">
+        <button  (click)="logIn()" mat-button class="login-button col-md-12" >Create Account</button> 
+        <!-- <a [routerLink]="['/login', { outlets:{loginPath: ['forgotPassword']}}]" class="text forget-button" (click)="forgetPassword()">Forget password?</a> -->
+        <div *ngIf="error">
+            <p class="errorClass">{{errorMessage}}</p>
+        </div>
+    </div>
+    
+</div>
