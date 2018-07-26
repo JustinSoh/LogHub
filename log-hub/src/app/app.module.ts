@@ -30,11 +30,19 @@ import { CPUChartOverview } from './analytics/modules/cpu-chart-overview/cpu-cha
 import { CpuChartDetailComponent } from './analytics/modules/cpu-chart-detail/cpu-chart-detail.component';
 import { CpuChartHostComponent } from './analytics/modules/cpu-chart-host/cpu-chart-host.component';
 import { BandwidthComponent } from './analytics/bandwidth/bandwidth.component';
-import {MatCardModule} from '@angular/material/card';
-import {ViewEncapsulation } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
+import { ViewEncapsulation } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { WebapiService } from './services/webapi.service';
+import { environment } from '../environments/environment';
+import { AngularFireModule } from 'angularfire2'
 
+export const firebaseConfig = environment.firebaseConfig;
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+
+import { UserService } from './services/user.service';
+import { OrganizationService } from './services/organization.service';
+import { BandwidthService } from './services/bandwidth.service';
 
 @NgModule({
   declarations: [
@@ -76,9 +84,10 @@ import { WebapiService } from './services/webapi.service';
     ChartsModule,
     MatCardModule,
     HttpClientModule,
-
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFirestoreModule
   ],
-  providers: [AppRoutingModule],
+  providers: [AppRoutingModule, UserService, OrganizationService, BandwidthService],
   bootstrap: [AppComponent],
 
 })

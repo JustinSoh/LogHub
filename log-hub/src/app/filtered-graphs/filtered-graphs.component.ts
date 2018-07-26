@@ -1,6 +1,9 @@
 import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import * as Chart from 'chart.js'
+import { UserService } from '../services/user.service';
+import { OrganizationService } from '../services/organization.service';
+import { BandwidthService } from '../services/bandwidth.service'; 
 
 @Component({
   selector: 'app-filtered-graphs',
@@ -234,7 +237,7 @@ export class FilteredGraphsComponent implements OnInit {
     }
   }
 
-  constructor(private modalService: NgbModal, private elementRef: ElementRef) {
+  constructor(private modalService: NgbModal, private elementRef: ElementRef, private userService: UserService, private orgService: OrganizationService, private bwService: BandwidthService) {
     this.cpuAverage = "67";
     this.cpuFirst = "chrome";
     this.cpuSecond = "svchost";
@@ -264,6 +267,15 @@ export class FilteredGraphsComponent implements OnInit {
   ngOnInit() {
     this.createLineChart();
     this.createDoughnut();
+    this.userService.getUsers().subscribe(users => {
+      console.log(users);
+    })
+    this.bwService.getBandwidth().subscribe(bw => {
+      console.log(bw);
+    })
+    this.orgService.getOrgs().subscribe(orgs => {
+      console.log(orgs);
+    })
   }
 }
 
