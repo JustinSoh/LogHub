@@ -1,12 +1,12 @@
 export class Bandwidth {
     private bandwidthId: string;
-    private included: boolean; 
-    private time: string;
+    private included: string; 
+    private time: Date;
     private usage: string; 
-    private riskScore: number;
+    private riskScore: string;
 
 
-	constructor($bandwidthId: string, $included: boolean, $time: string, $usage: string, $riskScore: number) {
+	constructor($bandwidthId: string, $included: string, $time: Date, $usage: string, $riskScore: string) {
         this.bandwidthId = $bandwidthId;
         this.included = $included;
         this.time = $time;
@@ -33,33 +33,33 @@ export class Bandwidth {
 
     /**
      * Getter $included
-     * @return {boolean}
+     * @return {string}
      */
-	public get $included(): boolean {
+	public get $included(): string {
 		return this.included;
 	}
 
     /**
      * Setter $included
-     * @param {boolean} value
+     * @param {string} value
      */
-	public set $included(value: boolean) {
+	public set $included(value: string) {
 		this.included = value;
 	}
 
     /**
      * Getter $time
-     * @return {string}
+     * @return {Date}
      */
-	public get $time(): string {
+	public get $time(): Date {
 		return this.time;
 	}
 
     /**
      * Setter $time
-     * @param {string} value
+     * @param {Date} value
      */
-	public set $time(value: string) {
+	public set $time(value: Date) {
 		this.time = value;
 	}
 
@@ -82,17 +82,17 @@ export class Bandwidth {
 
     /**
      * Getter $riskScore
-     * @return {number}
+     * @return {string}
      */
-	public get $riskScore():number {
+	public get $riskScore():string {
 		return this.riskScore;
 	}
 
     /**
      * Setter $riskScore
-     * @param {number} value
+     * @param {string} value
      */
-	public set $riskScore(value: number) {
+	public set $riskScore(value: string) {
 		this.riskScore = value;
 	}
 
