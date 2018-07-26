@@ -2,6 +2,11 @@
   <div class="container2">
     <div class="cpu-container">
       <div class="cpu">
+        <div class="select-session">
+          <select name="slct" id="slct" (change)="sessionChange($event.target.value)">
+            <option *ngFor="let session of sessions" [value]="session">{{session}}</option>
+          </select>
+        </div>
         <p class="header" style="padding-top: 5px">CPU
           <i class="fa fa-info-circle" aria-hidden="true"></i>
         </p>
@@ -48,6 +53,8 @@
       Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</span>
     <h2>
       <span>CPU USAGE</span>
+      <span class="no-hover">|</span>
+      <span>PREDICTIONS</span>
     </h2>
   </div>
   <div class="container">
@@ -72,4 +79,5 @@
       <p class="threat-level" style="color: #D03F4C">{{chromeRisk}}</p>
     </div>
   </div>
+  <!-- <div class="lds-ripple"><div></div><div></div></div> -->
 </div>
