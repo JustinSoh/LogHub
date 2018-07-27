@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Management;
 using System.Net;
 using System.Net.Http;
@@ -9,6 +10,7 @@ using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Security.Permissions;
 using System.ServiceProcess;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
@@ -19,7 +21,7 @@ namespace LogHubEndpointLogsExtractionVer3
     public partial class Service1 : ServiceBase
     {
         //Initilization of variables
-        private System.Timers.Timer thirtySecondTimer = null;
+        private System.Timers.Timer twentySecondTimer = null;
         private System.Timers.Timer oneSecondTimer = null;
         private System.Timers.Timer networkOneSecondTimer = null;
         FileSystemWatcher watcher;
@@ -40,6 +42,7 @@ namespace LogHubEndpointLogsExtractionVer3
         long sentBytes = 0;
         string bytesReceivedString;
         string bytesSentString;
+        String firstMacAddress;
 
         public Service1()
         {
@@ -67,11 +70,11 @@ namespace LogHubEndpointLogsExtractionVer3
             checkUsbRemove();
 
             // Logs that come every 30 seconds
-            thirtySecondTimer = new System.Timers.Timer();
-            //this.thirtySecondTimer.Interval = 30000; //Runs every 30 seconds
-            this.thirtySecondTimer.Interval = 20000; //Runs every 20 seconds
-            this.thirtySecondTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.thirtySecondTimer_tick);
-            thirtySecondTimer.Enabled = true;
+            twentySecondTimer = new System.Timers.Timer();
+            //this.twentySecondTimer.Interval = 30000; //Runs every 30 seconds
+            this.twentySecondTimer.Interval = 20000; //Runs every 20 seconds
+            this.twentySecondTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.twentySecondTimer_tick);
+            twentySecondTimer.Enabled = true;
             Library.WriteErrorLog("LogHub has started.");
 
             // Network Data log
@@ -80,10 +83,11 @@ namespace LogHubEndpointLogsExtractionVer3
             this.networkOneSecondTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.networkOneSecondTimer_tick);
             networkOneSecondTimer.Enabled = true;
 
-            // Get hostname & ip address
-            Library.WriteErrorLog("Hostname: " + getHostname());
+            // Get hostname, IP address, MAC address, & Deafult Gateway
+            Library.WriteErrorLog("Hostname{" + getHostname() + "}");
             getIpAddress();
-
+            getMacAddress();
+            getDefaultGateway();
         }
 
         protected override void OnStop()
@@ -91,7 +95,7 @@ namespace LogHubEndpointLogsExtractionVer3
             Library.WriteErrorLog("LogHub has stopped.");
         }
 
-        private void thirtySecondTimer_tick(object sender, ElapsedEventArgs e)
+        private void twentySecondTimer_tick(object sender, ElapsedEventArgs e)
         {
             // Prints Battery & CPU usage data
             Library.WriteErrorLog("Battery{" + getBatteryPercentage() + "}");
@@ -361,12 +365,42 @@ namespace LogHubEndpointLogsExtractionVer3
             {
                 if (ip.AddressFamily == AddressFamily.InterNetwork)
                 {
-                    Library.WriteErrorLog("IPv4: " + ip.ToString());
+                    Library.WriteErrorLog("IPv4{" + ip.ToString() +"}");
                 }
             }
         }
 
+        static void getMacAddress()
+        {
+            String firstMacAddress = NetworkInterface
+                .GetAllNetworkInterfaces()
+                .Where(nic => nic.OperationalStatus == OperationalStatus.Up && nic.NetworkInterfaceType != NetworkInterfaceType.Loopback)
+                .Select(nic => nic.GetPhysicalAddress().ToString())
+                .FirstOrDefault();
 
+            Library.WriteErrorLog("MAC Address{" + firstMacAddress + "}");
+        }
+
+        static void getDefaultGateway()
+        {
+            string cmdGateway = "\"Gateway\"";
+            string cmd = "/c ipconfig | findstr /i " + cmdGateway;
+
+            System.Diagnostics.Process proc = new System.Diagnostics.Process();
+            proc.StartInfo.FileName = "cmd.exe";
+            proc.StartInfo.Arguments = cmd;
+            proc.StartInfo.UseShellExecute = false;
+            proc.StartInfo.RedirectStandardOutput = true;
+            proc.StartInfo.CreateNoWindow = true;
+            proc.Start();
+            cmdGateway = proc.StandardOutput.ReadToEnd();
+            proc.Close();
+
+            Regex ip = new Regex(@"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b");
+            MatchCollection gateway = ip.Matches(cmdGateway);
+
+            Library.WriteErrorLog("Default Gateway{" + gateway[0] + "}");
+        }
 
         // 24.5.18
         // Did functions to let LogHub log extraction to run on startup and getCpuUsage()
@@ -430,5 +464,9 @@ namespace LogHubEndpointLogsExtractionVer3
         // Added function to send download/upload speed in Bytes per Second, every one second.
         // Also, I commented out Bryan's code that sends data to his raspberry pi so that I can effectively test my code.
         // Remember to uncomment his code in Library.cs and in Service1() method of this Class.
+
+        // 27.7.18
+        // Renamed thirtySecondTimer to twentySecondTimer.
+        // Added function to send MAC address and Default Gateway.
     }
 }
