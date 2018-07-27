@@ -5,6 +5,7 @@ import { ViewEncapsulation } from '@angular/core';
 import { TouchSequence } from '../../../../node_modules/@types/selenium-webdriver';
 import { WebapiService } from '../../services/webapi.service';
 import { User } from '../../class/user';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-bandwidth',
@@ -37,68 +38,102 @@ export class BandwidthComponent implements OnInit, OnChanges {
   private error: boolean = false;
   private errorMessage: string;
   private input = 79;
-  private webApi :WebapiService;
+  private webApi: WebapiService;
   private currentUser: User;
-  constructor(webapi:WebapiService) {
+  private userService: UserService;
+  private dataLoading: Boolean = false;
+  constructor(webapi: WebapiService, userService: UserService) {
     this.webApi = webapi;
+    this.userService = userService;
 
-   }
+  }
 
   async ngOnInit() {
 
-   
+
     this.webApi.user.subscribe(data => {
-        this.currentUser = data;
-    })
-    if(this.currentUser != null)
-    {
-      var currentSetting = this.currentUser.$bandwidthSetting;
-      if(currentSetting == "string")
-      {
-        console.log("testing");
-        this.currentUser.$bandwidthSetting =  this.lowFrom + "," + this.lowTo + "," + this.mediumFrom + "," + this.mediumTo + "," + this.highFrom + "," + this.highTo
-        console.log("testing");
-        
-      }
-      else {
-          var currentSetArray = currentSetting.split(",")
-          this.lowFrom = Number.parseInt(currentSetArray[0])
-          this.lowTo = Number.parseInt(currentSetArray[1])
-          this.mediumFrom = Number.parseInt(currentSetArray[2])
-          this.mediumTo = Number.parseInt(currentSetArray[3])
-          this.highFrom = Number.parseInt(currentSetArray[4])
-          this.highTo = Number.parseInt(currentSetArray[5])
-      }
-      var currentBw = this.getCurrentBwBasedOnData(this.input);
-      this.setCurrentBandwidth(currentBw, this.input);
-    }
-    else {
-      this.currentUser =  await this.webApi.getUser("string1"); 
-      var currentSetting = this.currentUser.$bandwidthSetting;
-      if(currentSetting == "string")
-      {
-        console.log("testing");
-        this.currentUser.$bandwidthSetting =  this.lowFrom + "," + this.lowTo + "," + this.mediumFrom + "," + this.mediumTo + "," + this.highFrom + "," + this.highTo
-        console.log("testing");
-        
-      }
-      else {
-          var currentSetArray = currentSetting.split(",")
-          this.lowFrom = Number.parseInt(currentSetArray[0])
-          this.lowTo = Number.parseInt(currentSetArray[1])
-          this.mediumFrom = Number.parseInt(currentSetArray[2])
-          this.mediumTo = Number.parseInt(currentSetArray[3])
-          this.highFrom = Number.parseInt(currentSetArray[4])
-          this.highTo = Number.parseInt(currentSetArray[5])
-      }
-      var currentBw = this.getCurrentBwBasedOnData(this.input);
-      this.setCurrentBandwidth(currentBw, this.input);
-    }
+      this.currentUser = data;
+
+    });
     
+    if (this.currentUser == null) {
+      var allUser: Array<User> = new Array<User>();
+      this.userService.getUsers().subscribe(data => {
+        for (var i = 0; i < data.length; i++) {
+          var newUser = this.userService.convertUser(data[i]);
+          allUser.push(newUser)
+        }
+      });
+      var returnValue;
+      this.userService.getUserDocumentID().subscribe(data => {
+        for (var i = 0; i < data.length; i++) {
+          if (data[i].payload.doc.id == "KJfWYi34fjRBxl1wDMru") {
+            returnValue = allUser[i];
+            returnValue.$documentID = data[i].payload.doc.id
+            this.currentUser = returnValue;
+            console.log(this.currentUser)
+          }
+        }
+      });
+     
+    }
+    // if(this.currentUser == null)
+    // {
+    //   this.userService.getUserById("testing2").subscribe( i => {
+    //    console.log
+    // })
+
+
+    // if(this.currentUser != null)
+    // {
+
+    //   var currentSetting = this.currentUser.$bandwidthSetting;
+    //   if(currentSetting == "string")
+    //   {
+    //     console.log("testing");
+    //     this.currentUser.$bandwidthSetting =  this.lowFrom + "," + this.lowTo + "," + this.mediumFrom + "," + this.mediumTo + "," + this.highFrom + "," + this.highTo
+    //     console.log("testing");
+
+    //   }
+    //   else {
+    //       var currentSetArray = currentSetting.split(",")
+    //       this.lowFrom = Number.parseInt(currentSetArray[0])
+    //       this.lowTo = Number.parseInt(currentSetArray[1])
+    //       this.mediumFrom = Number.parseInt(currentSetArray[2])
+    //       this.mediumTo = Number.parseInt(currentSetArray[3])
+    //       this.highFrom = Number.parseInt(currentSetArray[4])
+    //       this.highTo = Number.parseInt(currentSetArray[5])
+    //   }
+    //   var currentBw = this.getCurrentBwBasedOnData(this.input);
+    //   this.setCurrentBandwidth(currentBw, this.input);
+    // }
+    // else {
+    //   this.currentUser =  await this.webApi.getUser("string1"); 
+    //   var currentSetting = this.currentUser.$bandwidthSetting;
+    //   if(currentSetting == "string")
+    //   {
+    //     console.log("testing");
+    //     this.currentUser.$bandwidthSetting =  this.lowFrom + "," + this.lowTo + "," + this.mediumFrom + "," + this.mediumTo + "," + this.highFrom + "," + this.highTo
+    //     console.log("testing");
+
+    //   }
+    //   else {
+    //       var currentSetArray = currentSetting.split(",")
+    //       this.lowFrom = Number.parseInt(currentSetArray[0])
+    //       this.lowTo = Number.parseInt(currentSetArray[1])
+    //       this.mediumFrom = Number.parseInt(currentSetArray[2])
+    //       this.mediumTo = Number.parseInt(currentSetArray[3])
+    //       this.highFrom = Number.parseInt(currentSetArray[4])
+    //       this.highTo = Number.parseInt(currentSetArray[5])
+    //   }
+    //   var currentBw = this.getCurrentBwBasedOnData(this.input);
+    //   this.setCurrentBandwidth(currentBw, this.input);
+    // }
+
   }
   ngOnChanges() {
-    var currentBw = this.getCurrentBwBasedOnData(this.input);
-    this.chart = this.updateCurrentBandwidth(currentBw, this.input)
+    // var currentBw = this.getCurrentBwBasedOnData(this.input);
+    // this.chart = this.updateCurrentBandwidth(currentBw, this.input)
   }
   getCurrentBwBasedOnData(num: number) {
     if (num <= this.lowTo) {
@@ -134,23 +169,22 @@ export class BandwidthComponent implements OnInit, OnChanges {
       && this.highFrom >= 0 && this.highFrom <= 100
     ) {
       if (total == 100) {
-        
-        if(this.lowFrom < this.lowTo && this.lowTo < this.mediumFrom && this.mediumFrom < this.mediumTo && this.mediumTo < this.highFrom && this.highFrom < this.highTo)
-        {
+
+        if (this.lowFrom < this.lowTo && this.lowTo < this.mediumFrom && this.mediumFrom < this.mediumTo && this.mediumTo < this.highFrom && this.highFrom < this.highTo) {
           this.error = false;
           this.errorMessage = "";
           this.lowThreshold = this.lowTo;
           this.mediumThreshold = this.mediumTo;
           this.highTreshold - this.highTo;
-          
-          var Setting:Array<any> = new Array<any>();
-         
-          this.currentUser.$bandwidthSetting =  this.lowFrom + "," + this.lowTo + "," + this.mediumFrom + "," + this.mediumTo + "," + this.highFrom + "," + this.highTo
-          this.webApi.updateUser(this.currentUser.$userId , this.currentUser);
+
+          var Setting: Array<any> = new Array<any>();
+
+          this.currentUser.$bandwidthSetting = this.lowFrom + "," + this.lowTo + "," + this.mediumFrom + "," + this.mediumTo + "," + this.highFrom + "," + this.highTo
+          this.webApi.updateUser(this.currentUser.$userId, this.currentUser);
           var currentBw = this.getCurrentBwBasedOnData(this.input);
           this.chart = this.updateCurrentBandwidth(currentBw, this.input);
           this.settings = false;
-          
+
         }
         else {
           this.errorMessage = "Values are incorrect"
@@ -341,10 +375,10 @@ export class BandwidthComponent implements OnInit, OnChanges {
           color: color, //Default black
           fontStyle: 'Helvetica', //Default Arial
           sidePadding: 40 //Default 20 (as a percentage)
-          
+
         },
         arc: {
-          borderWidth: 3, 
+          borderWidth: 3,
           borderColor: "#1a1a1a"
         }
       },

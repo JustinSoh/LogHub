@@ -25,11 +25,19 @@ export class LoginDetailsComponent implements OnInit {
   ngOnInit() {
     this.SHA512 = require("crypto-js/sha256");
     this.userService.getUsers().subscribe(data => {
-      data.forEach(user => {
-        var newUser = this.userService.convertUser(user);
+      for(var i = 0; i < data.length; i++)
+      {
+        var newUser = this.userService.convertUser(data[i]);
         this.allUser.push(newUser)
       }
-    )});
+    });
+    this.userService.getUserDocumentID().subscribe(data => {
+      for(var i = 0 ; i < data.length; i++)
+      {
+        this.allUser[i].$documentID = data[i].payload.doc.id;
+      }
+    });
+
   }
   username = new FormControl('', [Validators.required]);
   password = new FormControl('', [Validators.required]);

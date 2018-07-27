@@ -12,9 +12,16 @@ export class WebapiService {
   private currentUser: BehaviorSubject<User> = new BehaviorSubject(null);
   public user:Observable<User> = this.currentUser.asObservable();
 
+  private currentUserID: BehaviorSubject<String> = new BehaviorSubject(null);
+  public userID:Observable<String> = this.currentUserID.asObservable();
 
   currentUserMethod(user:User)   {
       this.currentUser.next(user);
+  }
+
+  currentUserIDMethod(userID:String)
+  {
+    this.currentUserID.next(userID);
   }
 
 
