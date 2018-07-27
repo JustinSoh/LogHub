@@ -11,7 +11,7 @@ namespace LogHubEndpointLogsExtractionVer3
     class Library
     {
 
-        static Socket soc123 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        /*static Socket soc123 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         static System.Net.IPAddress ipAdd = System.Net.IPAddress.Parse("192.168.1.139");
         static System.Net.IPEndPoint remoteEP = new System.Net.IPEndPoint(ipAdd, 49153);
 
@@ -23,23 +23,20 @@ namespace LogHubEndpointLogsExtractionVer3
         public static void closeConnection()
         {
             soc123.Close();
-        }
+        }*/
 
         public static void WriteErrorLog(Exception ex)
         {
-
             StreamWriter sw = null;
 
             try
             {
-  
-                byte[] byData = System.Text.Encoding.ASCII.GetBytes(DateTime.Now.ToString() + ": " + ex.Source.ToString().Trim() + "; " + ex.Message.ToString().Trim());
-                soc123.Send(byData);
+                //byte[] byData = System.Text.Encoding.ASCII.GetBytes(DateTime.Now.ToString() + ": " + ex.Source.ToString().Trim() + "; " + ex.Message.ToString().Trim());
+                //soc123.Send(byData);
                 sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "\\LogFile.txt", true);
                 sw.WriteLine(DateTime.Now.ToString() + ": " + ex.Source.ToString().Trim() + "; " + ex.Message.ToString().Trim());
                 sw.Flush();
                 sw.Close();
-
             }
             catch { }
         }
@@ -47,19 +44,15 @@ namespace LogHubEndpointLogsExtractionVer3
         public static void WriteErrorLog(string Message)
         {
             StreamWriter sw = null;
-
             try
             {
-                byte[] byData = System.Text.Encoding.ASCII.GetBytes(DateTime.Now.ToString() + ": " + Message);
-                soc123.Send(byData);
+                //byte[] byData = System.Text.Encoding.ASCII.GetBytes(DateTime.Now.ToString() + ": " + Message);
+                //soc123.Send(byData);
                 sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "\\LogFile.txt", true);
                 sw.WriteLine(DateTime.Now.ToString() + ": " + Message);
                 sw.Flush();
                 sw.Close();
-
             }
-
-
             catch { }
         }
     }

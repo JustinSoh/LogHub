@@ -5,6 +5,7 @@ using System.IO;
 using System.Management;
 using System.Net;
 using System.Net.Http;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Security.Permissions;
 using System.ServiceProcess;
@@ -20,6 +21,7 @@ namespace LogHubEndpointLogsExtractionVer3
         //Initilization of variables
         private System.Timers.Timer thirtySecondTimer = null;
         private System.Timers.Timer oneSecondTimer = null;
+        private System.Timers.Timer networkOneSecondTimer = null;
         FileSystemWatcher watcher;
         private static PerformanceCounter diskRead = new PerformanceCounter();
         private static PerformanceCounter diskWrite = new PerformanceCounter();
@@ -27,11 +29,22 @@ namespace LogHubEndpointLogsExtractionVer3
         static double writeCounter = 0;
         static double totalCPU;
         static double CpuCounter;
+        NetworkInterface[] adapters = NetworkInterface.GetAllNetworkInterfaces();
+        long receivedBeginValue = 0;
+        long sentBeginValue = 0;
+        long receivedEndValue = 0;
+        long sentEndValue = 0;
+        DateTime beginTime;
+        DateTime endTime;
+        long receivedBytes = 0;
+        long sentBytes = 0;
+        string bytesReceivedString;
+        string bytesSentString;
 
         public Service1()
         {
             InitializeComponent();
-            Library.startConection();
+            //Library.startConection();
         }
 
         protected override void OnStart(string[] args)
@@ -60,6 +73,12 @@ namespace LogHubEndpointLogsExtractionVer3
             this.thirtySecondTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.thirtySecondTimer_tick);
             thirtySecondTimer.Enabled = true;
             Library.WriteErrorLog("LogHub has started.");
+
+            // Network Data log
+            networkOneSecondTimer = new System.Timers.Timer();
+            this.networkOneSecondTimer.Interval = 1000; //Runs every half a second
+            this.networkOneSecondTimer.Elapsed += new System.Timers.ElapsedEventHandler(this.networkOneSecondTimer_tick);
+            networkOneSecondTimer.Enabled = true;
 
             // Get hostname & ip address
             Library.WriteErrorLog("Hostname: " + getHostname());
@@ -96,8 +115,40 @@ namespace LogHubEndpointLogsExtractionVer3
 
         private void oneSecondTimer_tick(object sender, ElapsedEventArgs e)
         {
+            // Disk Read/Write
             readCounter += Convert.ToDouble(diskRead.NextValue());
             writeCounter += Convert.ToDouble(diskWrite.NextValue());
+        }
+
+        private void networkOneSecondTimer_tick(object sender, ElapsedEventArgs e)
+        {
+            foreach (NetworkInterface nic in adapters)
+            {
+                //Hardcoded to network interface called Wi-Fi
+                if ((nic.Name).Equals("Wi-Fi"))
+                {
+                    IPv4InterfaceStatistics interfaces = nic.GetIPv4Statistics();
+
+                    receivedBeginValue = nic.GetIPv4Statistics().BytesReceived;
+                    sentBeginValue = nic.GetIPv4Statistics().BytesSent;
+                    beginTime = DateTime.Now;
+
+                    Thread.Sleep(1000);
+
+                    receivedEndValue = nic.GetIPv4Statistics().BytesReceived;
+                    sentEndValue = nic.GetIPv4Statistics().BytesSent;
+                    endTime = DateTime.Now;
+
+                    receivedBytes = receivedEndValue - receivedBeginValue;
+                    sentBytes = sentEndValue - sentBeginValue;
+
+                    bytesReceivedString = receivedBytes.ToString();
+                    bytesSentString = sentBytes.ToString();
+
+                    Library.WriteErrorLog("Download/Upload{" + bytesReceivedString + "B/s," + bytesSentString + "B/s}");
+
+                }
+            }
         }
 
         static string getBatteryPercentage()
@@ -316,6 +367,7 @@ namespace LogHubEndpointLogsExtractionVer3
         }
 
 
+
         // 24.5.18
         // Did functions to let LogHub log extraction to run on startup and getCpuUsage()
         // Next step is to make getCpuUsage() run every few seconds.
@@ -373,5 +425,10 @@ namespace LogHubEndpointLogsExtractionVer3
         // 23.7.18
         // Added function to send hostname and ip address of workstation.
         // They will be sent every time Loghub starts.
+
+        // 27.7.18
+        // Added function to send download/upload speed in Bytes per Second, every one second.
+        // Also, I commented out Bryan's code that sends data to his raspberry pi so that I can effectively test my code.
+        // Remember to uncomment his code in Library.cs and in Service1() method of this Class.
     }
 }
