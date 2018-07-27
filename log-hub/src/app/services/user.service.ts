@@ -27,6 +27,11 @@ export class UserService {
     return allUser
   }
 
+  addUser(user)
+  {
+    
+    this.userCollection.add(user)
+  }
   convertUser(data)
   {
     var userId = data['userId']

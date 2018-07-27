@@ -46,3 +46,11 @@ input {
     background-color: #0072FF;
     color: #fafafa;
 }
+
+.errorClass {
+    color: #D44343
+}
+
+.successClass {
+    color: #4EAB7E
+}

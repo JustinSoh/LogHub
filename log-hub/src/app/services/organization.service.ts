@@ -20,6 +20,10 @@ export class OrganizationService {
     return this.orgs;
   }
 
+  addOrgs(org) {
+    this.orgCollection.add(org)
+  }
+
   convertOrg(data)
   {
     var organizationId = data['organizationID']

@@ -42,9 +42,9 @@
         <div class="row" style="margin-top: 2%">
           <div class="organization-field col-sm-8" >
               <div style="display: inline-block; width:100%;">
-                  <select class="custom-select mr-sm-2"  [formControl]="organizationName" type="string" name="organizationName" (change)="logIn()"  >
-                      <option [selected]="true" [value]=null>Select Organization ...</option>
-                      <option *ngFor="let name of organizationNames" [value]="name.$organizationId" required >{{name.$organizationName}}</option>
+                  <select class="custom-select mr-sm-2"  [formControl]="organizationName" type="string" name="organizationName" required   >
+                      <option [selected]="true" disabled>Select Organization ...</option>
+                      <option *ngFor="let name of organizationNames" [value]="name.$organizationId"  required >{{name.$organizationName}}</option>
                     </select> 
               </div>
           </div>
@@ -72,9 +72,12 @@
     <div class="bottom-section">
         <button  (click)="logIn()" mat-button class="login-button col-md-12" >Create Account</button> 
         <!-- <a [routerLink]="['/login', { outlets:{loginPath: ['forgotPassword']}}]" class="text forget-button" (click)="forgetPassword()">Forget password?</a> -->
-        <div *ngIf="error">
+        <div style="margin-top: 25%" *ngIf="error">
             <p class="errorClass">{{errorMessage}}</p>
         </div>
+        <div style="margin-top: 25%" *ngIf="success">
+                <p class="successClass">{{successMessage}}</p>
+            </div>
     </div>
     
 </div>

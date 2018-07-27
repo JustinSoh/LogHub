@@ -2,6 +2,7 @@ export class Organization {
     private organizationId: string;
     private organizationName: string;
     private securePinCode: string;
+    public selected:boolean;
 
 
 	constructor($organizationId: string, $organizationName: string, $securePinCode: string) {

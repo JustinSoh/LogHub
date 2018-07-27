@@ -4,6 +4,7 @@ import {FormControl, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { WebapiService } from '../../services/webapi.service';
 import { UserService } from '../../services/user.service';
+import { User } from '../../class/user';
 @Component({
   selector: 'app-login-details',
   templateUrl: './login-details.component.html',
@@ -14,6 +15,7 @@ export class LoginDetailsComponent implements OnInit {
   private router:Router;
   private webApi:WebapiService 
   private userService:UserService;
+  private allUser:Array<User> = new Array<User>();
   constructor(router:Router , webapi:WebapiService , userService:UserService) { 
     this.router = router;
     this.webApi = webapi;
@@ -22,7 +24,12 @@ export class LoginDetailsComponent implements OnInit {
   public SHA512;
   ngOnInit() {
     this.SHA512 = require("crypto-js/sha256");
-
+    this.userService.getUsers().subscribe(data => {
+      data.forEach(user => {
+        var newUser = this.userService.convertUser(user);
+        this.allUser.push(newUser)
+      }
+    )});
   }
   username = new FormControl('', [Validators.required]);
   password = new FormControl('', [Validators.required]);
@@ -60,9 +67,17 @@ export class LoginDetailsComponent implements OnInit {
 
   async logIn()
   {
-    var listOfUser = this.userService.getUsers().subscribe(data => {
-      console.log(data);
-    });
+    this.allUser.forEach(usr => {
+      if(usr.$userId == this.username.value && usr.$password == this.hashedpw)
+      {
+        this.validatedBoolean = true;
+            this.webApi.currentUserMethod(usr);
+            this.router.navigate(['/', 'home']);
+      }
+      else {
+        this.validatedBoolean = false;
+      }
+    })
     // listOfUser.forEach(element => {
     //   if(this.username.value == element.$userId && this.hashedpw == element.$password)
     //   {
