@@ -24,7 +24,10 @@ namespace LogHubEndpointLogsExtractionVer3
         private System.Timers.Timer twentySecondTimer = null;
         private System.Timers.Timer oneSecondTimer = null;
         private System.Timers.Timer networkOneSecondTimer = null;
-        FileSystemWatcher watcher;
+        FileSystemWatcher watcherSys32;
+        FileSystemWatcher watcherAppData;
+        FileSystemWatcher watcherProgramData;
+        string username = Environment.UserName;
         private static PerformanceCounter diskRead = new PerformanceCounter();
         private static PerformanceCounter diskWrite = new PerformanceCounter();
         static double readCounter = 0;
@@ -64,7 +67,9 @@ namespace LogHubEndpointLogsExtractionVer3
 
             // Logs that do not come every 30 seconds
             trackFileSystemChanges();
-            watcher.EnableRaisingEvents = true;
+            watcherSys32.EnableRaisingEvents = true;
+            watcherAppData.EnableRaisingEvents = true;
+            watcherProgramData.EnableRaisingEvents = true;
             getEventLogs();
             checkUsbInsert();
             checkUsbRemove();
@@ -268,23 +273,54 @@ namespace LogHubEndpointLogsExtractionVer3
 
         public void trackFileSystemChanges()
         {
-            watcher = new FileSystemWatcher();
+            watcherSys32 = new FileSystemWatcher();
+            watcherAppData = new FileSystemWatcher();
+            watcherProgramData = new FileSystemWatcher();
+
+            //======================================================
 
             // Detects and reports changes in System32 folder
-            watcher.IncludeSubdirectories = true;
-            watcher.Path = @"C:\Windows\Sysnative";
-            watcher.IncludeSubdirectories = true;
+            watcherSys32.IncludeSubdirectories = true;
+            watcherSys32.Path = @"C:\Windows\Sysnative";
+            watcherSys32.IncludeSubdirectories = true;
+
+            // Detects and reports changes in AppData Folder
+            watcherAppData.IncludeSubdirectories = true;
+            watcherAppData.Path = @"C:\Users\" + username + @"\AppData";
+            watcherAppData.IncludeSubdirectories = true;
+
+            // Detects and reports changes in ProgramData folder
+            watcherProgramData.IncludeSubdirectories = true;
+            watcherProgramData.Path = @"C:\ProgramData";
+            watcherProgramData.IncludeSubdirectories = true;
+
+            //======================================================
 
             // Watch for changes in LastAccess and LastWrite times, and the renaming of files or directories.
-            watcher.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+            watcherSys32.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+            watcherAppData.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+            watcherProgramData.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+           
             // Watches all files
-            watcher.Filter = "*.*";
+            watcherSys32.Filter = "*.*";
+            watcherAppData.Filter = "*.*";
+            watcherProgramData.Filter = "*.*";
 
             // Add event handlers.
-            watcher.Changed += new FileSystemEventHandler(OnChanged);
-            watcher.Created += new FileSystemEventHandler(OnChanged);
-            watcher.Deleted += new FileSystemEventHandler(OnChanged);
-            watcher.Renamed += new RenamedEventHandler(OnRenamed);
+            watcherSys32.Changed += new FileSystemEventHandler(OnChanged);
+            watcherSys32.Created += new FileSystemEventHandler(OnChanged);
+            watcherSys32.Deleted += new FileSystemEventHandler(OnChanged);
+            watcherSys32.Renamed += new RenamedEventHandler(OnRenamed);
+
+            watcherAppData.Changed += new FileSystemEventHandler(OnChanged);
+            watcherAppData.Created += new FileSystemEventHandler(OnChanged);
+            watcherAppData.Deleted += new FileSystemEventHandler(OnChanged);
+            watcherAppData.Renamed += new RenamedEventHandler(OnRenamed);
+
+            watcherProgramData.Changed += new FileSystemEventHandler(OnChanged);
+            watcherProgramData.Created += new FileSystemEventHandler(OnChanged);
+            watcherProgramData.Deleted += new FileSystemEventHandler(OnChanged);
+            watcherProgramData.Renamed += new RenamedEventHandler(OnRenamed);
         }
 
         private static void OnChanged(object source, FileSystemEventArgs e)
