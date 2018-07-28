@@ -5,14 +5,11 @@ using System.IO;
 using System.Linq;
 using System.Management;
 using System.Net;
-using System.Net.Http;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
-using System.Security.Permissions;
 using System.ServiceProcess;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
 
@@ -45,7 +42,6 @@ namespace LogHubEndpointLogsExtractionVer3
         long sentBytes = 0;
         string bytesReceivedString;
         string bytesSentString;
-        String firstMacAddress;
 
         public Service1()
         {
@@ -408,7 +404,7 @@ namespace LogHubEndpointLogsExtractionVer3
 
         static void getMacAddress()
         {
-            String firstMacAddress = NetworkInterface
+            string firstMacAddress = NetworkInterface
                 .GetAllNetworkInterfaces()
                 .Where(nic => nic.OperationalStatus == OperationalStatus.Up && nic.NetworkInterfaceType != NetworkInterfaceType.Loopback)
                 .Select(nic => nic.GetPhysicalAddress().ToString())
@@ -504,5 +500,8 @@ namespace LogHubEndpointLogsExtractionVer3
         // 27.7.18
         // Renamed thirtySecondTimer to twentySecondTimer.
         // Added function to send MAC address and Default Gateway.
+
+        // 28.7.18
+        // Improved the function to detect the type of changes of files to include change in /AppData and /ProgramData
     }
 }
