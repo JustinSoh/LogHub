@@ -1,4 +1,4 @@
-<div class="col-sm-4" style="margin-top:2% ; margin-left: 1%" ng-controller="flipCtrl">
+<div *ngIf="!dataLoading" class="col-sm-4" style="margin-top:2% ; margin-left: 1%" ng-controller="flipCtrl">
     <mat-card class="card-style">
         <div>
             <h3 class="title2 color" style="display:inline-block">Bandwidth Utilization</h3>
@@ -6,8 +6,10 @@
         </div>
         <div class="face">
             <p class="text subheader color">Current utilization of bandwidth</p>
-            <canvas id="bandwidthChart">
-            </canvas>
+            <p class="title2" style="text-align:center; color: #fafafa">480Mbps</p>
+            <p style="text-align:center">High Utilization</p> 
+            <!-- <canvas id="bandwidthChart">
+            </canvas> -->
         </div>
 
         <!-- <h1 [ngClass]="{'center': true , 'low': setLow, 'medium': setMedium, 'high': setHigh}">{{bandwidth}}</h1>
@@ -15,7 +17,7 @@
         <mat-card-subtitle>Percentage: {{data}}</mat-card-subtitle>
     </div> -->
     </mat-card>
-    <div *ngIf="settings" class="settings">
+    <!-- <div *ngIf="settings" class="settings">
         <mat-card class="settingsClass" (keyup.enter)="submitSettings()">
             <h3 class="subheading color" style=" display:inline-block; margin-bottom: 2%">Set Bandwidth Threshold</h3>
             <button mat-icon-button class="fa fa-times format-button color" (click)="closeSetting()"></button>
@@ -60,11 +62,9 @@
                         <button mat-button type="button" class="submitButton" (click)="submitSettings()" >Submit</button>
                     </div>
 
-
-                    <!-- <p class="text subheader" >Set Medium Threshold</p>
-                <p class="text subheader" >Set High Threshold</p> -->
                 </form>
             </div>
         </mat-card>
-    </div>
+    </div> -->
 </div>
+<div *ngIf="dataLoading" style="color: #fafafa">Data is currently loading . . . </div>

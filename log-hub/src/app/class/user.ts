@@ -4,7 +4,7 @@ export class User {
     private organizationId: string;
     private email: string; 
     private bandwidthSetting:string;
-
+    private documentID:string;
 
 	constructor($userId: string, $password: string, $organizationId: string, $email: string, $bandwidthSetting: string) {
 		this.userId = $userId;
@@ -97,6 +97,23 @@ export class User {
 		this.bandwidthSetting = value;
 	}
 
+
+    /**
+     * Getter $documentID
+     * @return {string}
+     */
+	public get $documentID(): string {
+		return this.documentID;
+	}
+
+    /**
+     * Setter $documentID
+     * @param {string} value
+     */
+	public set $documentID(value: string) {
+		this.documentID = value;
+	}
+    
 
 
 
