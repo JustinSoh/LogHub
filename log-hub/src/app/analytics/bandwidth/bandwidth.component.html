@@ -1,13 +1,15 @@
-<div *ngIf="!dataLoading" class="col-sm-4" style="margin-top:2% ; margin-left: 1%" ng-controller="flipCtrl">
+<div *ngIf="!dataLoading" class="col-sm-12" style="margin-top:2% ;" ng-controller="flipCtrl">
     <mat-card class="card-style">
         <div>
-            <h3 class="title2 color" style="display:inline-block">Bandwidth Utilization</h3>
-            <button mat-icon-button class="fa fa-bars format-button" style="margin-left: 1%; margin-right: 1%;" (click)="flip()"></button>
+            <h3 class="title1 color" style="display:inline-block">Overall Bandwidth Utilization</h3>
+            <!-- <button mat-icon-button class="fa fa-bars format-button" style="margin-left: 1%; margin-right: 1%;" (click)="flip()"></button> -->
         </div>
         <div class="face">
-            <p class="text subheader color">Current utilization of bandwidth</p>
-            <p class="title2" style="text-align:center; color: #fafafa">480Mbps</p>
-            <p style="text-align:center">High Utilization</p> 
+            <!-- <p class="text subheader color">Current utilization of bandwidth</p> -->
+            <p class="headline" style="text-align:center;" [ngClass]="{'low': lowTrue, 'medium': mediumTrue, 'high': highTrue , 'veryhigh': veryhighTrue}">480Mbps</p>
+        
+            <canvas id="bandwidthChartV2"></canvas>
+            <!-- <p style="text-align:center; margin-top:0px" class="subheading" [ngClass]="{'low': lowTrue, 'medium': mediumTrue, 'high': highTrue}" >High Utilization</p>  -->
             <!-- <canvas id="bandwidthChart">
             </canvas> -->
         </div>

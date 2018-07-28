@@ -1,19 +1,26 @@
 export class Bandwidth {
     private bandwidthId: string;
-    private included: string; 
+    private hostId: string;
+    private included: Boolean; 
+    private organizationId: string; 
+    private riskScore: string;
     private time: Date;
     private usage: string; 
-    private riskScore: string;
+    private processed: Boolean
 
 
-	constructor($bandwidthId: string, $included: string, $time: Date, $usage: string, $riskScore: string) {
-        this.bandwidthId = $bandwidthId;
-        this.included = $included;
-        this.time = $time;
+	constructor($bandwidthId: string, $hostId: string, $included: Boolean, $organizationId: string, $riskScore: string, $time: Date, $usage: string , $processed:Boolean) {
+		this.bandwidthId = $bandwidthId;
+		this.hostId = $hostId;
+		this.included = $included;
+		this.organizationId = $organizationId;
+		this.riskScore = $riskScore;
+		this.time = $time;
         this.usage = $usage;
-        this.riskScore = $riskScore;
+        this.processed = $processed
 	}
-    
+
+
     /**
      * Getter $bandwidthId
      * @return {string}
@@ -30,21 +37,68 @@ export class Bandwidth {
 		this.bandwidthId = value;
 	}
 
+    /**
+     * Getter $hostId
+     * @return {string}
+     */
+	public get $hostId(): string {
+		return this.hostId;
+	}
+
+    /**
+     * Setter $hostId
+     * @param {string} value
+     */
+	public set $hostId(value: string) {
+		this.hostId = value;
+	}
 
     /**
      * Getter $included
-     * @return {string}
+     * @return {Boolean}
      */
-	public get $included(): string {
+	public get $included(): Boolean {
 		return this.included;
 	}
 
     /**
      * Setter $included
+     * @param {Boolean} value
+     */
+	public set $included(value: Boolean) {
+		this.included = value;
+	}
+
+    /**
+     * Getter $organizationId
+     * @return {string}
+     */
+	public get $organizationId(): string {
+		return this.organizationId;
+	}
+
+    /**
+     * Setter $organizationId
      * @param {string} value
      */
-	public set $included(value: string) {
-		this.included = value;
+	public set $organizationId(value: string) {
+		this.organizationId = value;
+	}
+
+    /**
+     * Getter $riskScore
+     * @return {string}
+     */
+	public get $riskScore(): string {
+		return this.riskScore;
+	}
+
+    /**
+     * Setter $riskScore
+     * @param {string} value
+     */
+	public set $riskScore(value: string) {
+		this.riskScore = value;
 	}
 
     /**
@@ -79,22 +133,22 @@ export class Bandwidth {
 		this.usage = value;
     }
     
-
-    /**
-     * Getter $riskScore
-     * @return {string}
+     /**
+     * Getter $process
+     * @return {Boolean}
      */
-	public get $riskScore():string {
-		return this.riskScore;
+	public get $processed(): Boolean {
+		return this.processed;
 	}
 
     /**
-     * Setter $riskScore
-     * @param {string} value
+     * Setter $usage
+     * @param {Boolean} value
      */
-	public set $riskScore(value: string) {
-		this.riskScore = value;
+	public set $processed(value: Boolean) {
+		this.processed = value;
 	}
+    
 
 
 
