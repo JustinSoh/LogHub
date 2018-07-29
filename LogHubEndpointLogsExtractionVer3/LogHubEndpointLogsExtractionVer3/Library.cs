@@ -10,6 +10,8 @@ namespace LogHubEndpointLogsExtractionVer3
 {
     class Library
     {
+        static string date = DateTime.Now.ToString("ddMMyyyy");
+        static string time = DateTime.Now.ToString("hhmmss");
 
         /*static Socket soc123 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         static System.Net.IPAddress ipAdd = System.Net.IPAddress.Parse("192.168.1.139");
@@ -33,7 +35,7 @@ namespace LogHubEndpointLogsExtractionVer3
             {
                 //byte[] byData = System.Text.Encoding.ASCII.GetBytes(DateTime.Now.ToString() + ": " + ex.Source.ToString().Trim() + "; " + ex.Message.ToString().Trim());
                 //soc123.Send(byData);
-                sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "\\LogFile.txt", true);
+                sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "\\" + date + "-" + time + "-" + System.Environment.MachineName + ".txt", true);
                 sw.WriteLine(DateTime.Now.ToString() + ": " + ex.Source.ToString().Trim() + "; " + ex.Message.ToString().Trim());
                 sw.Flush();
                 sw.Close();
@@ -44,16 +46,33 @@ namespace LogHubEndpointLogsExtractionVer3
         public static void WriteErrorLog(string Message)
         {
             StreamWriter sw = null;
+            string hostname = Service1.getHostname();
+
             try
             {
                 //byte[] byData = System.Text.Encoding.ASCII.GetBytes(DateTime.Now.ToString() + ": " + Message);
                 //soc123.Send(byData);
-                sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "\\LogFile.txt", true);
+                sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "\\" + date + "-" + time + "-" + System.Environment.MachineName + ".txt", true);
                 sw.WriteLine(DateTime.Now.ToString() + ": " + Message);
                 sw.Flush();
                 sw.Close();
             }
             catch { }
+        }
+
+        public static string getHostname()
+        {
+            string cmd = "/c hostname";
+            System.Diagnostics.Process proc = new System.Diagnostics.Process();
+            proc.StartInfo.FileName = "cmd.exe";
+            proc.StartInfo.Arguments = cmd;
+            proc.StartInfo.UseShellExecute = false;
+            proc.StartInfo.RedirectStandardOutput = true;
+            proc.StartInfo.CreateNoWindow = true;
+            proc.Start();
+            string hostname = proc.StandardOutput.ReadToEnd();
+            proc.Close();
+            return hostname;
         }
     }
 }

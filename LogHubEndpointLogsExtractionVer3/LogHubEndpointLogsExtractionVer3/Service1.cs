@@ -45,7 +45,7 @@ namespace LogHubEndpointLogsExtractionVer3
         long sentBytes = 0;
         string bytesReceivedString;
         string bytesSentString;
-        String firstMacAddress;
+        static string firstMacAddress;
 
         public Service1()
         {
@@ -90,7 +90,7 @@ namespace LogHubEndpointLogsExtractionVer3
 
             // Get hostname, IP address, MAC address, & Deafult Gateway
             Library.WriteErrorLog("Hostname{" + getHostname() + "}");
-            getIpAddress();
+            Library.WriteErrorLog("IP Address{" + getIpAddress() + "}");
             getMacAddress();
             getDefaultGateway();
         }
@@ -379,7 +379,7 @@ namespace LogHubEndpointLogsExtractionVer3
             Library.WriteErrorLog("USB{Removed}");
         }
 
-        static string getHostname()
+       public static string getHostname()
         {
             string cmd = "/c hostname";
             System.Diagnostics.Process proc = new System.Diagnostics.Process();
@@ -394,21 +394,22 @@ namespace LogHubEndpointLogsExtractionVer3
             return hostname;
         }
 
-        static void getIpAddress()
+        public static string getIpAddress()
         {
             var host = Dns.GetHostEntry(Dns.GetHostName());
             foreach (var ip in host.AddressList)
             {
                 if (ip.AddressFamily == AddressFamily.InterNetwork)
                 {
-                    Library.WriteErrorLog("IPv4{" + ip.ToString() + "}");
+                    return ip.ToString();
                 }
             }
+            return "APIPA";
         }
 
         static void getMacAddress()
         {
-            String firstMacAddress = NetworkInterface
+            firstMacAddress = NetworkInterface
                 .GetAllNetworkInterfaces()
                 .Where(nic => nic.OperationalStatus == OperationalStatus.Up && nic.NetworkInterfaceType != NetworkInterfaceType.Loopback)
                 .Select(nic => nic.GetPhysicalAddress().ToString())
