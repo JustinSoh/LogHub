@@ -5,11 +5,14 @@ using System.IO;
 using System.Linq;
 using System.Management;
 using System.Net;
+using System.Net.Http;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Security.Permissions;
 using System.ServiceProcess;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
 
@@ -22,8 +25,8 @@ namespace LogHubEndpointLogsExtractionVer3
         private System.Timers.Timer oneSecondTimer = null;
         private System.Timers.Timer networkOneSecondTimer = null;
         FileSystemWatcher watcherSys32;
-        FileSystemWatcher watcherAppData;
-        FileSystemWatcher watcherProgramData;
+        //FileSystemWatcher watcherAppData;
+        //FileSystemWatcher watcherProgramData;
         string username = Environment.UserName;
         private static PerformanceCounter diskRead = new PerformanceCounter();
         private static PerformanceCounter diskWrite = new PerformanceCounter();
@@ -42,6 +45,7 @@ namespace LogHubEndpointLogsExtractionVer3
         long sentBytes = 0;
         string bytesReceivedString;
         string bytesSentString;
+        String firstMacAddress;
 
         public Service1()
         {
@@ -64,8 +68,8 @@ namespace LogHubEndpointLogsExtractionVer3
             // Logs that do not come every 30 seconds
             trackFileSystemChanges();
             watcherSys32.EnableRaisingEvents = true;
-            watcherAppData.EnableRaisingEvents = true;
-            watcherProgramData.EnableRaisingEvents = true;
+            //watcherAppData.EnableRaisingEvents = true;
+            //watcherProgramData.EnableRaisingEvents = true;
             getEventLogs();
             checkUsbInsert();
             checkUsbRemove();
@@ -184,15 +188,15 @@ namespace LogHubEndpointLogsExtractionVer3
             foreach (var counter in counters)
             {
                 CpuCounter = Math.Round(counter.NextValue(), 1);
-                stringsOfCpu += (processes[i].ProcessName + "(" + +processes[i].Id +"): " + CpuCounter / processorCount) + ";\n";
+                stringsOfCpu += (processes[i].ProcessName + "(" + +processes[i].Id + "): " + CpuCounter / processorCount) + ";\n";
                 if (processes[i].ProcessName.Equals("Idle"))
                 {
-                    totalCPU = 100 - (CpuCounter/processorCount);
+                    totalCPU = 100 - (CpuCounter / processorCount);
                 }
-                ++i;   
+                ++i;
             }
 
-            return "CPU{" + stringsOfCpu+ "Total used: " + totalCPU +"}";
+            return "CPU{" + stringsOfCpu + "Total used: " + totalCPU + "}";
         }
 
         static void getEventLogs()
@@ -219,12 +223,12 @@ namespace LogHubEndpointLogsExtractionVer3
             e1 = log.Entries.Count - 1; // last entry
 
             string logType = Convert.ToString(log.Entries[e1].EntryType);
-            string logCategory = Convert.ToString(log.Entries[e1].Category); 
+            string logCategory = Convert.ToString(log.Entries[e1].Category);
             string eventID = log.Entries[e1].EventID.ToString();
             string logMachine = log.Entries[e1].MachineName;
             string logDescription = log.Entries[e1].Message;
 
-            string compiledErrorLog = "Log Type: " + logType + "\nCategory: " + logCategory + "\nEvent ID: " + eventID +  "\nMachine: " + logMachine + "\nDescription:<" +logDescription+">";
+            string compiledErrorLog = "Log Type: " + logType + "\nCategory: " + logCategory + "\nEvent ID: " + eventID + "\nMachine: " + logMachine + "\nDescription:<" + logDescription + ">";
 
             Library.WriteErrorLog("Security Event Log{\n" + compiledErrorLog + "}");
         }
@@ -270,8 +274,8 @@ namespace LogHubEndpointLogsExtractionVer3
         public void trackFileSystemChanges()
         {
             watcherSys32 = new FileSystemWatcher();
-            watcherAppData = new FileSystemWatcher();
-            watcherProgramData = new FileSystemWatcher();
+            //watcherAppData = new FileSystemWatcher();
+            //watcherProgramData = new FileSystemWatcher();
 
             //======================================================
 
@@ -281,26 +285,26 @@ namespace LogHubEndpointLogsExtractionVer3
             watcherSys32.IncludeSubdirectories = true;
 
             // Detects and reports changes in AppData Folder
-            watcherAppData.IncludeSubdirectories = true;
-            watcherAppData.Path = @"C:\Users\" + username + @"\AppData";
-            watcherAppData.IncludeSubdirectories = true;
+            //watcherAppData.IncludeSubdirectories = true;
+            //watcherAppData.Path = @"C:\Users\" + username + @"\AppData";
+            //watcherAppData.IncludeSubdirectories = true;
 
             // Detects and reports changes in ProgramData folder
-            watcherProgramData.IncludeSubdirectories = true;
-            watcherProgramData.Path = @"C:\ProgramData";
-            watcherProgramData.IncludeSubdirectories = true;
+            //watcherProgramData.IncludeSubdirectories = true;
+            //watcherProgramData.Path = @"C:\ProgramData";
+            //watcherProgramData.IncludeSubdirectories = true;
 
             //======================================================
 
             // Watch for changes in LastAccess and LastWrite times, and the renaming of files or directories.
             watcherSys32.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
-            watcherAppData.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
-            watcherProgramData.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
-           
+            //watcherAppData.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+            //watcherProgramData.NotifyFilter = NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.DirectoryName;
+
             // Watches all files
             watcherSys32.Filter = "*.*";
-            watcherAppData.Filter = "*.*";
-            watcherProgramData.Filter = "*.*";
+            //watcherAppData.Filter = "*.*";
+            //watcherProgramData.Filter = "*.*";
 
             // Add event handlers.
             watcherSys32.Changed += new FileSystemEventHandler(OnChanged);
@@ -308,15 +312,15 @@ namespace LogHubEndpointLogsExtractionVer3
             watcherSys32.Deleted += new FileSystemEventHandler(OnChanged);
             watcherSys32.Renamed += new RenamedEventHandler(OnRenamed);
 
-            watcherAppData.Changed += new FileSystemEventHandler(OnChanged);
-            watcherAppData.Created += new FileSystemEventHandler(OnChanged);
-            watcherAppData.Deleted += new FileSystemEventHandler(OnChanged);
-            watcherAppData.Renamed += new RenamedEventHandler(OnRenamed);
+            //watcherAppData.Changed += new FileSystemEventHandler(OnChanged);
+            //watcherAppData.Created += new FileSystemEventHandler(OnChanged);
+            //watcherAppData.Deleted += new FileSystemEventHandler(OnChanged);
+            //watcherAppData.Renamed += new RenamedEventHandler(OnRenamed);
 
-            watcherProgramData.Changed += new FileSystemEventHandler(OnChanged);
-            watcherProgramData.Created += new FileSystemEventHandler(OnChanged);
-            watcherProgramData.Deleted += new FileSystemEventHandler(OnChanged);
-            watcherProgramData.Renamed += new RenamedEventHandler(OnRenamed);
+            //watcherProgramData.Changed += new FileSystemEventHandler(OnChanged);
+            //watcherProgramData.Created += new FileSystemEventHandler(OnChanged);
+            //watcherProgramData.Deleted += new FileSystemEventHandler(OnChanged);
+            //watcherProgramData.Renamed += new RenamedEventHandler(OnRenamed);
         }
 
         private static void OnChanged(object source, FileSystemEventArgs e)
@@ -328,7 +332,7 @@ namespace LogHubEndpointLogsExtractionVer3
         private static void OnRenamed(object source, RenamedEventArgs e)
         {
             // Specify what is done when a file is renamed.
-            Library.WriteErrorLog("File:{" + e.OldFullPath + " renamed to " + e.FullPath +"}");
+            Library.WriteErrorLog("File:{" + e.OldFullPath + " renamed to " + e.FullPath + "}");
         }
 
         private static string getEstablishedConnections()
@@ -397,14 +401,14 @@ namespace LogHubEndpointLogsExtractionVer3
             {
                 if (ip.AddressFamily == AddressFamily.InterNetwork)
                 {
-                    Library.WriteErrorLog("IPv4{" + ip.ToString() +"}");
+                    Library.WriteErrorLog("IPv4{" + ip.ToString() + "}");
                 }
             }
         }
 
         static void getMacAddress()
         {
-            string firstMacAddress = NetworkInterface
+            String firstMacAddress = NetworkInterface
                 .GetAllNetworkInterfaces()
                 .Where(nic => nic.OperationalStatus == OperationalStatus.Up && nic.NetworkInterfaceType != NetworkInterfaceType.Loopback)
                 .Select(nic => nic.GetPhysicalAddress().ToString())
@@ -500,8 +504,5 @@ namespace LogHubEndpointLogsExtractionVer3
         // 27.7.18
         // Renamed thirtySecondTimer to twentySecondTimer.
         // Added function to send MAC address and Default Gateway.
-
-        // 28.7.18
-        // Improved the function to detect the type of changes of files to include change in /AppData and /ProgramData
     }
 }
