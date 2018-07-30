@@ -36,7 +36,7 @@ namespace LogHubEndpointLogsExtractionVer3
                 //byte[] byData = System.Text.Encoding.ASCII.GetBytes(DateTime.Now.ToString() + ": " + ex.Source.ToString().Trim() + "; " + ex.Message.ToString().Trim());
                 //soc123.Send(byData);
                 sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "\\" + date + "-" + time + "-" + System.Environment.MachineName + ".txt", true);
-                sw.WriteLine(DateTime.Now.ToString() + ": " + ex.Source.ToString().Trim() + "; " + ex.Message.ToString().Trim());
+                sw.WriteLine(System.Environment.MachineName + " " + DateTime.Now.ToString() + ": " + ex.Source.ToString().Trim() + "; " + ex.Message.ToString().Trim());
                 sw.Flush();
                 sw.Close();
             }
@@ -53,26 +53,11 @@ namespace LogHubEndpointLogsExtractionVer3
                 //byte[] byData = System.Text.Encoding.ASCII.GetBytes(DateTime.Now.ToString() + ": " + Message);
                 //soc123.Send(byData);
                 sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "\\" + date + "-" + time + "-" + System.Environment.MachineName + ".txt", true);
-                sw.WriteLine(DateTime.Now.ToString() + ": " + Message);
+                sw.WriteLine(System.Environment.MachineName + " " + DateTime.Now.ToString() + ": " + Message);
                 sw.Flush();
                 sw.Close();
             }
             catch { }
-        }
-
-        public static string getHostname()
-        {
-            string cmd = "/c hostname";
-            System.Diagnostics.Process proc = new System.Diagnostics.Process();
-            proc.StartInfo.FileName = "cmd.exe";
-            proc.StartInfo.Arguments = cmd;
-            proc.StartInfo.UseShellExecute = false;
-            proc.StartInfo.RedirectStandardOutput = true;
-            proc.StartInfo.CreateNoWindow = true;
-            proc.Start();
-            string hostname = proc.StandardOutput.ReadToEnd();
-            proc.Close();
-            return hostname;
         }
     }
 }
