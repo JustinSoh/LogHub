@@ -13,9 +13,9 @@ namespace LogHubEndpointLogsExtractionVer3
         static string date = DateTime.Now.ToString("ddMMyyyy");
         static string time = DateTime.Now.ToString("hhmmss");
 
-        /*static Socket soc123 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        static System.Net.IPAddress ipAdd = System.Net.IPAddress.Parse("192.168.1.139");
-        static System.Net.IPEndPoint remoteEP = new System.Net.IPEndPoint(ipAdd, 49153);
+        static Socket soc123 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+        static System.Net.IPAddress ipAdd = System.Net.IPAddress.Parse("192.168.1.146");
+        static System.Net.IPEndPoint remoteEP = new System.Net.IPEndPoint(ipAdd, 8888);
 
         public static void startConection()
         {
@@ -25,7 +25,7 @@ namespace LogHubEndpointLogsExtractionVer3
         public static void closeConnection()
         {
             soc123.Close();
-        }*/
+        }
 
         public static void WriteErrorLog(Exception ex)
         {
@@ -33,8 +33,8 @@ namespace LogHubEndpointLogsExtractionVer3
 
             try
             {
-                //byte[] byData = System.Text.Encoding.ASCII.GetBytes(DateTime.Now.ToString() + ": " + ex.Source.ToString().Trim() + "; " + ex.Message.ToString().Trim());
-                //soc123.Send(byData);
+                byte[] byData = System.Text.Encoding.ASCII.GetBytes(System.Environment.MachineName + " " + DateTime.Now.ToString() + ": " + ex.Source.ToString().Trim() + "; " + ex.Message.ToString().Trim());
+                soc123.Send(byData);
                 sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "\\" + date + "-" + time + "-" + System.Environment.MachineName + ".txt", true);
                 sw.WriteLine(System.Environment.MachineName + " " + DateTime.Now.ToString() + ": " + ex.Source.ToString().Trim() + "; " + ex.Message.ToString().Trim());
                 sw.Flush();
@@ -50,8 +50,8 @@ namespace LogHubEndpointLogsExtractionVer3
 
             try
             {
-                //byte[] byData = System.Text.Encoding.ASCII.GetBytes(DateTime.Now.ToString() + ": " + Message);
-                //soc123.Send(byData);
+                byte[] byData = System.Text.Encoding.ASCII.GetBytes(System.Environment.MachineName + " " + DateTime.Now.ToString() + ": " + Message);
+                soc123.Send(byData);
                 sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "\\" + date + "-" + time + "-" + System.Environment.MachineName + ".txt", true);
                 sw.WriteLine(System.Environment.MachineName + " " + DateTime.Now.ToString() + ": " + Message);
                 sw.Flush();
