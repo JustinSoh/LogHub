@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { WebapiService } from '../../../services/webapi.service';
+import { AnalyticsService } from '../../services/analytics.service';
 
 @Component({
   selector: 'app-analytics-nav',
@@ -9,12 +10,16 @@ import { WebapiService } from '../../../services/webapi.service';
 export class AnalyticsNavComponent implements OnInit {
 
   private webApi:WebapiService;
-  constructor(webapi:WebapiService) {
+  private as:AnalyticsService
+  constructor(webapi:WebapiService , as:AnalyticsService) {
     this.webApi = webapi;
+    this.as = as;
    }
 
   ngOnInit() {
-    
+    this.as.currentDetails.subscribe(data => {
+      console.log(data + "testing oligx cjs");
+    })
   }
 
   public showCompareOutlet = false;

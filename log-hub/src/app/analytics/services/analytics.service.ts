@@ -2,18 +2,19 @@ import { Injectable,EventEmitter } from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import { CpuClass } from '../../class/cpu-class';
 import { HostClass } from 'src/app/class/host-class';
+import { Bandwidth } from '../../class/bandwidth';
 @Injectable({
   providedIn: 'root'
 })
 export class AnalyticsService {
 
-  //To set boolean to show cpu-chart details
-  private detailsStatus = new BehaviorSubject<Boolean>(false);
+  //To set boolean to show bandwidth details
+  private detailsStatus = new BehaviorSubject<String>(null);
   public currentDetails = this.detailsStatus.asObservable();
   
   //To set currentDataset
-  private currentDataset = new BehaviorSubject<CpuClass>(null);
-  public currentData = this.currentDataset.asObservable();
+  private bwDataset = new BehaviorSubject<Array<Bandwidth>>(null);
+  public bwData = this.bwDataset.asObservable();
 
   //To show the host portion
   private hostStatus = new BehaviorSubject<Boolean>(false);
@@ -30,14 +31,14 @@ export class AnalyticsService {
 
   constructor() { }
 
-  DetailStatus(value:Boolean)
+  DetailStatus(value:String)
   {
     this.detailsStatus.next(value);
   }
 
-  DataDetails(value:CpuClass)
+  BwDataDetails(value:Array<Bandwidth>)
   {
-    this.currentDataset.next(value);
+    this.bwDataset.next(value);
   }
 
   HostDetails(value:Boolean)

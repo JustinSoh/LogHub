@@ -62,7 +62,6 @@ export class WebapiService {
   async updateUser(userId:string, user:User)
   {
       var data = await this.http.put("https://loghub.azurewebsites.net/api/Users/" + userId , user).toPromise();
-      console.log(data);
   }
 
 

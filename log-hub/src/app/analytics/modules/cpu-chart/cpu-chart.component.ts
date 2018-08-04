@@ -48,42 +48,42 @@ export class CpuChartComponent implements OnInit {
     // this.UpdateChart(this.actualData, this.predictData, this.labelData);
     
     //method to retrieve data from database 
-    var cpuChartOverviewData = this.retrieveDatasetFromDatabase();
-    //indicate the type of labels of the chart
-    var cpuChartOverviewLabel = ['Low','Medium','High'];
-    //indicate what type of chart you would like
-    var cpuChartType = "bubble";
-    //used to pass data over to the cpu-chart-overview component
-    this.cpuChartOverview = new Gchart(cpuChartOverviewData, cpuChartOverviewLabel , cpuChartType);
-    //subscribe to an event on the cpu-chart-overview component
+    // var cpuChartOverviewData = this.retrieveDatasetFromDatabase();
+    // //indicate the type of labels of the chart
+    // var cpuChartOverviewLabel = ['Low','Medium','High'];
+    // //indicate what type of chart you would like
+    // var cpuChartType = "bubble";
+    // //used to pass data over to the cpu-chart-overview component
+    // this.cpuChartOverview = new Gchart(cpuChartOverviewData, cpuChartOverviewLabel , cpuChartType);
+    // //subscribe to an event on the cpu-chart-overview component
     
-    await this.analyticsService.currentDetails.subscribe(status => {
-      this.showDetails = status;
-      if(this.showDetails == true)
-      {
-        var details = document.getElementById("details");
-        if(details != null)
-        {
-          details.scrollIntoView({behavior: "smooth"});
-        }
-      }
-    }
-    );
+    // await this.analyticsService.currentDetails.subscribe(status => {
+    //   this.showDetails = status;
+    //   if(this.showDetails == true)
+    //   {
+    //     var details = document.getElementById("details");
+    //     if(details != null)
+    //     {
+    //       details.scrollIntoView({behavior: "smooth"});
+    //     }
+    //   }
+    // }
+    // );
   
-    //subscribe to an event when cpu-chart-overview bubble is clicked 
-    this.analyticsService.currentData.subscribe(data => this.clickedData = data);
-    //subscribe to see if the host details has been called 
-    this.analyticsService.currentHost.subscribe(data => {
-      this.showHost = data
-      if(this.showHost == true)
-      {
-        var hosts = document.getElementById("hosts");
-        if(hosts != null)
-        {
-          hosts.scrollIntoView({behavior:"smooth"});
-        }
-      }
-    });
+    // //subscribe to an event when cpu-chart-overview bubble is clicked 
+    // this.analyticsService.currentData.subscribe(data => this.clickedData = data);
+    // //subscribe to see if the host details has been called 
+    // this.analyticsService.currentHost.subscribe(data => {
+    //   this.showHost = data
+    //   if(this.showHost == true)
+    //   {
+    //     var hosts = document.getElementById("hosts");
+    //     if(hosts != null)
+    //     {
+    //       hosts.scrollIntoView({behavior:"smooth"});
+    //     }
+    //   }
+    // });
   }
 
 

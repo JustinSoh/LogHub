@@ -10,6 +10,9 @@ import { OrganizationService } from '../../services/organization.service';
 import { BandwidthService } from '../../services/bandwidth.service';
 import { Bandwidth } from '../../class/bandwidth';
 import { Router } from '../../../../node_modules/@angular/router';
+import { AnalyticsService } from '../services/analytics.service';
+import { Indivdualbandwidth } from '../../class/indivdualbandwidth';
+import { IndividualbandwidthService } from '../../services/individualbandwidth.service';
 
 @Component({
   selector: 'app-bandwidth',
@@ -47,140 +50,463 @@ export class BandwidthComponent implements OnInit, OnChanges {
   private userService: UserService;
   private bandwidthService: BandwidthService;
   private dataLoading: Boolean = false;
-  private bandwidthValue: String = "Loading . . ." ; 
+  private bandwidthValue: String = "Loading . . .";
   private bandwidthStatus: String = "Loading . . .";
-  private bwData:Array<Bandwidth> = new Array<Bandwidth>();
-  private mostRecent:Bandwidth;
-  private overviewTime:Date;
-  private overviewUsage:string; 
-  private overviewStatus:string;
-  private lowTrue:Boolean;
-  private mediumTrue:Boolean;
-  private highTrue:Boolean;
-  private veryhighTrue:Boolean;
-  private router:Router;
-
-  constructor(webapi: WebapiService, userService: UserService , bandwidthService:BandwidthService , router:Router) {
+  private bwData: Array<Bandwidth> = new Array<Bandwidth>();
+  private mainData: Array<Bandwidth> = new Array<Bandwidth>();
+  private mostRecent: Bandwidth;
+  private overviewTime: Date;
+  private overviewUsage: string;
+  private overviewStatus: string;
+  private lowTrue: Boolean;
+  private mediumTrue: Boolean;
+  private highTrue: Boolean;
+  private veryhighTrue: Boolean;
+  private trainingTrue: Boolean
+  private router: Router;
+  private informationMessage: String;
+  private analyticsService: AnalyticsService
+  private individualBw: IndividualbandwidthService;
+  private filterLive: Boolean = true;
+  private filterAll: Boolean = false;
+  private filterDay: Boolean = false;
+  private filterWeek: Boolean = false;
+  private detailsText: String;
+  private indBwData: Array<Indivdualbandwidth> = new Array<Indivdualbandwidth>();
+  private showDrilledData: Boolean = false;
+  private selectedData: Array<any> = new Array<any>();
+  private firstRow = ['Hostname' , 'Organization Name' , 'Total Upload (MB)' , 'Total Download (MB)' , 'Total (MB)' , 'Action']
+  constructor(webapi: WebapiService, userService: UserService, bandwidthService: BandwidthService, router: Router, as: AnalyticsService, individualBandwidth: IndividualbandwidthService) {
     this.webApi = webapi;
     this.userService = userService;
     this.bandwidthService = bandwidthService;
     this.router = router;
+    this.analyticsService = as;
+    this.individualBw = individualBandwidth;
 
   }
 
-  getDataThatHasBeenProcessed(bwData:Array<Bandwidth>)
-  {
-    var returnData:Array<Bandwidth> = new Array<Bandwidth>();
+  getDataThatHasBeenProcessed(bwData: Array<Bandwidth>) {
+    var returnData: Array<Bandwidth> = new Array<Bandwidth>();
     bwData.forEach(data => {
-      if(data.$riskScore.toLowerCase() == "high" || data.$riskScore.toLowerCase() == "very high"|| data.$riskScore.toLowerCase() == "medium" || data.$riskScore.toLowerCase() == "low")
-      {
-        if(data.$processed == true)
-        {
-          returnData.push(data)
-        }
+      if (data.$riskScore.toLowerCase() == "high" || data.$riskScore.toLowerCase() == "very high" || data.$riskScore.toLowerCase() == "medium" || data.$riskScore.toLowerCase() == "low" || data.$riskScore.toLowerCase() == "training") {
+        returnData.push(data)
       }
     })
     return returnData;
   }
-  async ngOnInit() {
+  ngOnInit() {
     this.webApi.user.subscribe(data => {
-      if(data == null)
-      {
-        this.router.navigate(['/'])
+      if (data == null) {
+        this.router.navigate(['/']);
       }
-      else{
+      else {
         this.currentUser = data;
+        var indBwID: Array<string> = new Array<string>();
+    
         this.bandwidthService.getBandwidthBasedOnId(this.currentUser.$organizationId).valueChanges().subscribe(data => {
           this.bwData = [];
           data.forEach(bwDataInd => {
-            console.log(bwDataInd)
-            var currentbw:Bandwidth= this.bandwidthService.convertBandwidth(bwDataInd);
+            var currentbw: Bandwidth = this.bandwidthService.convertBandwidth(bwDataInd);
             this.bwData.push(currentbw)
           })
-        this.bwData = this.getDataThatHasBeenProcessed(this.bwData);
-        this.mostRecent = this.bwData[this.bwData.length - 1];
-        this.overviewUsage = this.mostRecent.$usage;
-        this.overviewStatus = this.mostRecent.$riskScore
-        this.setColour(this.overviewStatus)
-           this.chart = this.createChart(this.bwData);
+          this.analyticsService.BwDataDetails(this.bwData)
+          this.bwData = this.getDataThatHasBeenProcessed(this.bwData);
+          this.bwData.forEach(data => {
+            console.log(data.$usage + " check this ")
+          })
+          this.mainData = this.bwData;
+          var type = "live"
+          if (this.filterLive == true) {
+            type = "live"
+          }
+          if (this.filterAll == true) {
+            type = "all"
+          }
+          if (this.filterDay == true) {
+            type = "day"
+          }
+          if (this.filterWeek == true) {
+            type = "week"
+          }
+          this.bwData = this.updateCurrentInformation(this.bwData, type)
+          this.indBwData = new Array<Indivdualbandwidth>();
+          this.individualBw.getBandwidthID().subscribe(data => {
+            console.log(data);
+            indBwID = new Array<string>();
+            this.indBwData = new Array<Indivdualbandwidth>();
+            data.forEach(element => {
+              var docId = element['payload']['doc']['id'];
+              indBwID.push(docId);
+              console.log(indBwID);
+            });
+          })
+          this.individualBw.getBandwidth().subscribe(data => {
+            this.indBwData = new Array<Indivdualbandwidth>();
+            for (var i = 0; i < data.length; i++) {
+              var indID = indBwID[i];
+              var indBwObj = this.individualBw.convertIndBandwidthFromData(indID, data[i]);
+              this.indBwData.push(indBwObj)
+              console.log(indBwObj);
+            }
+          })
         });
+        
+       
+
+
+
       }
     });
   }
 
-  createChart(bwData:Array<Bandwidth>){
-    var dataSet:Array<Number> = new Array<Number>();
-    var information:Map<string , any> = this.getUsageData(bwData);
-    if(this.chart == null)
-    {
-      this.chart = new Chart("bandwidthChartV2" , {
-        type: 'line',
-      })
-      var dateArray:Array<string> = new Array<string>();
+  processDataMappingPerDay(bwData: Array<Bandwidth>) {
+    var dataMapping: Map<Number, Array<Bandwidth>> = new Map<Number, Array<Bandwidth>>();
+    bwData.forEach(element => {
+      var time: Date = element.$time
+      var day = time.getDate();
+      if (dataMapping.get(day)) {
+        var arrayBW = dataMapping.get(day);
+        arrayBW.push(element);
+        dataMapping.set(day, arrayBW);
+
+      }
+      else {
+        var newArray: Array<Bandwidth> = new Array<Bandwidth>();
+        newArray.push(element);
+        dataMapping.set(day, newArray)
+      }
+    });
+    return dataMapping;
+  }
+
+  processRiskScorePerDay(riskScore: Map<String, number>) {
+    var total = 0
+    riskScore.forEach((value: Number, key: String) => {
+      if (key != "training") {
+        total = total + Number(value);
+      }
+    })
+    var lowTotal = 0;
+    var mediumTotal = 0;
+    var highTotal = 0;
+    var veryHigh = 0;
+    // var training = 0;
+    riskScore.forEach((value: Number, key: String) => {
+      // if(key.toLowerCase() == "training")
+      // {
+      //   training = training + Number(value);
+      // }
+      if (key.toLowerCase() == "low") {
+        lowTotal = lowTotal + Number(value);
+      }
+      if (key.toLowerCase() == "medium") {
+        mediumTotal = mediumTotal + Number(value);
+      }
+      if (key.toLowerCase() == "high") {
+        highTotal = highTotal + Number(value);
+      }
+      if (key.toLowerCase() == "very high") {
+        veryHigh = veryHigh + Number(value);
+      }
+
+    })
+    // console.log("Training total is " + training)
+
+
+    var overall = lowTotal + mediumTotal + highTotal + veryHigh
+    // var trainingPercentage = (training / overall) * 100
+    var lowPercentage = (lowTotal / overall) * 100
+    var mediumPercentage = (mediumTotal / overall) * 100
+    var highPercentage = (highTotal / overall) * 100
+    var veryHighPercentage = (veryHigh / overall) * 100
+
+
+    // console.log("Training perc is " + trainingPercentage)
+
+    var array: Array<Number> = new Array<Number>();
+    array.push(lowPercentage);
+    array.push(mediumPercentage);
+    array.push(highPercentage);
+    array.push(veryHighPercentage);
+
+    array = array.sort((a: any, b: any) =>
+      b - a
+    );
+    var winner = array[0]
+    var winningCategory = ""
+    if (winner == lowPercentage) {
+      winningCategory = "low";
+    }
+    else if (winner == mediumPercentage) {
+      winningCategory = "medium";
+    }
+    else if (winner == highPercentage) {
+      winningCategory = "high";
+    }
+    else if (winner == veryHighPercentage) {
+      winningCategory = "very high";
+    }
+    return [winningCategory, winner]
+    //fix later  
+    //this.caculateStandardDeviation([9, 2, 5, 4, 12, 7, 8, 11, 9, 3, 7, 4, 12, 5, 4, 10, 9, 6, 9, 4])
+
+
+  }
+  caculateStandardDeviation(value: Array<number>) {
+    var total = 0
+    for (var i = 0; i < value.length; i++) {
+      total = total + value[i];
+    }
+    var mean = total / value.length;
+    var xiTotal = 0;
+    for (var i = 0; i < value.length; i++) {
+      var xi = (value[i] - mean) * (value[i] - mean)
+      xiTotal = xiTotal + xi;
+    }
+
+    var variance = (1 / value.length) * xiTotal;
+    var sd = Math.sqrt(variance)
+    console.log(sd)
+
+  }
+
+  updateCurrentInformation(bwData, type) {
+    var dontUpdateLabel = false;
+    bwData = this.sortInformation(bwData);
+    if (type == "all") {
+      this.showDrilledData = false;
+      bwData = this.mainData
+      bwData = this.sortInformation(bwData);
+      if (this.chart != null) {
+        this.chart.options.scales.yAxes[0].ticks.stepSize = 20;
+        this.chart.update();
+      }
+      dontUpdateLabel = false;
+    }
+    if (type == "live") {
+      this.showDrilledData = false;
+      bwData = this.mainData;
+      if (bwData.length > 30) {
+        this.mainData = bwData;
+        bwData = bwData.slice(bwData.length - 30, bwData.length)
+      }
+      if (this.chart != null) {
+        this.chart.options.scales.yAxes[0].ticks.stepSize = 20;
+        this.chart.update();
+      }
+      dontUpdateLabel = false;
+
+    }
+    if (type == "day") {
+      this.showDrilledData = false;
+      var arrayOfData: Array<Bandwidth> = new Array<Bandwidth>();
+      bwData = this.mainData;
+      bwData = this.sortInformation(bwData);
+      var dataMapping: Map<Number, Array<Bandwidth>> = this.processDataMappingPerDay(bwData);
+      dataMapping.forEach((value: Array<Bandwidth>, key: Number) => {
+        var totalUsage = 0;
+        var organizationId = ""
+        var riskScore: Map<String, number> = new Map<String, number>();
+        var time: Date;
+        value.forEach(bw => {
+          totalUsage = totalUsage + Number(bw.$usage)
+          organizationId = bw.$organizationId;
+          time = bw.$time;
+          if (riskScore.get(bw.$riskScore)) {
+            riskScore.set(bw.$riskScore, riskScore.get(bw.$riskScore) + 1);
+          }
+          else {
+            riskScore.set(bw.$riskScore, 1);
+          }
+
+        })
+        var bandwidthId = "total" + key;
+        var hostId = "total" + key;
+        var riskScoreTotalPerDay = this.processRiskScorePerDay(riskScore);
+        var riskScoreValue = riskScoreTotalPerDay[0];
+        var totalBw1 = new Bandwidth(bandwidthId, hostId, true, organizationId, riskScoreValue.toString(), time, totalUsage.toString(), true);
+        arrayOfData.push(totalBw1);
+        // console.log("The risk is " + riskScoreTotalPerDay[0] + " at " + riskScoreTotalPerDay[1] + "percent")
+        // var totalbw1 = new Bandwidth(bandwidthId , hostId , True , organizationId , )
+      });
+      bwData = arrayOfData;
+      var information: Map<string, any> = this.getUsageData(bwData);
+      var dateArray: Array<string> = new Array<string>();
       var timeMap = information.get("Time")
       timeMap.forEach(element => {
-        var date = element.get("Date")
+        var date = element.get("DateAct") + "/" + element.get("Month") + "/" + element.get("Year")
         dateArray.push(date);
       });
-      this.chart.data.labels = dateArray
-      this.chart.data.datasets = [{label:'Bandwidth Utilization' , data:information.get("usage") , backgroundColor:"#1a1a1a" , pointBackgroundColor: information.get("PointColor")}]
+      this.chart.data.labels = dateArray;
+      this.chart.options.scales.yAxes[0].ticks.stepSize = 1000;
       this.chart.update();
+      dontUpdateLabel = true;
     }
-        else {
-      //update chart
+    // if(this.bwData.length > 30)
+    // {
+    // }
+    this.bwData = bwData;
+    this.mostRecent = bwData[bwData.length - 1];
+    console.log(this.mostRecent.$usage)
+    console.log(this.mostRecent.$riskScore)
+    this.overviewUsage = this.mostRecent.$usage;
+    this.overviewStatus = this.mostRecent.$riskScore
+    this.setColour(this.overviewStatus)
+    this.createChart(bwData, type, dontUpdateLabel);
+    return bwData;
+  }
+
+  sortInformation(information) {
+    var information2 = information.sort((a: any, b: any) =>
+      new Date(a.time).getTime() - new Date(b.time).getTime()
+    );
+    console.log(information2)
+    return information2
+
+  }
+
+  createChart(bwData: Array<Bandwidth>, type, dontUpdateLabel) {
+    var dataSet: Array<Number> = new Array<Number>();
+    var information: Map<string, any> = this.getUsageData(bwData);
+    var radius = 3
+    if (type == "live" || type == "day") {
+      radius = 5;
+    }
+    if (this.chart == null) {
+      this.chart = new Chart("bandwidthChartV2", {
+        type: 'line',
+        options: {
+          animation: false,
+          scales: {
+            yAxes: [{
+              ticks: {
+                beginAtZero: true,
+                stepSize: 20,
+                // Include a dollar sign in the ticks
+                callback: function (value, index, values) {
+                  return value + "mb/s";
+                },
+              }
+            }]
+          }
+          , tooltips: {
+            callbacks: {
+              label: function (tooltipItems, data) {
+                var index = tooltipItems.index;
+                var riskcolor = data.datasets[0].pointBackgroundColor[index];
+                var riskcolor = riskcolor.toLowerCase();
+                var risk = "";
+                if (riskcolor == "#4eab7e") {
+                  risk = "Low"
+                }
+                else if (riskcolor == "#ff8400") {
+                  risk = "Medium"
+                }
+                else if (riskcolor == "#ff9eb5") {
+                  risk = "High"
+                }
+                else if (riskcolor == "#d44343") {
+                  risk = "Very high"
+                }
+                else if (riskcolor == "#0072ff") {
+                  risk = "Training"
+                }
+                return risk;
+              }
+            }
+          }
+        }
+      })
+      var dateArray: Array<string> = new Array<string>();
+      var timeMap = information.get("Time")
+      timeMap.forEach(element => {
+        var date = element.get("Time")
+        dateArray.push(date);
+      });
+      if (dontUpdateLabel == false) {
+        console.log("DOES THIS EVEN RUN ==============")
+        this.chart.data.labels = dateArray
+      }
+      this.chart.data.datasets = [{ label: 'Bandwidth Utilization', data: information.get("usage"), backgroundColor: "#1a1a1a", pointBackgroundColor: information.get("PointColor"), pointRadius: radius }]
+      this.chart.update();
+
+    }
+    else {
+      var dateArray: Array<string> = new Array<string>();
+      var timeMap = information.get("Time")
+      timeMap.forEach(element => {
+        var date = element.get("Time")
+        dateArray.push(date);
+      });
+      if (dontUpdateLabel == false) {
+        console.log("DOES THIS EVEN RUN ==============")
+        this.chart.data.labels = dateArray
+      }
+      this.chart.data.datasets = [{ label: 'Bandwidth Utilization', data: information.get("usage"), backgroundColor: "#1a1a1a", pointBackgroundColor: information.get("PointColor"), pointRadius: radius }]
+      // if(type != "live")
+      // {
+      //   this.chart.options.animation = true;
+      // }
+      // else {
+      //   this.chart.options.animation = false;
+      // }
+      this.chart.update();
+
     }
   }
 
-  getUsageData(bwData:Array<Bandwidth>)
-  {
-    var dataMap:Map<string, any> = new Map<string, any>(); 
-    var usageArray:Array<string> = new Array<string>();
-    var riskScore:Array<string> = new Array<string>();
-    var time:Array<Map<string,any>> = new Array<Map<string,any>>();
+  getUsageData(bwData: Array<Bandwidth>) {
+    var dataMap: Map<string, any> = new Map<string, any>();
+    var usageArray: Array<string> = new Array<string>();
+    var riskScore: Array<string> = new Array<string>();
+    var time: Array<Map<string, any>> = new Array<Map<string, any>>();
     var backgroundColor: Array<string> = new Array<string>();
     bwData.forEach(data => {
       usageArray.push(data.$usage)
       riskScore.push(data.$riskScore);
       var day = this.getDayFromDate(data.$time)
-      var date = data.$time.getDay(); 
-      var month = data.$time.getMonth();
+      var date = data.$time.getDate();
+      var month = data.$time.getMonth() + 1;
       var year = data.$time.getFullYear();
       var hour = data.$time.getHours();
       var t = data.$time.getMinutes();
-      var timeMap:Map<string, string> = new Map<string, string>(); 
-      timeMap.set("Day" , day);
-      timeMap.set("Date" , day + "/" + month + "/" + year);
-      timeMap.set("Month" , month.toString());
-      timeMap.set("Year" , year.toString());
-      timeMap.set("Time" , hour.toString() + ":" +  t.toString())
-      timeMap.set("Hour" , hour.toString());
-      timeMap.set("Min" , t.toString())
+      var sec = data.$time.getSeconds();
+      var timeMap: Map<string, string> = new Map<string, string>();
+      timeMap.set("Day", day);
+      timeMap.set("DateAct", date.toString());
+      timeMap.set("Date", data.$time.getDate() + "/" + month + " " + hour + ":" + t);
+      timeMap.set("Month", month.toString());
+      timeMap.set("Year", year.toString());
+      timeMap.set("Time", hour.toString() + ":" + t.toString() + ":" + sec)
+      timeMap.set("Hour", hour.toString());
+      timeMap.set("Min", t.toString())
+      timeMap.set("Sec", sec.toString())
       time.push(timeMap)
       var color = this.getPointColorBasedOnStatus(data.$riskScore);
       backgroundColor.push(color);
     });
-    dataMap.set("usage" , usageArray)
-    dataMap.set("risk" , riskScore)
-    dataMap.set("Time" , time)
-    dataMap.set("PointColor" , backgroundColor)
+    dataMap.set("usage", usageArray)
+    dataMap.set("risk", riskScore)
+    dataMap.set("Time", time)
+    dataMap.set("PointColor", backgroundColor)
     return dataMap;
   }
 
-  getPointColorBasedOnStatus(riskScore)
-  {
-    if(riskScore.toLowerCase() == "low")
-    {
-      return "#4EBB7E"
+  getPointColorBasedOnStatus(riskScore) {
+    if (riskScore.toLowerCase() == "low") {
+      return "#4EAB7E"
     }
-    else if(riskScore.toLowerCase() == "medium")
-    {
+    else if (riskScore.toLowerCase() == "medium") {
       return "#FF8400"
     }
 
-    else if(riskScore.toLowerCase() == "high")
-    {
+    else if (riskScore.toLowerCase() == "high") {
       return "#ff9eb5"
 
+    }
+    else if (riskScore.toLowerCase() == "training") {
+      return "#0072FF"
     }
     else {
       return "#D44343"
@@ -188,39 +514,295 @@ export class BandwidthComponent implements OnInit, OnChanges {
 
   }
 
-  getDayFromDate(time:Date)
-  {
+  getDayFromDate(time: Date) {
     var day = time.getDay();
-    if(day == 0)
-    {
+    if (day == 0) {
       return "Mon"
     }
-    else if(day == 1)
-    {
+    else if (day == 1) {
       return "Tue"
     }
-    else if(day == 2)
-    {
+    else if (day == 2) {
       return "Wed"
     }
-    else if(day == 3)
-    {
+    else if (day == 3) {
       return "Thur"
     }
-    else if(day == 4)
-    {
+    else if (day == 4) {
       return "Fri"
     }
-    else if(day ==5)
-    {
+    else if (day == 5) {
       return "Sat"
     }
-    else if(day == 6)
-    {
+    else if (day == 6) {
       return "Sun"
     }
   }
-    
+
+  showBandwidthDetails() {
+    console.log("Show Bandwidth Details")
+    this.analyticsService.DetailStatus("bwd");
+
+  }
+
+  showAll() {
+    this.filterLive = false;
+    this.filterDay = false;
+    this.filterWeek = false;
+    this.filterAll = true;
+    this.updateCurrentInformation(this.bwData, "all");
+
+  }
+
+  showLive() {
+    this.filterAll = false;
+    this.filterDay = false;
+    this.filterWeek = false;
+    this.filterLive = true;
+    this.updateCurrentInformation(this.bwData, "live");
+  }
+
+  showDay() {
+    this.filterAll = false;
+    this.filterDay = true;
+    this.filterWeek = false;
+    this.filterLive = false;
+    this.updateCurrentInformation(this.bwData, "day");
+  }
+
+  showWeek() {
+
+  }
+
+
+  ngOnChanges() {
+    // var currentBw = this.getCurrentBwBasedOnData(this.input);
+    // this.chart = this.updateCurrentBandwidth(currentBw, this.input)
+  }
+
+  setColour(overviewStatus) {
+    this.lowTrue = false;
+    this.mediumTrue = false;
+    this.highTrue = false;
+    this.trainingTrue = false;
+
+    if (overviewStatus.toLowerCase() == "low") {
+      this.lowTrue = true;
+      this.informationMessage = "Low Risk"
+    }
+    if (overviewStatus.toLowerCase() == "medium") {
+      this.mediumTrue = true;
+      this.informationMessage = "Medium Risk"
+
+    } if (overviewStatus.toLowerCase() == "high") {
+      console.log("does this happen")
+      this.highTrue = true;
+      this.informationMessage = "High Risk"
+
+    }
+    if (overviewStatus.toLowerCase() == "very high") {
+      this.veryhighTrue = true;
+      this.informationMessage = "Very High Risk"
+
+    }
+    if (overviewStatus.toLowerCase() == "training") {
+      this.trainingTrue = true;
+      this.informationMessage = "Data is being trained"
+
+    }
+  }
+
+  getCurrentBwBasedOnData(num: number) {
+    if (num <= this.lowTo) {
+      return "Low"
+    }
+    else if (num <= this.mediumTo) {
+      return "Medium"
+    }
+    else if (num <= this.highTo) {
+      return "High"
+    }
+    else {
+      return null
+    }
+  }
+
+  processDetailsData(clickedbw , unfilteredSelectedData , type )
+  {
+    if(type == "live")
+    {
+      
+    }
+    var comday = clickedbw.$time.getDate().toString() + "/" + clickedbw.$time.getMonth().toString() + "/" + clickedbw.$time.getFullYear();
+        var comhour = clickedbw.$time.getHours();
+        console.log("The current day is " + comday)
+        console.log(comhour)
+        console.log(this.indBwData);
+        this.indBwData.forEach(data => {
+          var day = data.$time.getDate().toString() + "/" + data.$time.getMonth().toString() + "/" + data.$time.getFullYear();
+          var hour = data.$time.getHours()
+          if (day == comday) {
+            if(type == "live")
+            {
+              if (hour == comhour) {
+                unfilteredSelectedData.push(data);
+              }
+            }
+            if(type =="day")
+            {
+              unfilteredSelectedData.push(data);
+            }
+          }
+        })
+        console.log(unfilteredSelectedData);
+        var dataMapping: Map<string, Array<Indivdualbandwidth>> = new Map<string, Array<Indivdualbandwidth>>();
+        unfilteredSelectedData.forEach(data => {
+          if (dataMapping.get(data.$hostname)) {
+            var list: Array<Indivdualbandwidth> = dataMapping.get(data.$hostname);
+            list.push(data);
+            dataMapping.set(data.$hostname, list);
+          }
+          else {
+            var newArray: Array<Indivdualbandwidth> = new Array<Indivdualbandwidth>();
+            newArray.push(data);
+            dataMapping.set(data.$hostname, newArray)
+          }
+
+        })
+
+        var sunormoonstart = "pm"
+        var sunormoonend = "pm"
+        if (comhour <= 12) {
+          sunormoonstart = "am"
+        }
+        if (comhour + 1 < 12) {
+          sunormoonend = "am"
+        }
+        this.detailsText = comday + " from " + comhour + ":00 " + sunormoonstart + " to " + (comhour + 1).toString() + ":00 " + sunormoonend
+        console.log(dataMapping);
+        this.selectedData = new Array<any>();
+        dataMapping.forEach((value, key) => {
+          console.log(key + "Chwxk rhias");
+          this.selectedData.push([key, comday, comhour , type]);
+        })
+        console.log(this.selectedData);
+        this.showDrilledData = true;
+        try {
+          document.getElementById("drilledData").scrollIntoView({ behavior: "smooth" })
+        }
+        catch{
+          console.log("oops");
+        }
+
+        return this.selectedData;
+  }
+
+
+
+
+  bandwidthClick(evt) {
+    var unfilteredSelectedData: Array<Indivdualbandwidth> = new Array<Indivdualbandwidth>();
+      var activePoints = this.chart.getElementsAtEvent(evt);
+      var index = activePoints[0]._index;
+      var clickedbw: Bandwidth = this.bwData[index];
+      console.log(clickedbw);
+      if (this.filterLive) {
+        this.processDetailsData(clickedbw , unfilteredSelectedData , "live")
+
+      }
+      if(this.filterDay)
+      {
+        this.processDetailsData(clickedbw , unfilteredSelectedData , "day")
+
+      }
+
+  }
+
+}
+
+
+// Chart.pluginService.register({
+//   beforeInit: function (chart) {
+//       var hasWrappedTicks = chart.config.data.labels.some(function (label) {
+//           return label.indexOf('\n') !== -1;
+//       });
+
+//       if (hasWrappedTicks) {
+//           // figure out how many lines we need - use fontsize as the height of one line
+//           var tickFontSize = Chart.helpers.getValueOrDefault(chart.options.scales.xAxes[0].ticks.fontSize, Chart.defaults.global.defaultFontSize);
+//           var maxLines = chart.config.data.labels.reduce(function (maxLines, label) {
+//               return Math.max(maxLines, label.split('\n').length);
+//           }, 0);
+//           var height = (tickFontSize + 2) * maxLines + (chart.options.scales.xAxes[0].ticks.padding || 0);
+
+//           // insert a dummy box at the bottom - to reserve space for the labels
+//           Chart.layoutService.addBox(chart, {
+//               draw: Chart.helpers.noop,
+//               isHorizontal: function () {
+//                   return true;
+//               },
+//               update: function () {
+//                   return {
+//                       height: this.height
+//                   };
+//               },
+//               height: height,
+//               options: {
+//                   position: 'bottom',
+//                   fullWidth: 1,
+//               }
+//           });
+
+//           // turn off x axis ticks since we are managing it ourselves
+//           chart.options = Chart.helpers.configMerge(chart.options, {
+//               scales: {
+//                   xAxes: [{
+//                       ticks: {
+//                           display: false,
+//                           // set the fontSize to 0 so that extra labels are not forced on the right side
+//                           fontSize: 0
+//                       }
+//                   }]
+//               }
+//           });
+
+//           chart.hasWrappedTicks = {
+//               tickFontSize: tickFontSize
+//           };
+//       }
+//   },
+//   afterDraw: function (chart) {
+//       if (chart.hasWrappedTicks) {
+//           // draw the labels and we are done!
+//           chart.chart.ctx.save();
+//           var tickFontSize = chart.hasWrappedTicks.tickFontSize;
+//           var tickFontStyle = Chart.helpers.getValueOrDefault(chart.options.scales.xAxes[0].ticks.fontStyle, Chart.defaults.global.defaultFontStyle);
+//           var tickFontFamily = Chart.helpers.getValueOrDefault(chart.options.scales.xAxes[0].ticks.fontFamily, Chart.defaults.global.defaultFontFamily);
+//           var tickLabelFont = Chart.helpers.fontString(tickFontSize, tickFontStyle, tickFontFamily);
+//           chart.chart.ctx.font = tickLabelFont;
+//           chart.chart.ctx.textAlign = 'center';
+//           var tickFontColor = Chart.helpers.getValueOrDefault(chart.options.scales.xAxes[0].fontColor, Chart.defaults.global.defaultFontColor);
+//           chart.chart.ctx.fillStyle = tickFontColor;
+
+//           var meta = chart.getDatasetMeta(0);
+//           var xScale = chart.scales[meta.xAxisID];
+//           var yScale = chart.scales[meta.yAxisID];
+
+//           chart.config.data.labels.forEach(function (label, i) {
+//               label.split('\n').forEach(function (line, j) {
+//                   chart.chart.ctx.fillText(line, xScale.getPixelForTick(i + 0.5), (chart.options.scales.xAxes[0].ticks.padding || 0) + yScale.getPixelForValue(yScale.min) +
+//                       // move j lines down
+//                       j * (chart.hasWrappedTicks.tickFontSize + 2));
+//               });
+//           });
+
+//           chart.chart.ctx.restore();
+//       }
+//   }
+// });
+
+
+
     // if (this.currentUser == null) {
     //   var allUser: Array<User> = new Array<User>();
     //   this.userService.getUsers().subscribe(data => {
@@ -240,16 +822,16 @@ export class BandwidthComponent implements OnInit, OnChanges {
     //       }
     //     }
     //   });
-      
+
     // }
     // console.log(this.currentUser);
 
-  
 
-    
-    
+
+
+
     // console.log(this.currentUser.$organizationId)
-    
+
     //readFromDatabase
 
 
@@ -305,50 +887,6 @@ export class BandwidthComponent implements OnInit, OnChanges {
     //   var currentBw = this.getCurrentBwBasedOnData(this.input);
     //   this.setCurrentBandwidth(currentBw, this.input);
     // }
-
-  ngOnChanges() {
-    // var currentBw = this.getCurrentBwBasedOnData(this.input);
-    // this.chart = this.updateCurrentBandwidth(currentBw, this.input)
-  }
-  
-  setColour(overviewStatus)
-  {
-    this.lowTrue = false;
-    this.mediumTrue = false;
-    this.highTrue = false;
-
-    if(overviewStatus.toLowerCase() == "low")
-    {
-      this.lowTrue = true;
-    }
-    if(overviewStatus.toLowerCase() == "medium")
-    {
-      this.mediumTrue = true;
-    } if(overviewStatus.toLowerCase() == "high")
-    {
-      console.log("does this happen")
-      this.highTrue = true;
-    }
-    if(overviewStatus.toLowerCase() == "very high")
-    {
-      this.veryhighTrue = true;
-    }
-  }
-  
-  getCurrentBwBasedOnData(num: number) {
-    if (num <= this.lowTo) {
-      return "Low"
-    }
-    else if (num <= this.mediumTo) {
-      return "Medium"
-    }
-    else if (num <= this.highTo) {
-      return "High"
-    }
-    else {
-      return null
-    }
-  }
 
 //   closeSetting() {
 //     this.settings = false;
@@ -642,6 +1180,3 @@ export class BandwidthComponent implements OnInit, OnChanges {
 //       ctx.fillText(txt, centerX, centerY);
 //     }
 //   }
-
-}
-

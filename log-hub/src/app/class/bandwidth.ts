@@ -6,8 +6,8 @@ export class Bandwidth {
     private riskScore: string;
     private time: Date;
     private usage: string; 
-    private processed: Boolean
-
+    private processed: Boolean;
+    private bandwidthArray:Array<Bandwidth>;
 
 	constructor($bandwidthId: string, $hostId: string, $included: Boolean, $organizationId: string, $riskScore: string, $time: Date, $usage: string , $processed:Boolean) {
 		this.bandwidthId = $bandwidthId;
@@ -150,6 +150,21 @@ export class Bandwidth {
 	}
     
 
+    /**
+     * Getter $bandwidthArray
+     * @return {Array<Bandwidth>}
+     */
+	public get $bandwidthArray(): Array<Bandwidth> {
+		return this.bandwidthArray;
+	}
+
+    /**
+     * Setter $bandwidthArray
+     * @param {Array<Bandwidth>} value
+     */
+	public set $bandwidthArray(value: Array<Bandwidth>) {
+		this.bandwidthArray = value;
+	}
 
 
 

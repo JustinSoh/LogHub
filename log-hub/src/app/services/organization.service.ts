@@ -20,6 +20,16 @@ export class OrganizationService {
     return this.orgs;
   }
 
+  getOrgsDocumentIDbyID(id)
+  {
+    return this.afs.collection('Organization' , ref => ref.where('organizationID', '==', id)).snapshotChanges();
+  }
+
+  getOrgsObjByDocID(id)
+  {
+    return this.afs.collection('Organization').doc(id).valueChanges();
+  }
+
   addOrgs(org) {
     this.orgCollection.add(org)
   }

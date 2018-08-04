@@ -53,28 +53,28 @@ export class CPUChartOverview implements OnInit {
 
   //on click of the button
   chartClicked(e: any): void {
-    var status = false;
-    this.analyticsService.DetailStatus(this.showDetails);
+    // var status = false;
+    // this.analyticsService.DetailStatus(this.showDetails);
 
-    //if click on white area, hide the cpu-chart-detail  and sync it with the service
-    if (e['active'].length != 0) {
-      status = true;
-      this.showDetails = status;
-      this.analyticsService.DetailStatus(this.showDetails);
-      //Get the type of data e.g. High , Medium , Low
-      var applicableSet: Array<CpuClass> = this.getApplicableSet(e);
-      //Get the actual data within applicableSet
-      var currentData: CpuClass = this.getSpecificData(applicableSet, e);
-      //Sync the data with the service of what is the actual data
-      this.analyticsService.DataDetails(currentData);
+    // //if click on white area, hide the cpu-chart-detail  and sync it with the service
+    // if (e['active'].length != 0) {
+    //   status = true;
+    //   this.showDetails = status;
+    //   this.analyticsService.DetailStatus(this.showDetails);
+    //   //Get the type of data e.g. High , Medium , Low
+    //   var applicableSet: Array<CpuClass> = this.getApplicableSet(e);
+    //   //Get the actual data within applicableSet
+    //   var currentData: CpuClass = this.getSpecificData(applicableSet, e);
+    //   //Sync the data with the service of what is the actual data
+    //   this.analyticsService.DataDetails(currentData);
 
 
-    }
-    else {
-      status = false;
-      this.showDetails = false
-      this.analyticsService.DetailStatus(this.showDetails);
-    }
+    // }
+    // else {
+    //   status = false;
+    //   this.showDetails = false
+    //   this.analyticsService.DetailStatus(this.showDetails);
+    // }
 
 
   }

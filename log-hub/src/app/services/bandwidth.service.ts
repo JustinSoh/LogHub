@@ -17,13 +17,14 @@ export class BandwidthService {
     this.bandwidth = this.bandwidthCollection.valueChanges();
   }
 
+  
+
   getBandwidth() {
     return this.bandwidth;
   }
   
   getBandwidthBasedOnId(organizationId){
     var data = this.afs.collection('Bandwidth')
-    console.log(data);
     return data;
   }
 
@@ -39,7 +40,8 @@ export class BandwidthService {
     var time:Timestamp = bw['time']
     var processed = bw['processed']
     var newbw:Bandwidth = new Bandwidth(bandwidthId , hostId , included , organizationId , riskScore , time.toDate(), usage , processed)
-    console.log(newbw);
     return newbw;
   }
+
+  
 }

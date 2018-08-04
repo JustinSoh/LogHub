@@ -36,6 +36,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { WebapiService } from './services/webapi.service';
 import { environment } from '../environments/environment';
 import { AngularFireModule } from 'angularfire2'
+import {MatIconModule} from '@angular/material/icon';
 
 export const firebaseConfig = environment.firebaseConfig;
 import { AngularFirestoreModule } from 'angularfire2/firestore';
@@ -43,6 +44,8 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { UserService } from './services/user.service';
 import { OrganizationService } from './services/organization.service';
 import { BandwidthService } from './services/bandwidth.service';
+import { DetailsTemplateComponent } from './analytics/detailsTemplate/details-template/details-template.component';
+import { BandwidthDetailsComponent } from './analytics/bandwidth-details/bandwidth-details.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +67,8 @@ import { BandwidthService } from './services/bandwidth.service';
     CpuChartDetailComponent,
     CpuChartHostComponent,
     BandwidthComponent,
+    DetailsTemplateComponent,
+    BandwidthDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -85,7 +90,8 @@ import { BandwidthService } from './services/bandwidth.service';
     MatCardModule,
     HttpClientModule,
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    MatIconModule
   ],
   providers: [AppRoutingModule, UserService, OrganizationService, BandwidthService],
   bootstrap: [AppComponent],

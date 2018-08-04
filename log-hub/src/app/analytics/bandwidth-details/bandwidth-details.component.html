@@ -1,0 +1,29 @@
+<div class="container-fluid">
+  <div class="row">
+      <mat-card class="card-style">
+          <div class="row">
+              <div class="col-sm-2" style="padding:0px" >
+                <p class="subtitle data" [ngClass]="{'first': first}"> {{hostname}}</p>
+              </div>
+              <div class="col-sm-2" style="padding:0px">
+                <p class="subtitle data" [ngClass]="{'first': first}">{{organizationName}}</p>
+              </div>
+              <div class="col-sm-2" style="padding:0px">
+                <p class="subtitle data" [ngClass]="{'first': first}">{{upload}}</p>
+              </div>
+              <div class="col-sm-2" style="padding:0px">
+                <p class="subtitle data" [ngClass]="{'first': first}">{{download}}</p>
+              </div>
+              <div class="col-sm-2" style="padding:0px">
+                <p class="subtitle data" [ngClass]="{'first': first}">{{total}}</p>
+              </div>
+              <div class="col-sm-2" *ngIf="first" style="padding:0px">
+                <p class="subtitle data" [ngClass]="{'first': first}">{{action}}</p>
+              </div>
+               <div class="col-sm-2" *ngIf="!first" style="padding:0px; text-align: center;   display: flex;;align-items: center;justify-content: center;">
+                    <button mat-button class="login-button">Details</button>
+              </div>
+          </div>
+      </mat-card>
+  </div>
+</div>

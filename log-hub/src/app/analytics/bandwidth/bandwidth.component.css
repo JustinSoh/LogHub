@@ -18,6 +18,9 @@
     color: #D44343;
 
 }
+.training { 
+    color: #0072FF
+}
 
 .center {
     text-align: left;
@@ -43,9 +46,9 @@
     outline: none !important;
     border: none !important;
     margin-left: 2%;
-    margin-right: 2%;
-    color: #FAFAFA;
+    color: #0072FF;
     width:auto;
+    
     display: inline-block;
 }
 
@@ -62,6 +65,42 @@
     color: #FAFAFA;
 }
 
+.button {
+    border: 0px; 
+    outline: none;
+
+}
+
+.format-button{
+    text-align: right;
+}
+
+.fa-bars {
+    font-size: 1.2em;
+}
+
+::ng-deep .mat-menu {
+    background-color: #262626 !important;
+}
+::ng-deep .mat-menu-content  {
+    border: 0px;
+    outline: none;
+    height: auto;
+    background-color: #1a1a1a !important;
+}
+
+::ng-deep .mat-menu-panel {
+    background-color: #1a1a1a !important;
+}
+
+.mat-menu-item {
+    color: #4c4c4c !important;
+    background: #1a1a1a !important;
+    border: 1px;
+    text-align: center;
+    outline: none;
+  }
+  
 
 .settings {
     width: 20% ; 
@@ -73,7 +112,7 @@
     /* bring your own prefixes */
     transform: translate(-50%, -50%);
     background-color: #262626 !important;
-    border-radius: 3px
+    border-radius: 30px
 }
 
 .settingsClass {
@@ -106,8 +145,7 @@
 .submitButton {
     width: 100%;
     color: #fafafa;
-    
-    background: #0072FF
+    background: #0072FF;
 }
 
 .textField {
@@ -125,4 +163,21 @@
 .card-style {
     border-radius: 30px;
     background: #262626;
+}
+
+.custom-select {
+    width: 10%;
+}
+
+.selected {
+    color: #fafafa !important;
+}
+
+.hostTopDetails {
+    margin-top: 3%;
+    margin-left: 1%;
+    height: auto;
+    min-height: 30vh; 
+    border-radius: 30px;
+    width:96vw;
 }

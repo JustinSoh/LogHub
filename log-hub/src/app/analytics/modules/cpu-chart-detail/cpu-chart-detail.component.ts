@@ -26,16 +26,16 @@ export class CpuChartDetailComponent implements OnInit {
 
 
   public ngOnInit() {
-    this.analyticsService.currentData.subscribe(data => {
-      this.currentData = data;
-      // this.updateChart(this.currentData);
-      if (this.chart != null) {
-        this.updateChart(this.currentData);
-      }
-      else {
-        this.createChart(this.currentData);
-      }
-    });
+    // this.analyticsService.currentData.subscribe(data => {
+    //   this.currentData = data;
+    //   // this.updateChart(this.currentData);
+    //   if (this.chart != null) {
+    //     this.updateChart(this.currentData);
+    //   }
+    //   else {
+    //     this.createChart(this.currentData);
+    //   }
+    // });
   }
 
   createChart(currentData: CpuClass) {
