@@ -8,7 +8,7 @@
           <canvas id="doughnut-canvas" class="chartjs-render-monitor"></canvas>
         </div>
         <div class="cpu-info">
-          <span class="cpu-average-percentage">{{cpuAverage}}
+          <span class="cpu-average-percentage">{{cpuAverage | number: '.1-2'}}
             <span>%</span>
           </span>
           <p class="average-usage-text">Average CPU Usage</p>
@@ -21,10 +21,10 @@
           <canvas id="doughnut-canvas2" class="chartjs-render-monitor"></canvas>
         </div>
         <div class="cpu-info">
-          <span class="cpu-average-percentage">{{chromeAverage}}
+          <span class="cpu-average-percentage">{{chromeAverage | number: '.1-2'}}
             <span>%</span>
           </span>
-          <p class="average-usage-text">Average CPU Usage</p>
+          <p class="average-usage-text">Average Chrome Usage</p>
         </div>
       </div>
       <div class="event">

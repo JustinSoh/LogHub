@@ -61,6 +61,7 @@ export class FilteredGraphsComponent implements OnInit {
         }]
       },
       options: {
+        animation: false,
         maintainAspectRatio: false,
         title: {
           display: false
@@ -107,6 +108,7 @@ export class FilteredGraphsComponent implements OnInit {
         }]
       },
       options: {
+        animation: false,
         maintainAspectRatio: false,
         title: {
           display: false
@@ -182,12 +184,12 @@ export class FilteredGraphsComponent implements OnInit {
     })
   }
 
-  showCPU() {
-    this.createLineChart();
-  }
-
-  showChrome() {
-    this.createLineChart2();
+  sessionChange(selected: any) {
+    if (selected == "CPU Usage") {
+      this.createLineChart()
+    } else if (selected == "Chrome Usage") {
+      this.createLineChart2()
+    }
   }
 
   constructor(private modalService: NgbModal, private elementRef: ElementRef, private cpuDetailsService: CpuDetailsService, private cpuLogsService: CpuLogsService) {
@@ -213,6 +215,11 @@ export class FilteredGraphsComponent implements OnInit {
     })
 
     this.cpuLogsService.getItems().subscribe(data => {
+      this.dataset = []
+      this.dataset2 = []
+      this.timeset = []
+      this.colorset = []
+
       for (var i = 0; i < data.length; i++) {
         this.dataset.push(data[i]['usage'])
         this.dataset2.push(data[i]['chrome'])
@@ -225,6 +232,9 @@ export class FilteredGraphsComponent implements OnInit {
         }
         else if (data[i]['riskValue'] == 'medium') {
           this.colorset.push('yellow')
+        }
+        else if (data[i]['riskValue'] == 'training') {
+          this.colorset.push('cyan')
         }
       }
       this.createLineChart();
