@@ -25,6 +25,11 @@ export class OrganizationService {
     return this.afs.collection('Organization' , ref => ref.where('organizationID', '==', id)).snapshotChanges();
   }
 
+  getOrgsObjUsingID(id)
+  {
+    return this.afs.collection('Organization' , ref => ref.where('organizationID', '==', id)).valueChanges();
+  }
+
   getOrgsObjByDocID(id)
   {
     return this.afs.collection('Organization').doc(id).valueChanges();

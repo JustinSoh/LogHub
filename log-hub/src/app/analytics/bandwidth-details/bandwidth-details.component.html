@@ -21,7 +21,7 @@
                 <p class="subtitle data" [ngClass]="{'first': first}">{{action}}</p>
               </div>
                <div class="col-sm-2" *ngIf="!first" style="padding:0px; text-align: center;   display: flex;;align-items: center;justify-content: center;">
-                    <button mat-button class="login-button">Details</button>
+                    <button mat-button class="login-button" (click)="showHostDetails()">Details</button>
               </div>
           </div>
       </mat-card>

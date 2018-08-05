@@ -33,20 +33,20 @@ export class CpuChartHostComponent implements OnInit {
 
   ngOnInit() {
 
-    this.analyticsService.currentHostData.subscribe(data => {
-      //Transform the data into chart readable 
-      this.hostname = data.$hostId;
-      this.predictionArray = data.$predictedArray; 
-      this.actualArray = data.$actualArray; 
-      this.labelArray = data.$labels;
-      this.splicePredictionArray = this.splicingMethod(this.predictionArray, 10);
-      this.spliceActualArray = this.splicingMethod(this.actualArray, 10);
-      this.spliceLabelArray = this.splicingMethod(this.labelArray, 10);
-      this.actualData = this.splicePredictionArray[0];
-      this.predictData = this.spliceActualArray[0];
-      this.labelData = this.spliceLabelArray[0];
-      this.UpdateChart(this.actualData, this.predictData, this.labelData, this.hostname);
-    });
+    // this.analyticsService.currentHostData.subscribe(data => {
+    //   //Transform the data into chart readable 
+    //   this.hostname = data.$hostId;
+    //   this.predictionArray = data.$predictedArray; 
+    //   this.actualArray = data.$actualArray; 
+    //   this.labelArray = data.$labels;
+    //   this.splicePredictionArray = this.splicingMethod(this.predictionArray, 10);
+    //   this.spliceActualArray = this.splicingMethod(this.actualArray, 10);
+    //   this.spliceLabelArray = this.splicingMethod(this.labelArray, 10);
+    //   this.actualData = this.splicePredictionArray[0];
+    //   this.predictData = this.spliceActualArray[0];
+    //   this.labelData = this.spliceLabelArray[0];
+    //   this.UpdateChart(this.actualData, this.predictData, this.labelData, this.hostname);
+    // });
 
    
   }

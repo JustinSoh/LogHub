@@ -33,7 +33,7 @@
         </mat-card>
         <!-- </button> -->
     </div>
-    <div style="display:inline-block" style="margin-top:2% ;" class="col-sm-4">
+    <div style="display:inline-block" style="margin-top:2% ;" class="col-sm-3">
         <mat-card class="card-style">
             HELOO
         </mat-card>
@@ -43,17 +43,34 @@
 <div *ngIf="showDrilledData" id="drilledData" class="hostTopDetails">
     <mat-card class="card-style">
         <div class="row">
-            <h3 class="title1 color" class="col-sm-11" style="display:inline-block; color:#fafafa">Individual Host Analysis</h3>
+            <h3 class="title1 color" class="col-sm-11" style="display:inline-block; color:#fafafa">All Host Overview</h3>
             <p class="subheading2 color" class="col-sm-11" style="display:inline-block; color:#fafafa">{{detailsText}}</p>
             <app-bandwidth-details [input]="firstRow"></app-bandwidth-details>
             <app-bandwidth-details *ngFor="let indbw of selectedData" [input]="indbw"></app-bandwidth-details>
         </div>
     </mat-card>
 </div>
-
+<div *ngIf="hostDetails" id="indData" class="hostTopDetails2">
+        <mat-card class="card-style2">
+            <div class="row">
+                <div class="col-sm-4" >
+                    <mat-card class="card-style3">
+                        <h3 class="title1 color" class="col-sm-11" style="display:inline-block; color:#0072FF">{{hostName}}</h3>
+                        <h4 class="subtitle " class="col-sm-11" style="display:inline-block; color:#777777">{{organizationName}}</h4>
+                        <p class="title2 color" class="col-sm-11" style="display:inline-block; color:#777777">IP Adress: {{IPAddress}}</p>
+                        <p class="title2 color" class="col-sm-11" style="display:inline-block; color:#777777">MAC Adress: {{MACAddress}}</p>
+                        <p class="title2 color" class="col-sm-11" style="display:inline-block; color:#777777">Default Gateway:{{DefaultGateway}}</p>
+                    </mat-card>
+                </div>
+                <div class="col-sm-8" ></div>
+ 
+          
+                
+            </div>
+        </mat-card>
+    </div>
 
 <div *ngIf="bandwidthChartClicked" style="color: #fafafa">Data is currently loading . . . </div>
-
 
 <!-- <div *ngIf="settings" class="settings">
         <mat-card class="settingsClass" (keyup.enter)="submitSettings()">

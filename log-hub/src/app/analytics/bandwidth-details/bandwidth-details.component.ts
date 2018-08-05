@@ -73,7 +73,6 @@ export class BandwidthDetailsComponent implements OnInit {
             }
           }
         }
-        console.log(this.organizationName);
         this.organizationService.getOrgsDocumentIDbyID(this.organizationName).subscribe(data => {
           var organizationID = ""
           console.log(data);
@@ -128,6 +127,11 @@ export class BandwidthDetailsComponent implements OnInit {
     console.log(information2)
     return information2
 
+  }
+
+  showHostDetails() {
+    this.as.DetailStatus(true)
+    this.as.HostStatus(this.input[0]);
   }
 
 

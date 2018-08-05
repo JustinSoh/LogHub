@@ -36,9 +36,9 @@ export class CPUChartOverview implements OnInit {
     //get the data and update the chart with the relevent data
     this.UpdateChart(this.cpuChartOverview.$cpuOverviewData, this.cpuChartOverview.$cpuOverviewLabel, this.cpuChartOverview.$cpuOverviewType);
     //Get the data from the service that was passed over from Cpu overview 
-    this.lowDataset = this.analyticsService.$cpuLow;
-    this.mediumDataset = this.analyticsService.$cpuMedium
-    this.highDataset = this.analyticsService.$cpuHigh;
+    // this.lowDataset = this.analyticsService.$cpuLow;
+    // this.mediumDataset = this.analyticsService.$cpuMedium
+    // this.highDataset = this.analyticsService.$cpuHigh;
     // this.createChart(this.cpuChartOverview.$cpuOverviewData, this.cpuChartOverview.$cpuOverviewLabel, this.cpuChartOverview.$cpuOverviewType);
   }
 

@@ -286,15 +286,15 @@ export class CpuChartDetailComponent implements OnInit {
   public chartClicked(e: any, content): void {
     var dataClicked = this.currentPoint(e);
     var showHost = false;
-    if (dataClicked != undefined) {
-      showHost = true;
-      this.analyticsService.HostDetails(showHost);
-      this.analyticsService.HostData(dataClicked);
-    }
-    else {
-      showHost = false; 
-      this.analyticsService.HostDetails(showHost);
-    }
+    // if (dataClicked != undefined) {
+    //   showHost = true;
+    //   this.analyticsService.HostDetails(showHost);
+    //   this.analyticsService.HostData(dataClicked);
+    // }
+    // else {
+    //   showHost = false; 
+    //   this.analyticsService.HostDetails(showHost);
+    // }
   }
 
   currentPoint(e) {

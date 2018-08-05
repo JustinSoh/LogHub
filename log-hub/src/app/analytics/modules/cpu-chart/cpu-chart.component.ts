@@ -138,9 +138,9 @@ export class CpuChartComponent implements OnInit {
     var highDataSet:Array<CpuClass> = this.transformData(arrayOfHighSet);
 
     //sync the dataSet with analytics service to be used in other components 
-    this.analyticsService.$cpuLow = arrayOfLowSet; 
-    this.analyticsService.$cpuMedium = arrayOfMediumSet; 
-    this.analyticsService.$cpuHigh = arrayOfHighSet;
+    // this.analyticsService.$cpuLow = arrayOfLowSet; 
+    // this.analyticsService.$cpuMedium = arrayOfMediumSet; 
+    // this.analyticsService.$cpuHigh = arrayOfHighSet;
     //Replace the dataset with data retrieved from database in the format of [{x,y,r}, {x,y,r}];
     var cpuChartOverviewData = 
     [{data: lowDataSet,

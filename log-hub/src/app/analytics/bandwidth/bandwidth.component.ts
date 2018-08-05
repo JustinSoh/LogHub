@@ -13,6 +13,9 @@ import { Router } from '../../../../node_modules/@angular/router';
 import { AnalyticsService } from '../services/analytics.service';
 import { Indivdualbandwidth } from '../../class/indivdualbandwidth';
 import { IndividualbandwidthService } from '../../services/individualbandwidth.service';
+import { HostmappingService } from '../../services/hostmapping.service';
+import { HostMapping } from '../../class/host-mapping';
+import { Organization } from '../../class/organization';
 
 @Component({
   selector: 'app-bandwidth',
@@ -75,14 +78,27 @@ export class BandwidthComponent implements OnInit, OnChanges {
   private indBwData: Array<Indivdualbandwidth> = new Array<Indivdualbandwidth>();
   private showDrilledData: Boolean = false;
   private selectedData: Array<any> = new Array<any>();
+  private hostDetails:Boolean = false;
+  private hostName:String = "";
+  private organizationName:String = ""
+  private organizationService:OrganizationService;
+  private hostMapService:HostmappingService;
+  private currentHM:HostMapping;
+  private IPAddress:String; 
+  private MACAddress:String; 
+  private DefaultGateway:String;
   private firstRow = ['Hostname' , 'Organization Name' , 'Total Upload (MB)' , 'Total Download (MB)' , 'Total (MB)' , 'Action']
-  constructor(webapi: WebapiService, userService: UserService, bandwidthService: BandwidthService, router: Router, as: AnalyticsService, individualBandwidth: IndividualbandwidthService) {
+  constructor(webapi: WebapiService, userService: UserService, bandwidthService: BandwidthService, router: Router, as: AnalyticsService, individualBandwidth: IndividualbandwidthService
+  ,organizationService:OrganizationService, hostMapService:HostmappingService
+  ) {
     this.webApi = webapi;
     this.userService = userService;
     this.bandwidthService = bandwidthService;
     this.router = router;
     this.analyticsService = as;
     this.individualBw = individualBandwidth;
+    this.organizationService = organizationService;
+    this.hostMapService = hostMapService;
 
   }
 
@@ -110,7 +126,7 @@ export class BandwidthComponent implements OnInit, OnChanges {
             var currentbw: Bandwidth = this.bandwidthService.convertBandwidth(bwDataInd);
             this.bwData.push(currentbw)
           })
-          this.analyticsService.BwDataDetails(this.bwData)
+          // this.analyticsService.BwDataDetails(this.bwData)
           this.bwData = this.getDataThatHasBeenProcessed(this.bwData);
           this.bwData.forEach(data => {
             console.log(data.$usage + " check this ")
@@ -150,12 +166,42 @@ export class BandwidthComponent implements OnInit, OnChanges {
               console.log(indBwObj);
             }
           })
+
+          this.analyticsService.currentDetails.subscribe(data => {
+            this.hostDetails = data; 
+          })
+  
+          this.analyticsService.currentHost.subscribe(data => {
+            this.hostName = data;
+            console.log(this.hostName);
+            this.hostMapService.getSpecificHostBasedOnID(this.hostName).subscribe(data =>
+            {
+              data.forEach(data1 => {
+                this.currentHM = this.hostMapService.convertToHostMapObj(data1);
+              })
+              this.IPAddress = this.currentHM.$IPAddress;
+              this.MACAddress = this.currentHM.$MACAddress
+              this.DefaultGateway = this.currentHM.$DefaultGateway;
+              var organization:Organization;
+              this.organizationService.getOrgsObjUsingID(this.currentHM.$OrganizationID).subscribe(data => {
+                data.forEach(element => {
+                  organization = this.organizationService.convertOrg(element);
+                });
+                this.organizationName = organization.$organizationName;
+              })
+            })
+            try{
+              document.getElementById("indData").scrollIntoView({behavior:"smooth"});
+            }
+  
+            catch{
+              console.log("oops");
+            }
+          })
+          
         });
         
-       
-
-
-
+     
       }
     });
   }
@@ -276,6 +322,8 @@ export class BandwidthComponent implements OnInit, OnChanges {
     bwData = this.sortInformation(bwData);
     if (type == "all") {
       this.showDrilledData = false;
+      this.analyticsService.DetailStatus(false);
+      this.analyticsService.HostStatus(null);
       bwData = this.mainData
       bwData = this.sortInformation(bwData);
       if (this.chart != null) {
@@ -286,6 +334,8 @@ export class BandwidthComponent implements OnInit, OnChanges {
     }
     if (type == "live") {
       this.showDrilledData = false;
+      this.analyticsService.DetailStatus(false);
+      this.analyticsService.HostStatus(null);
       bwData = this.mainData;
       if (bwData.length > 30) {
         this.mainData = bwData;
@@ -300,6 +350,8 @@ export class BandwidthComponent implements OnInit, OnChanges {
     }
     if (type == "day") {
       this.showDrilledData = false;
+      this.analyticsService.DetailStatus(false);
+      this.analyticsService.HostStatus(null);
       var arrayOfData: Array<Bandwidth> = new Array<Bandwidth>();
       bwData = this.mainData;
       bwData = this.sortInformation(bwData);
@@ -541,7 +593,7 @@ export class BandwidthComponent implements OnInit, OnChanges {
 
   showBandwidthDetails() {
     console.log("Show Bandwidth Details")
-    this.analyticsService.DetailStatus("bwd");
+    // this.analyticsService.DetailStatus("bwd");
 
   }
 
