@@ -228,9 +228,9 @@ namespace LogHubEndpointLogsExtractionVer3
             string logMachine = log.Entries[e1].MachineName;
             string logDescription = log.Entries[e1].Message;
 
-            string compiledErrorLog = "Log Type: " + logType + "\nCategory: " + logCategory + "\nEvent ID: " + eventID + "\nMachine: " + logMachine + "\nDescription:<" + logDescription + ">";
+            string compiledErrorLog = "Log Type: " + logType + "\nCategory: " + logCategory + "\nEvent ID: " + eventID + "\nMachine: " + logMachine + "\nDescription:<" + logDescription;
 
-            Library.WriteErrorLog("Security Event Log{\n" + compiledErrorLog + "}");
+            Library.WriteErrorLog("Security Event Log{\n" + compiledErrorLog);
         }
 
         private static void onSystemEntryWritten(object source, EntryWrittenEventArgs e)
@@ -247,9 +247,9 @@ namespace LogHubEndpointLogsExtractionVer3
             string logMachine = log.Entries[e1].MachineName;
             string logDescription = log.Entries[e1].Message;
 
-            string compiledErrorLog = "Log Type: " + logType + "\nCategory: " + logCategory + "\nEvent ID: " + eventID + "\nMachine: " + logMachine + "\nDescription:<" + logDescription + ">";
+            string compiledErrorLog = "Log Type: " + logType + "\nCategory: " + logCategory + "\nEvent ID: " + eventID + "\nMachine: " + logMachine + "\nDescription:<" + logDescription;
 
-            Library.WriteErrorLog("System Event Log{\n" + compiledErrorLog + "}");
+            Library.WriteErrorLog("System Event Log{\n" + compiledErrorLog);
         }
 
         private static void onApplicationEntryWritten(object source, EntryWrittenEventArgs e)
@@ -266,9 +266,9 @@ namespace LogHubEndpointLogsExtractionVer3
             string logMachine = log.Entries[e1].MachineName;
             string logDescription = log.Entries[e1].Message;
 
-            string compiledErrorLog = "Log Type: " + logType + "\nCategory: " + logCategory + "\nEvent ID: " + eventID + "\nMachine: " + logMachine + "\nDescription:<" + logDescription + ">";
+            string compiledErrorLog = "Log Type: " + logType + "\nCategory: " + logCategory + "\nEvent ID: " + eventID + "\nMachine: " + logMachine + "\nDescription:<" + logDescription;
 
-            Library.WriteErrorLog("Application Event Log{\n" + compiledErrorLog + "}");
+            Library.WriteErrorLog("Application Event Log{\n" + compiledErrorLog);
         }
 
         public void trackFileSystemChanges()

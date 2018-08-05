@@ -15,15 +15,19 @@ namespace LogHubEndpointLogsExtractionVer3
 
         static Socket soc123 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         static Socket soc456 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        static System.Net.IPAddress ipAdd = System.Net.IPAddress.Parse("192.168.1.139");
-        static System.Net.IPEndPoint remoteEP = new System.Net.IPEndPoint(ipAdd, 49156);
-        static System.Net.IPEndPoint remoteEP2 = new System.Net.IPEndPoint(ipAdd, 49152);
+
+        static System.Net.IPAddress ipAddChester = System.Net.IPAddress.Parse("192.168.1.146");
+        static System.Net.IPEndPoint remoteEP = new System.Net.IPEndPoint(ipAddChester, 8888);
+
+        static System.Net.IPAddress ipAddJustin = System.Net.IPAddress.Parse("192.168.1.140");
+        static System.Net.IPEndPoint remoteEP2 = new System.Net.IPEndPoint(ipAddJustin, 60222);
+
         static string organizationId = "testing";
 
         public static void startConection()
         {
             soc123.Connect(remoteEP);
-            soc456.Connect(remoteEP2);
+            soc456.Connect(remoteEP2);                      
         }
 
         public static void closeConnection()
@@ -39,6 +43,7 @@ namespace LogHubEndpointLogsExtractionVer3
             try
             {
                 byte[] byData = System.Text.Encoding.ASCII.GetBytes(System.Environment.MachineName + " " + DateTime.Now.ToString() + " " + organizationId + ": " + Message);
+                soc456.SendBufferSize = 99999;
                 soc456.Send(byData);
                 sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "\\" + date + "-" + time + "-" + System.Environment.MachineName + ".txt", true);
                 sw.WriteLine(System.Environment.MachineName + " " + DateTime.Now.ToString() + ": " + Message);
@@ -54,10 +59,12 @@ namespace LogHubEndpointLogsExtractionVer3
 
             try
             {
+                soc123.SendBufferSize = 99999;
                 byte[] byData = System.Text.Encoding.ASCII.GetBytes(System.Environment.MachineName + " " + DateTime.Now.ToString() + ": " + ex.Source.ToString().Trim() + "; " + ex.Message.ToString().Trim());
                 soc123.Send(byData);
+                int abc = soc123.Send(byData);
                 sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "\\" + date + "-" + time + "-" + System.Environment.MachineName + ".txt", true);
-                sw.WriteLine(System.Environment.MachineName + " " + DateTime.Now.ToString() + ": " + ex.Source.ToString().Trim() + "; " + ex.Message.ToString().Trim());
+                sw.WriteLine(System.Environment.MachineName + " " + DateTime.Now.ToString() + ": " + ex.Source.ToString().Trim() + "; " + ex.Message.ToString().Trim() + "\nBuffer" + abc);
                 sw.Flush();
                 sw.Close();
             }
@@ -71,9 +78,11 @@ namespace LogHubEndpointLogsExtractionVer3
             try
             {
                 byte[] byData = System.Text.Encoding.ASCII.GetBytes(System.Environment.MachineName + " " + DateTime.Now.ToString() + ": " + Message);
+                soc123.SendBufferSize = 99999;
                 soc123.Send(byData);
+                int abc = soc123.Send(byData);
                 sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "\\" + date + "-" + time + "-" + System.Environment.MachineName + ".txt", true);
-                sw.WriteLine(System.Environment.MachineName + " " + DateTime.Now.ToString() + ": " + Message);
+                sw.WriteLine(System.Environment.MachineName + " " + DateTime.Now.ToString() + ": " + Message + "\nBuffer:" + abc);
                 sw.Flush();
                 sw.Close();
             }
