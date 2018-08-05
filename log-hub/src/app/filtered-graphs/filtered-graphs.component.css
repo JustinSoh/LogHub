@@ -1,7 +1,7 @@
 .container {
     float: left;
     width: 68%;
-    height: 230px;
+    height: 400px;
     margin-top: 1%;
     margin-left: 2%;
 }
@@ -107,40 +107,7 @@
     line-height: 18px;
 }
 
-h2 {
-    display: flex;
-    align-items: left;
-    justify-content: left;
-    margin-top: 20px;
-} 
 
-h2 > span { 
-    color: rgb(136, 136, 136);
-    font-size: 14px;
-    padding-right: 10px;
-}
-
-h2 > span:hover {
-    color: white;
-    cursor: pointer;
-}
-
-.no-hover:hover {
-    color: rgb(136, 136, 136) !important; 
-    cursor: default !important;
-}
-
-h2:after {
-  background: rgb(54, 54, 54);
-  height: 1px;
-  margin-top: 10px;
-  flex: 1;
-  content: '';
-}
-
-h2:before {
-    background: none
-}
 
 i {
     font-size: 12px;
@@ -193,6 +160,7 @@ select {
     background: #2c3e50;
     overflow: hidden;
     border-radius: .25em;
+    margin-top: 20px;
 }
 
 select {

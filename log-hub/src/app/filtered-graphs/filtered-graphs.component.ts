@@ -1,9 +1,8 @@
 import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import * as Chart from 'chart.js'
-import { UserService } from '../services/user.service';
-import { OrganizationService } from '../services/organization.service';
-import { BandwidthService } from '../services/bandwidth.service'; 
+import * as Chart from 'chart.js';
+import { CpuDetailsService } from '../services/cpu-details.service';
+import { CpuLogsService } from '../services/cpu-logs.service';
 
 @Component({
   selector: 'app-filtered-graphs',
@@ -18,17 +17,14 @@ export class FilteredGraphsComponent implements OnInit {
   //Define chart stuff
   chart: any;
   chart2: any;
-  dataset = [67, 33];
-  dataset2 = [43, 57];
+  dataset = [];
+  dataset2 = [];
+  timeset = [];
+  colorset = [];
 
   //CPU Values
-  cpuAverage: string;
-  cpuFirst: string;
-  cpuSecond: string;
-  cpuThird: string;
-  firstPercentage: string;
-  secondPercentage: string;
-  thirdPercentage: string;
+  cpuAverage: number;
+  chromeAverage: number;
 
   //Event Values
   firstTitle: string;
@@ -53,10 +49,14 @@ export class FilteredGraphsComponent implements OnInit {
     this.chart = new Chart('canvas', {
       type: 'line',
       data: {
-        labels: ['1400', '1410', '1420', '1430', '1440', '1450', '1500', '1510', '1520', '1530', '1540'],
+        labels: this.timeset,
         datasets: [{
-          data: ['20', '17', '25', '50', '12', '24', '9', '8', '10', '20', '30'],
-          borderColor: 'rgba(54, 162, 235, 1)',
+          data: this.dataset,
+          pointBackgroundColor: this.colorset,
+          pointBorderColor: this.colorset,
+          pointRadius: 4,
+          pointHoverRadius: 8,
+          borderColor: 'grey',
           fill: true
         }]
       },
@@ -74,6 +74,15 @@ export class FilteredGraphsComponent implements OnInit {
               beginAtZero: true
             }
           }]
+        },
+        tooltips: {
+          enabled: true,
+          mode: 'single',
+          callbacks: {
+            label: function(tooltipItems, data) {
+              return tooltipItems.yLabel + '% CPU Usage'
+            }
+          }
         }
       }
     })
@@ -86,10 +95,14 @@ export class FilteredGraphsComponent implements OnInit {
     this.chart = new Chart('canvas', {
       type: 'line',
       data: {
-        labels: ['1000', '1010', '1020', '1030', '1040', '1050'],
+        labels: this.timeset,
         datasets: [{
-          data: ['10', '13', '25', '50', '20', '27'],
-          borderColor: 'rgba(54, 162, 235, 1)',
+          data: this.dataset2,
+          pointBackgroundColor: this.colorset,
+          pointBorderColor: this.colorset,
+          pointRadius: 4,
+          pointHoverRadius: 8,
+          borderColor: 'grey',
           fill: true
         }]
       },
@@ -107,71 +120,27 @@ export class FilteredGraphsComponent implements OnInit {
               beginAtZero: true
             }
           }]
+        },
+        tooltips: {
+          enabled: true,
+          mode: 'single',
+          callbacks: {
+            label: function(tooltipItems, data) {
+              return tooltipItems.yLabel + '% Chrome Usage'
+            }
+          }
         }
       }
     })
   }
 
   createDoughnut() {
-    if (this.chart2 != null) {
-      for (var i = 0; i <= this.chart2.data.datasets[0].data.length; i++) {
-        this.chart2.data.datasets.forEach((dataset) => {
-          dataset.data.pop();
-        });
-      }
-
-      for (var i = 0; i < this.dataset.length; i++) {
-        this.chart2.data.datasets.forEach((dataset) => {
-          dataset.data.push(this.dataset[i]);
-        });
-      }
-      this.chart2.update();
-    } else {
-      this.chart2 = new Chart('doughnut-canvas', {
-        type: 'doughnut',
-        data: {
-          datasets: [
-            {
-              data: [67, 33],
-              backgroundColor: ["#2D98DC", "#222D33"],
-              borderWidth: [0, 0]
-            }
-          ]
-        },
-        options: {
-          cutoutPercentage: 70,
-          tooltips: {
-            enabled: false
-          },
-          hover: {
-            mode: null
-          }
-        },
-      })
-    }
-  }
-
-  createDoughnut2() {
-    if (this.chart2 != null) {
-      for (var i = 0; i <= this.chart2.data.datasets[0].data.length; i++) {
-        this.chart2.data.datasets.forEach((dataset) => {
-          dataset.data.pop();
-        });
-      }
-
-      for (var i = 0; i < this.dataset2.length; i++) {
-        this.chart2.data.datasets.forEach((dataset) => {
-          dataset.data.push(this.dataset2[i]);
-        });
-      }
-      this.chart2.update();
-    }
     this.chart2 = new Chart('doughnut-canvas', {
       type: 'doughnut',
       data: {
         datasets: [
           {
-            data: [43, 57],
+            data: [this.cpuAverage, 100 - this.cpuAverage],
             backgroundColor: ["#2D98DC", "#222D33"],
             borderWidth: [0, 0]
           }
@@ -189,75 +158,39 @@ export class FilteredGraphsComponent implements OnInit {
     })
   }
 
-  sessionChange(selected: any) {
-    if (selected == "Session 2") {
-      this.cpuAverage = "43";
-      this.cpuFirst = "chrome";
-      this.cpuSecond = "steam";
-      this.cpuThird = "svchost";
-      this.firstPercentage = "16%";
-      this.secondPercentage = "12%";
-      this.thirdPercentage = "6%";
-
-      this.firstTitle = "Application Event";
-      this.secondTitle = "Application Event";
-      this.thirdTitle = "Security Event";
-      this.firstDesc = "Fault bucket 116204959230, type 5.";
-      this.secondDesc = "Some application event";
-      this.thirdDesc = "A user's local group membership was enumerated.";
-
-      this.eventRisk = "LOW";
-      this.cpuRisk = "LOW";
-      this.chromeRisk = "HIGH";
-
-      this.createLineChart2();
-      this.createDoughnut2();
-    } else if (selected == "Session 1") {
-      this.cpuAverage = "67";
-      this.cpuFirst = "chrome";
-      this.cpuSecond = "svchost";
-      this.cpuThird = "vsstudio";
-      this.firstPercentage = "18%";
-      this.secondPercentage = "8%";
-      this.thirdPercentage = "4%";
-
-      this.firstTitle = "Application Event";
-      this.secondTitle = "System Event";
-      this.thirdTitle = "Security Event";
-      this.firstDesc = "Fault bucket 116204959230, type 5.";
-      this.secondDesc = "The mfevtp MMS Service entered the running state.";
-      this.thirdDesc = "A user's local group membership was enumerated.";
-
-      this.eventRisk = "LOW";
-      this.cpuRisk = "MODERATE";
-      this.chromeRisk = "HIGH";
-
-      this.createDoughnut();
-      this.createLineChart();
-    }
+  createDoughnut2() {
+    this.chart2 = new Chart('doughnut-canvas2', {
+      type: 'doughnut',
+      data: {
+        datasets: [
+          {
+            data: [this.chromeAverage, 100 - this.chromeAverage],
+            backgroundColor: ["#2D98DC", "#222D33"],
+            borderWidth: [0, 0]
+          }
+        ]
+      },
+      options: {
+        cutoutPercentage: 70,
+        tooltips: {
+          enabled: false
+        },
+        hover: {
+          mode: null
+        }
+      },
+    })
   }
 
-  constructor(private modalService: NgbModal, private elementRef: ElementRef, private userService: UserService, private orgService: OrganizationService, private bwService: BandwidthService) {
-    this.cpuAverage = "67";
-    this.cpuFirst = "chrome";
-    this.cpuSecond = "svchost";
-    this.cpuThird = "vsstudio";
-    this.firstPercentage = "18%";
-    this.secondPercentage = "8%";
-    this.thirdPercentage = "4%";
+  showCPU() {
+    this.createLineChart();
+  }
 
-    this.firstTitle = "Application Event";
-    this.secondTitle = "System Event";
-    this.thirdTitle = "Security Event";
-    this.firstDesc = "Fault bucket 116204959230, type 5.";
-    this.secondDesc = "The mfevtp MMS Service entered the running state.";
-    this.thirdDesc = "A user's local group membership was enumerated.";
+  showChrome() {
+    this.createLineChart2();
+  }
 
-    this.eventRisk = "LOW";
-    this.cpuRisk = "MODERATE";
-    this.chromeRisk = "HIGH";
-
-    this.sessions = ["Session 1", "Session 2"]
+  constructor(private modalService: NgbModal, private elementRef: ElementRef, private cpuDetailsService: CpuDetailsService, private cpuLogsService: CpuLogsService) {
   }
 
   ngAfterViewInit() {
@@ -265,17 +198,38 @@ export class FilteredGraphsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.createLineChart();
-    this.createDoughnut();
-    this.userService.getUsers().subscribe(users => {
-      console.log(users);
+    this.sessions = ["CPU Usage", "Chrome Usage"] 
+    this.cpuDetailsService.getItem().subscribe(data => {
+      this.cpuAverage = data[0]['cpuAverage']
+      this.chromeAverage = data[0]['chromeAverage']
+      this.firstTitle = data[0]['ev1']
+      this.secondTitle = data[0]['ev2']
+      this.thirdTitle = data[0]['ev3']
+      this.firstDesc = data[0]['desc1']
+      this.secondDesc = data[0]['desc2']
+      this.thirdDesc = data[0]['desc3']
+      this.createDoughnut();
+      this.createDoughnut2();
     })
-    this.bwService.getBandwidth().subscribe(bw => {
-      console.log(bw);
+
+    this.cpuLogsService.getItems().subscribe(data => {
+      for (var i = 0; i < data.length; i++) {
+        this.dataset.push(data[i]['usage'])
+        this.dataset2.push(data[i]['chrome'])
+        this.timeset.push(data[i]['time'])
+        if (data[i]['riskValue'] == 'high') {
+          this.colorset.push('red')
+        }
+        else if (data[i]['riskValue'] == 'low') {
+          this.colorset.push('lime')
+        }
+        else if (data[i]['riskValue'] == 'medium') {
+          this.colorset.push('yellow')
+        }
+      }
+      this.createLineChart();
     })
-    this.orgService.getOrgs().subscribe(orgs => {
-      console.log(orgs);
-    })
+
   }
 }
 
