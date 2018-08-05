@@ -46,6 +46,7 @@ import { OrganizationService } from './services/organization.service';
 import { BandwidthService } from './services/bandwidth.service';
 import { DetailsTemplateComponent } from './analytics/detailsTemplate/details-template/details-template.component';
 import { BandwidthDetailsComponent } from './analytics/bandwidth-details/bandwidth-details.component';
+import { HostDetailsComponent } from './analytics/host-details/host-details.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { BandwidthDetailsComponent } from './analytics/bandwidth-details/bandwid
     BandwidthComponent,
     DetailsTemplateComponent,
     BandwidthDetailsComponent,
+    HostDetailsComponent,
   ],
   imports: [
     BrowserModule,

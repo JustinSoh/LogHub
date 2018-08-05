@@ -38,7 +38,7 @@ export class BandwidthDetailsComponent implements OnInit {
 
   ngOnInit() {
     if (this.input[0] != "Hostname") {
-      console.log(this.input);
+      // console.log(this.input);
       var indBwID: Array<string> = new Array<string>();
       this.individualBandwidth.getBandwidthIDBasedOnHostname(this.input[0]).subscribe(data => {
         indBwID = new Array<string>();
@@ -55,33 +55,41 @@ export class BandwidthDetailsComponent implements OnInit {
           var indBwObj: Indivdualbandwidth = this.individualBandwidth.convertIndBandwidthFromData(indId, data[i]);
           var day = indBwObj.$time.getDate().toString() + "/" + indBwObj.$time.getMonth().toString() + "/" + indBwObj.$time.getFullYear();
           var hour = indBwObj.$time.getHours()
-          console.log(day)
-          if (day == this.input[1]) {
-            if(this.input[3] == "live")
-            {
-              if (hour == this.input[2]) {
+          // console.log(day)
+          if(this.input[3] == "all")
+          {
+            this.organizationName = indBwObj.$organizationId;
+            // console.log(this.organizationName);
+            this.indBwData.push(indBwObj)
+          }
+          else{
+            if (day == this.input[1]) {
+              if(this.input[3] == "live")
+              {
+                if (hour == this.input[2]) {
+                  this.organizationName = indBwObj.$organizationId;
+                  // console.log(this.organizationName);
+                  this.indBwData.push(indBwObj)
+                }
+              }
+              if(this.input[3] == "day")
+              {
                 this.organizationName = indBwObj.$organizationId;
-                console.log(this.organizationName);
+                // console.log(this.organizationName);
                 this.indBwData.push(indBwObj)
               }
             }
-            if(this.input[3] == "day")
-            {
-              this.organizationName = indBwObj.$organizationId;
-              console.log(this.organizationName);
-              this.indBwData.push(indBwObj)
-            }
           }
         }
+        console.log(this.organizationName)
         this.organizationService.getOrgsDocumentIDbyID(this.organizationName).subscribe(data => {
           var organizationID = ""
-          console.log(data);
+          // console.log(data);
           data.forEach(dat1 => {
-            console.log(dat1);
+            // console.log(dat1);
             organizationID = dat1['payload']['doc']['id'];
           })
           this.organizationService.getOrgsObjByDocID(organizationID).subscribe(data => {
-            console.log(data);
             var obj = this.organizationService.convertOrg(data);
             this.organizationobj = obj;
             this.organizationName = this.organizationobj.$organizationName;
@@ -103,7 +111,7 @@ export class BandwidthDetailsComponent implements OnInit {
         this.hostname = this.input[0];
 
 
-        console.log(this.indBwData);
+        // console.log(this.indBwData);
       })
     }
     else {
@@ -124,7 +132,7 @@ export class BandwidthDetailsComponent implements OnInit {
     var information2 = information.sort((a: any, b: any) =>
       new Date(a.time).getTime() - new Date(b.time).getTime()
     );
-    console.log(information2)
+    // console.log(information2)
     return information2
 
   }

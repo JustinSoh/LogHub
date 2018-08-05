@@ -49,6 +49,7 @@ export class RegistrationDetailsComponent implements OnInit {
         var newOrg = this.organizationService.convertOrg(org); 
         this.organizationNames.push(newOrg)
       });
+      
     })
     this.SHA512 = require("crypto-js/sha256");
   }

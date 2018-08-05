@@ -1,0 +1,42 @@
+.card-style2 {
+    margin-top: 3%;
+    width: 98vw;
+    background: #262626;
+    border-radius: 30px;
+
+}
+
+.card-style3 {
+    margin-top: 3%;
+    background: #1a1a1a;
+    border-radius: 30px;
+
+}
+
+.hostTopDetails {
+    margin-top: 3%;
+    height: auto;
+    border-radius: 30px;
+    width:90vw;
+    background: #262626;
+}
+
+.card-style {
+    border-radius: 10px;
+    background: #1b1b1b;
+    width: 90vw;
+    height:auto;
+    margin-left: 2%; 
+    margin-right: 2%;
+    padding:0px;
+    margin-top: 0.3%;
+    vertical-align: middle;
+}
+
+.textS {
+    text-align: center;
+    vertical-align: middle;
+    line-height: 100%;
+    margin-bottom: 0px;
+    padding: 5%;
+}

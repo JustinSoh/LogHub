@@ -51,10 +51,10 @@ export class IndividualbandwidthService {
     var time:Timestamp = data['time'];
     var upload = data['upload'];
     var download = data['download'];
-
-  
+   
     var newbw:Indivdualbandwidth = new Indivdualbandwidth(indBwId , hostname, organizationId , time.toDate(), download , upload);
     return newbw;
   }
+  
   
 }

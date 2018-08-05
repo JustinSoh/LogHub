@@ -51,23 +51,7 @@
     </mat-card>
 </div>
 <div *ngIf="hostDetails" id="indData" class="hostTopDetails2">
-        <mat-card class="card-style2">
-            <div class="row">
-                <div class="col-sm-4" >
-                    <mat-card class="card-style3">
-                        <h3 class="title1 color" class="col-sm-11" style="display:inline-block; color:#0072FF">{{hostName}}</h3>
-                        <h4 class="subtitle " class="col-sm-11" style="display:inline-block; color:#777777">{{organizationName}}</h4>
-                        <p class="title2 color" class="col-sm-11" style="display:inline-block; color:#777777">IP Adress: {{IPAddress}}</p>
-                        <p class="title2 color" class="col-sm-11" style="display:inline-block; color:#777777">MAC Adress: {{MACAddress}}</p>
-                        <p class="title2 color" class="col-sm-11" style="display:inline-block; color:#777777">Default Gateway:{{DefaultGateway}}</p>
-                    </mat-card>
-                </div>
-                <div class="col-sm-8" ></div>
- 
-          
-                
-            </div>
-        </mat-card>
+        <app-host-details [data]="hostName"></app-host-details>
     </div>
 
 <div *ngIf="bandwidthChartClicked" style="color: #fafafa">Data is currently loading . . . </div>
