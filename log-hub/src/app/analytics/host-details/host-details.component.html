@@ -64,6 +64,7 @@
         <div class="col-sm-2">
           <p class="title2 color" class="textS" style="display:inline-block; color:#FAFAFA">Default Gateway Address</p>
         </div>
+       
       </div>
       <div class="row" style="text-align: center">
         <div class="col-sm-2">
@@ -75,6 +76,7 @@
         <div class="col-sm-2">
           <p class="title2 color" class="textS" style="display:inline-block; color:#777777">{{DefaultGateway}}</p>
         </div>
+       
       </div>
     </mat-card>
     <div class="row" >
@@ -92,8 +94,15 @@
         <div class="col-sm-2">
           <p class="title2 color" class="textS" style="display:inline-block; color:#FAFAFA">Total (Mb)</p>
         </div>
-        
-
+        <div class="col-sm-2">
+          <p class="title2 color" class="textS" style="display:inline-block; color:#FAFAFA">Threshold reached</p>
+        </div>
+        <div class="col-sm-2">
+          <p class="title2 color" class="textS" style="display:inline-block; color:#FAFAFA">Threshold value</p>
+        </div>
+        <!-- <div class="col-sm-2">
+          <p class="title2 color" class="textS" style="display:inline-block; color:#FAFAFA">Set Threshold</p>
+        </div> -->
       </div>
       <div class="row" style="text-align: center">
         <div class="col-sm-2">
@@ -105,13 +114,21 @@
         <div class="col-sm-2">
           <p class="title2 color" class=" textS" style="display:inline-block; color:#777777">{{total}}</p>
         </div>
-       
+        <div class="col-sm-2">
+          <p class="title2 color" class="textS" style="display:inline-block; color:#777777">False</p>
+        </div>
+        <div class="col-sm-2">
+          <p class="title2 color" class="textS" style="display:inline-block; color:#777777">{{thresholdRange}}</p>
+        </div>
+        <div class="col-sm-2">
+          <button class="title 2 color" class="threshold-button"mat-button style="display: inline-block; " (click)="showThreshold()">Configure Threshold</button>
+        </div>
       </div>
      
       <mat-menu #frequency="matMenu" style="color: #fafafa !important" class="mat-elevation-z0">
           <button mat-menu-item [ngClass]="{'selected': filterSec}" (click)="showSeconds()">10 Seconds</button>
           <button mat-menu-item [ngClass]="{'selected': filterMin}" (click)="showMinutes()">10 Minutes</button>
-          <button mat-menu-item [ngClass]="{'selected': filterDay}" (click)="showDaily()">Daily</button>
+          <button mat-menu-item [ngClass]="{'selected': filterDay}" (click)="showDaily()">Hourly</button>
       </mat-menu>
       <div>
           <canvas id="individualBandwidthChart"></canvas>
@@ -119,7 +136,65 @@
 
     </mat-card>
     <!-- <h3 class="title1 color" class="col-sm-11" style="display:inline-block; color:#0072FF">{{hostName}}</h3> -->
-
+    <div class="centered" *ngIf="threshold" style="background:#262626; ">
+        <div class="row">
+          <!-- <p class="col-sm-10 " style="display: inline-block;
+          color: #FAFAFA;
+          text-align: center;
+          margin-top: 5%;">Set Threshold</p> -->
+          <!-- <button class="col-sm-1" mat-icon-button style="margin-right: 2%;" class="fa fa-times"></button> -->
+          <form class="login-form" style="margin-top: 15%">
+            <div row>
+                <input 
+                style="color:#fafafa" 
+                placeholder={{thresholdLevelMessage}} 
+                class ="input login-input form-control" 
+                [formControl]="thresholdLevel" 
+                type="number" 
+                name="thresholdLevel" 
+                required
+                autocomplete="off"
+                (keyup.enter)="thresholdMethod()"
+                [ngClass]="{'has-error':error }"
+                >
+            </div>
+            <div row >
+                <input 
+                style="color:#fafafa; margin-top: 3%" 
+                placeholder={{thresholdLevelEndMessage}} 
+                class ="input login-input form-control" 
+                [formControl]="thresholdLevelEnd" 
+                type="number" 
+                name="thresholdLevelEnd" 
+                required
+                autocomplete="off"
+                (keyup.enter)="thresholdMethodEnd()"
+                [ngClass]="{'has-error':error }"
+                >
+            </div>
+            <div row>
+                <input 
+                style="color:#fafafa; margin-top: 2%" 
+                placeholder={{warningLevelMessage}} 
+                class ="input login-input form-control" 
+                [formControl]="warningMessage" 
+                type="string" 
+                name="warningMessage" 
+                required
+                autocomplete="off"
+                (keyup.enter)="warningMessageMethod()"
+                [ngClass]="{'has-error':error }"
+                >
+            </div>
+            <div row>
+                <button  (click)="confirm()" mat-button style="width: 16vw;" class="login-button login-button col-md-12" >Confirm</button> 
+            </div>
+            <div row>
+                <button  (click)="cancel()" mat-button style="margin-top: 5% !important; width: 16vw;" class="login-button login-button col-md-12" >Cancel</button> 
+            </div>
+          </form>
+        </div>
+    </div>
 
 <!-- <p class="title2 color" class="col-sm-11" style="display:inline-block; color:#777777">MAC Adress: {{MACAddress}}</p> -->
 <!-- <p class="title2 color" class="col-sm-11" style="display:inline-block; color:#777777">Default Gateway:{{DefaultGateway}}</p> -->

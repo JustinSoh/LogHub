@@ -21,6 +21,65 @@ export class IndividualbandwidthService {
 
   }
 
+  getSpecificThreshold(userID , targetHostName)
+  {
+    return this.afs.collection('Threshold', ref => ref.where('UserID', "==" , userID).where('TargetHostName', "==" , targetHostName))
+  }
+
+  getSpecificThresholdBasedOnOrganizationAndUserID(userID , organizationId)
+  {
+    return this.afs.collection('Threshold', ref => ref.where('UserID', "==" , userID).where('organizationId', "==" , organizationId))
+  }
+
+
+  getThresholdLevel(userID , targetHostName ,  organizationId , thresholdLevel , warningMessage)
+  {
+    return this.afs.collection('Threshold' ).valueChanges()
+  }
+
+  getThresholdID()
+  {
+    return this.afs.collection('Threshold' ).snapshotChanges();
+  }
+  setThresholdLevel(userID , targetHostName ,  organizationId , thresholdLevel , warningMessage  , thresholdLevelEnd)
+  {
+    // try  {
+    //   var test = this.afs.collection('Threshold' , ref => ref.where('userID' , '==' , "testing"))
+
+    // }
+    
+    this.afs.collection('Threshold').add({
+        'UserID':userID, 
+        'TargetHostName':targetHostName, 
+        'organizationId': organizationId, 
+        'thresholdLevel':thresholdLevel, 
+        'warningMessage':warningMessage,
+        'thresholdLevelEnd':thresholdLevelEnd
+    })
+    
+  
+  }
+
+  updateThresholdLevel(docID , userID , targetHostName ,  organizationId , thresholdLevel , warningMessage , thresholdLevelEnd )
+  {
+    // try  {
+    //   var test = this.afs.collection('Threshold' , ref => ref.where('userID' , '==' , "testing"))
+
+    // }
+    
+    this.afs.collection('Threshold').doc(docID).update({
+        'UserID':userID, 
+        'TargetHostName':targetHostName, 
+        'organizationId': organizationId, 
+        'thresholdLevel':thresholdLevel, 
+        'warningMessage':warningMessage,
+        'thresholdLevelEnd':thresholdLevelEnd
+
+    })
+    
+  
+  }
+
   getBandwidth() {
     return this.indbandwidth;
   }
@@ -55,6 +114,8 @@ export class IndividualbandwidthService {
     var newbw:Indivdualbandwidth = new Indivdualbandwidth(indBwId , hostname, organizationId , time.toDate(), download , upload);
     return newbw;
   }
+
+
   
   
 }

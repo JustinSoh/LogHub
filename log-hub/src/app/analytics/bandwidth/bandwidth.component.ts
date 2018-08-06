@@ -78,20 +78,28 @@ export class BandwidthComponent implements OnInit, OnChanges {
   private indBwData: Array<Indivdualbandwidth> = new Array<Indivdualbandwidth>();
   private showDrilledData: Boolean = false;
   private selectedData: Array<any> = new Array<any>();
-  private hostDetails:Boolean = false;
-  private hostName:any = "";
-  private organizationName:String = ""
-  private organizationService:OrganizationService;
-  private hostMapService:HostmappingService;
-  private currentHM:HostMapping;
-  private IPAddress:String; 
-  private MACAddress:String; 
-  private DefaultGateway:String;
-  private firstRow = ['Hostname' , 'Organization Name' , 'Total Upload (MB)' , 'Total Download (MB)' , 'Total (MB)' , 'Action']
-  private comhour:string; 
-  private comday:string;
+  private hostDetails: Boolean = false;
+  private hostName: any = "";
+  private organizationName: String = ""
+  private organizationService: OrganizationService;
+  private hostMapService: HostmappingService;
+  private currentHM: HostMapping;
+  private IPAddress: String;
+  private MACAddress: String;
+  private DefaultGateway: String;
+  private ThresholdValue: Number;
+  private ThresholdValueEnd: Number;
+  private problemLog: Array<Indivdualbandwidth> = new Array<Indivdualbandwidth>();
+  private WarningMessage: String = "Nothing";
+  private alertMessage: String = "Nothing";
+  private uploadCount: Number;
+  private downloadCount: Number;
+  private numberOfCount: Number = 0;
+  private firstRow = ['Hostname', 'Organization Name', 'Total Upload (MB)', 'Total Download (MB)', 'Total (MB)', 'Action']
+  private comhour: string;
+  private comday: string;
   constructor(webapi: WebapiService, userService: UserService, bandwidthService: BandwidthService, router: Router, as: AnalyticsService, individualBandwidth: IndividualbandwidthService
-  ,organizationService:OrganizationService, hostMapService:HostmappingService
+    , organizationService: OrganizationService, hostMapService: HostmappingService
   ) {
     this.webApi = webapi;
     this.userService = userService;
@@ -121,7 +129,7 @@ export class BandwidthComponent implements OnInit, OnChanges {
       else {
         this.currentUser = data;
         var indBwID: Array<string> = new Array<string>();
-    
+
         this.bandwidthService.getBandwidthBasedOnId(this.currentUser.$organizationId).valueChanges().subscribe(data => {
           this.bwData = [];
           data.forEach(bwDataInd => {
@@ -158,43 +166,84 @@ export class BandwidthComponent implements OnInit, OnChanges {
               indBwID.push(docId);
               // console.log(indBwID);
             });
-          })
-          this.individualBw.getBandwidth().subscribe(data => {
-            this.indBwData = new Array<Indivdualbandwidth>();
-            for (var i = 0; i < data.length; i++) {
-              var indID = indBwID[i];
-              var indBwObj = this.individualBw.convertIndBandwidthFromData(indID, data[i]);
-              this.indBwData.push(indBwObj)
-              // console.log(indBwObj);
-            }
-          })
-          this.analyticsService.currentDetails.subscribe(data => {
-            this.hostDetails = data; 
-          })
-  
-          this.analyticsService.currentHost.subscribe(data => {
-            this.hostName = data;
-            var type = ""
-            if(this.filterAll == true)
-            {
-              type = "all"
-            }
-            if(this.filterLive == true)
-            {
-              type = "live"
-            }
-            if(this.filterDay == true)
-            {
-              type = "day"
-            }
-            this.hostName = [data , type , this.comday , this.comhour]
-            
-          })
-       
-          
-        });
-       
-      }
+
+            this.individualBw.getBandwidth().subscribe(data => {
+              this.indBwData = new Array<Indivdualbandwidth>();
+              for (var i = 0; i < data.length; i++) {
+                var indID = indBwID[i];
+                var indBwObj = this.individualBw.convertIndBandwidthFromData(indID, data[i]);
+                this.indBwData.push(indBwObj)
+                // console.log(indBwObj);
+              }
+
+              this.individualBw.getSpecificThresholdBasedOnOrganizationAndUserID(this.currentUser.$userId, this.currentUser.$organizationId).valueChanges().subscribe(data => {
+                var threshHoldValue = -100;
+                var threshHoldValueEnd = 1000;
+                var WarningMessage = "";
+                this.numberOfCount = 0;
+                this.uploadCount = 0;
+                this.downloadCount = 0;
+                var problemLog = new Array<Indivdualbandwidth>();
+                var uploadLog = new Array<Indivdualbandwidth>();
+                var downloadLog = new Array<Indivdualbandwidth>();
+                data.forEach(tresh => {
+                  console.log(tresh);
+                  threshHoldValueEnd = tresh['thresholdLevelEnd']
+                  threshHoldValue = tresh['thresholdLevel']
+                  WarningMessage = tresh['warningMessage']
+                })
+                // console.log(this.indBwData.length)
+                this.indBwData.forEach(data1 => {
+                  var upload: Number = data1.$upload;
+                  var download: Number = data1.$download
+                  if (download < threshHoldValue || download > threshHoldValueEnd) {
+                    downloadLog.push(data1)
+                  }
+                  if (upload < threshHoldValue || upload > threshHoldValueEnd) {
+                    uploadLog.push(data1)
+                  }
+                  if (download < threshHoldValue || download > threshHoldValueEnd || upload < threshHoldValue || upload > threshHoldValueEnd) {
+                    problemLog.push(data1)
+                  }
+                  //   // console.log(data.$download + "|" + threshHoldValue)
+                  // if ( upload < threshHoldValueEnd || upload > threshHoldValue) {
+                  //   // console.log(data.$download + "|" + data.$upload)
+                  //   this.problemLog.push(data1)
+                  // }
+                  this.alertMessage = WarningMessage;
+                  this.numberOfCount = problemLog.length;
+                  this.uploadCount = uploadLog.length;
+                  this.downloadCount = downloadLog.length;
+                })
+              })
+            })
+
+            this.analyticsService.currentDetails.subscribe(data => {
+              this.hostDetails = data;
+            })
+
+            this.analyticsService.currentHost.subscribe(data => {
+              this.hostName = data;
+              var type = ""
+              if (this.filterAll == true) {
+                type = "all"
+              }
+              if (this.filterLive == true) {
+                type = "live"
+              }
+              if (this.filterDay == true) {
+                type = "day"
+              }
+              this.hostName = [data, type, this.comday, this.comhour]
+            })
+
+          });
+        
+        }
+      )}
+        
+      
+    
     });
   }
 
@@ -451,7 +500,7 @@ export class BandwidthComponent implements OnInit, OnChanges {
                   risk = "High: " + data.datasets[0].data[index].toString()
                 }
                 else if (riskcolor == "#d44343") {
-                  risk = "Very High: " + data.datasets[0].data[index].toString() 
+                  risk = "Very High: " + data.datasets[0].data[index].toString()
                 }
                 else if (riskcolor == "#0072ff") {
                   risk = "Training in Progress"
@@ -671,113 +720,104 @@ export class BandwidthComponent implements OnInit, OnChanges {
     }
   }
 
-  processDetailsData(clickedbw , unfilteredSelectedData , type )
-  {
-    
+  processDetailsData(clickedbw, unfilteredSelectedData, type) {
+
     var comday = clickedbw.$time.getDate().toString() + "/" + clickedbw.$time.getMonth().toString() + "/" + clickedbw.$time.getFullYear();
-        var comhour = clickedbw.$time.getHours();
-        console.log("The current day is " + comday)
-        // console.log(comhour)
-        // console.log(this.indBwData);
-        this.indBwData.forEach(data => {
-          var day = data.$time.getDate().toString() + "/" + data.$time.getMonth().toString() + "/" + data.$time.getFullYear();
-          var hour = data.$time.getHours()
-          if(type == "all")
-          {
-            unfilteredSelectedData.push(data);
-          }
-          else{
-            if (day == comday) {
-              if(type == "live")
-              {
-                if (hour == comhour) {
-                  unfilteredSelectedData.push(data);
-                }
-              }
-              if(type =="day")
-              {
-                unfilteredSelectedData.push(data);
-              }
+    var comhour = clickedbw.$time.getHours();
+    console.log("The current day is " + comday)
+    // console.log(comhour)
+    // console.log(this.indBwData);
+    this.indBwData.forEach(data => {
+      var day = data.$time.getDate().toString() + "/" + data.$time.getMonth().toString() + "/" + data.$time.getFullYear();
+      var hour = data.$time.getHours()
+      if (type == "all") {
+        unfilteredSelectedData.push(data);
+      }
+      else {
+        if (day == comday) {
+          if (type == "live") {
+            if (hour == comhour) {
+              unfilteredSelectedData.push(data);
             }
           }
-        })
-        var dataMapping: Map<string, Array<Indivdualbandwidth>> = new Map<string, Array<Indivdualbandwidth>>();
-        unfilteredSelectedData.forEach(data => {
-          if (dataMapping.get(data.$hostname)) {
-            var list: Array<Indivdualbandwidth> = dataMapping.get(data.$hostname);
-            list.push(data);
-            dataMapping.set(data.$hostname, list);
+          if (type == "day") {
+            unfilteredSelectedData.push(data);
           }
-          else {
-            var newArray: Array<Indivdualbandwidth> = new Array<Indivdualbandwidth>();
-            newArray.push(data);
-            dataMapping.set(data.$hostname, newArray)
-          }
+        }
+      }
+    })
+    var dataMapping: Map<string, Array<Indivdualbandwidth>> = new Map<string, Array<Indivdualbandwidth>>();
+    unfilteredSelectedData.forEach(data => {
+      if (dataMapping.get(data.$hostname)) {
+        var list: Array<Indivdualbandwidth> = dataMapping.get(data.$hostname);
+        list.push(data);
+        dataMapping.set(data.$hostname, list);
+      }
+      else {
+        var newArray: Array<Indivdualbandwidth> = new Array<Indivdualbandwidth>();
+        newArray.push(data);
+        dataMapping.set(data.$hostname, newArray)
+      }
 
-        })
-        var sunormoonstart = "pm"
-        var sunormoonend = "pm"
-        if (comhour <= 12) {
-          sunormoonstart = "am"
-        }
-        if (comhour + 1 < 12) {
-          sunormoonend = "am"
-        }
-        if(type == "live")
-        {
-          this.detailsText = comday + " from " + comhour + ":00 " + sunormoonstart + " to " + (comhour + 1).toString() + ":00 " + sunormoonend
-        }
-        if(type == "day")
-        {
-          this.detailsText = "Showing data on " + comday;
-        }
-        if(type == "all")
-        {
-          this.detailsText = "Showing all data";
-        }
-        this.comday = comday; 
-        this.comhour = comhour; 
-        // console.log(dataMapping);
-        this.selectedData = new Array<any>();
-        dataMapping.forEach((value, key) => {
-          // console.log(key + "Chwxk rhias");
-          this.selectedData.push([key, comday, comhour , type]);
-        })
-        // console.log(this.selectedData);
-        this.showDrilledData = true;
-        try {
-          document.getElementById("drilledData").scrollIntoView({ behavior: "smooth" })
-        }
-        catch{
-          console.log("oops");
-        }
-        return this.selectedData;
-  } 
+    })
+    var sunormoonstart = "pm"
+    var sunormoonend = "pm"
+    if (comhour <= 12) {
+      sunormoonstart = "am"
+    }
+    if (comhour + 1 < 12) {
+      sunormoonend = "am"
+    }
+    if (type == "live") {
+      this.detailsText = comday + " from " + comhour + ":00 " + sunormoonstart + " to " + (comhour + 1).toString() + ":00 " + sunormoonend
+    }
+    if (type == "day") {
+      this.detailsText = "Showing data on " + comday;
+    }
+    if (type == "all") {
+      this.detailsText = "Showing all data";
+    }
+    this.comday = comday;
+    this.comhour = comhour;
+    // console.log(dataMapping);
+    this.selectedData = new Array<any>();
+    dataMapping.forEach((value, key) => {
+      // console.log(key + "Chwxk rhias");
+      this.selectedData.push([key, comday, comhour, type]);
+    })
+    // console.log(this.selectedData);
+    this.showDrilledData = true;
+    try {
+      document.getElementById("drilledData").scrollIntoView({ behavior: "smooth" })
+    }
+    catch{
+      console.log("oops");
+    }
+    return this.selectedData;
+  }
 
 
 
 
   bandwidthClick(evt) {
     var unfilteredSelectedData: Array<Indivdualbandwidth> = new Array<Indivdualbandwidth>();
-      var activePoints = this.chart.getElementsAtEvent(evt);
-      var index = activePoints[0]._index;
-      var clickedbw: Bandwidth = this.bwData[index];
-      // console.log(clickedbw);
-      if (this.filterLive) {
-        this.processDetailsData(clickedbw , unfilteredSelectedData , "live")
+    var activePoints = this.chart.getElementsAtEvent(evt);
+    var index = activePoints[0]._index;
+    var clickedbw: Bandwidth = this.bwData[index];
+    // console.log(clickedbw);
+    if (this.filterLive) {
+      this.processDetailsData(clickedbw, unfilteredSelectedData, "live")
 
-      }
-      if(this.filterDay)
-      {
-        this.processDetailsData(clickedbw , unfilteredSelectedData , "day")
+    }
+    if (this.filterDay) {
+      this.processDetailsData(clickedbw, unfilteredSelectedData, "day")
 
-      }
+    }
 
-      if(this.filterAll)
-      {
-        this.processDetailsData(clickedbw , unfilteredSelectedData , "all")
+    if (this.filterAll) {
+      this.processDetailsData(clickedbw, unfilteredSelectedData, "all")
 
-      }
+    }
 
   }
 
