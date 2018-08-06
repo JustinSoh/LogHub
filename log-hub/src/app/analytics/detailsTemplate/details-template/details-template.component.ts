@@ -45,19 +45,19 @@ export class DetailsTemplateComponent implements OnInit , OnChanges {
   async ngOnInit() {
 
     //Check if current is bandwidth 
-    await this.as.currentDetails.subscribe(data => {
-      console.log(data);
-      // var showWhat = this.processShowWhat(data)
-      // console.log(showWhat)
-      // if(data == "bwd")
-      // {
-      //   console.log("testing");
-      //   this.showBandwidth = true;
-      // }
-      // else {
-      //   this.showBandwidth = false;
-      // }
-    })
+    // await this.as.currentDetails.subscribe(data => {
+    //   console.log(data);
+    //   // var showWhat = this.processShowWhat(data)
+    //   // console.log(showWhat)
+    //   // if(data == "bwd")
+    //   // {
+    //   //   console.log("testing");
+    //   //   this.showBandwidth = true;
+    //   // }
+    //   // else {
+    //   //   this.showBandwidth = false;
+    //   // }
+    // })
     
     // if(this.showBandwidth == true)
     // {

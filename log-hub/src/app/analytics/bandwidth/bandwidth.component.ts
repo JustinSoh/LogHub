@@ -188,18 +188,12 @@ export class BandwidthComponent implements OnInit, OnChanges {
               type = "day"
             }
             this.hostName = [data , type , this.comday , this.comhour]
-            try{
-              document.getElementById("indData").scrollIntoView({behavior:"smooth"});
-            }
-  
-            catch{
-              console.log("oops");
-            }
+            
           })
+       
           
         });
-        
-     
+       
       }
     });
   }
@@ -319,7 +313,7 @@ export class BandwidthComponent implements OnInit, OnChanges {
     var dontUpdateLabel = false;
     bwData = this.sortInformation(bwData);
     if (type == "all") {
-      this.showDrilledData = false;
+      // this.showDrilledData = false;
       this.analyticsService.DetailStatus(false);
       this.analyticsService.HostStatus(null);
       bwData = this.mainData
@@ -331,7 +325,7 @@ export class BandwidthComponent implements OnInit, OnChanges {
       dontUpdateLabel = false;
     }
     if (type == "live") {
-      this.showDrilledData = false;
+      // this.showDrilledData = false;
       this.analyticsService.DetailStatus(false);
       this.analyticsService.HostStatus(null);
       bwData = this.mainData;
@@ -347,7 +341,7 @@ export class BandwidthComponent implements OnInit, OnChanges {
 
     }
     if (type == "day") {
-      this.showDrilledData = false;
+      // this.showDrilledData = false;
       this.analyticsService.DetailStatus(false);
       this.analyticsService.HostStatus(null);
       var arrayOfData: Array<Bandwidth> = new Array<Bandwidth>();

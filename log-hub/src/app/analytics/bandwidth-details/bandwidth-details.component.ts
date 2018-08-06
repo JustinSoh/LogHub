@@ -17,7 +17,7 @@ export class BandwidthDetailsComponent implements OnInit {
   private individualBandwidth: IndividualbandwidthService;
   private indBwData: Array<Indivdualbandwidth> = new Array<Indivdualbandwidth>();
   private totalUsage: Number;
-  private hostname: String;
+  private hostname: string;
   private organizationobj: Organization;
   private organizationName: string;
   private currentDataset: Indivdualbandwidth;
@@ -27,6 +27,9 @@ export class BandwidthDetailsComponent implements OnInit {
   private download:string;
   private total:string;
   private action:string;
+  private hostDetails:Boolean = false;;
+  private hostName:any;
+  private actionName:String = "Expand" ;
   constructor(as: AnalyticsService, bandwidthService: BandwidthService, indBandwidthService: IndividualbandwidthService, organizationService: OrganizationService) {
     this.as = as;
     this.bandwidthService = bandwidthService;
@@ -138,9 +141,30 @@ export class BandwidthDetailsComponent implements OnInit {
   }
 
   showHostDetails() {
-    this.as.DetailStatus(true)
-    this.as.HostStatus(this.input[0]);
+    if(this.hostDetails == false)
+    {
+      this.actionName = "Collapse"
+      this.hostDetails = true;
+      var type = ""
+      if(this.input[3] == "all")
+      {
+        type = "all"
+      }
+      if(this.input[3] == "live")
+      {
+        type = "live"
+      }
+      if(this.input[3] == "day")
+      {
+        type = "day"
+      }
+      this.hostName = [this.input[0] , type , this.input[1] , this.input[2]]
+      console.log(this.hostName);
+    }
+    else {
+      this.hostDetails = false; 
+      this.actionName = "Expand";
+    }
+  
   }
-
-
 }

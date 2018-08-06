@@ -20,7 +20,7 @@
                 <!-- <p class="text subheader color">Current utilization of bandwidth</p> -->
                 <p class="headline" style="text-align:center; font-size: 2em!important;" [ngClass]="{'low': lowTrue, 'medium': mediumTrue, 'high': highTrue , 'veryhigh': veryhighTrue , 'training':trainingTrue}">{{overviewUsage}} Mbit/s</p>
                 <p class="subtitle" style="text-align:center;font-style: italic" [ngClass]="{'low': lowTrue, 'medium': mediumTrue, 'high': highTrue , 'veryhigh': veryhighTrue , 'training':trainingTrue}">{{informationMessage}}</p>
-                <canvas  id="bandwidthChartV2" (click)="bandwidthClick($event)"></canvas>
+                <canvas id="bandwidthChartV2" (click)="bandwidthClick($event)"></canvas>
                 <!-- <p style="text-align:center; margin-top:0px" class="subheading" [ngClass]="{'low': lowTrue, 'medium': mediumTrue, 'high': highTrue}" >High Utilization</p>  -->
                 <!-- <canvas id="bandwidthChart">
                         </canvas> -->
@@ -33,10 +33,17 @@
         </mat-card>
         <!-- </button> -->
     </div>
-    <div style="display:inline-block" style="margin-top:2% ;" class="col-sm-3">
-        <mat-card class="card-style">
-            HELOO
-        </mat-card>
+    <div style="display:inline-block" style="margin-top:2% ;" class="col-sm-4">
+        <div class="row">
+            <mat-card class="card-style4">
+                <h3 class="title1 color" class="col-sm-12" style="width:100% !important; display:inline-block; color:#777777;text-align: center;">TCP Connection</h3>
+            </mat-card>
+        </div>
+        <div class="row">
+            <mat-card class="card-style4">
+                <h3 class="title1 color" class="col-sm-12" style="width: 100% !important;display:inline-block; color:#777777;text-align: center;">UDP Connection</h3>
+            </mat-card>
+        </div>
     </div>
 </div>
 
@@ -50,9 +57,6 @@
         </div>
     </mat-card>
 </div>
-<div *ngIf="hostDetails" id="indData" class="hostTopDetails2">
-        <app-host-details [data]="hostName"></app-host-details>
-    </div>
 
 <div *ngIf="bandwidthChartClicked" style="color: #fafafa">Data is currently loading . . . </div>
 

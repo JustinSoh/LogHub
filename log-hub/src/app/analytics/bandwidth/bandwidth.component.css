@@ -180,6 +180,16 @@
 
 }
 
+.card-style4{
+    width: 98%;
+    background: #262626;
+    border-radius: 30px;
+    margin-left:1%;
+    margin-right:1%;
+
+    display:inline-block; color:#0072FF;text-align: center;
+}
+
 .custom-select {
     width: 10%;
 }
@@ -194,12 +204,3 @@
     border-radius: 30px;
     width:96vw;
 }
-
-.hostTopDetails {
-    margin-top: 3%;
-    height: auto;
-    border-radius: 30px;
-    width:98vw;
-    background: #1a1a1a;
-}
-

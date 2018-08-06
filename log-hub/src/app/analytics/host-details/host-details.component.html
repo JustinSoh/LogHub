@@ -1,71 +1,115 @@
-<div style="background-color: #1a1a1a">
-  <mat-card class="card-style2">
-    <div class="row">
-      <div class="col-sm-12">
-        <mat-card class="card-style3">
-          <h3 class="title1 color" class="col-sm-11" style="display:inline-block; color:#0072FF">{{hostName}}</h3>
-          <h4 class="subtitle " class="col-sm-11" style="display:inline-block; color:#777777">{{organizationName}}</h4>
-          <h4 class="subtitle " class="col-sm-11" style="display:inline-block; color:#777777">Network Details</h4>
-          <mat-card class="card-style">
-            <div class="row" style="text-align: center">
-              <div class="col-sm-2">
-                <p class="title2 color" class="textS" style="display:inline-block; color:#FAFAFA">IP Address</p>
-              </div>
-              <div class="col-sm-2">
-                <p class="title2 color" class="textS" style="display:inline-block; color:#FAFAFA">MAC Address</p>
-              </div>
-              <div class="col-sm-2">
-                <p class="title2 color" class="textS" style="display:inline-block; color:#FAFAFA">Default Gateway Address</p>
-              </div>
-            </div>
-            <div class="row" style="text-align: center">
-              <div class="col-sm-2">
-                <p class="title2 color" class=" textS" style="display:inline-block; color:#777777">{{IPAddress}}</p>
-              </div>
-              <div class="col-sm-2">
-                <p class="title2 color" class=" textS" style="display:inline-block; color:#777777">{{MACAddress}}</p>
-              </div>
-              <div class="col-sm-2">
-                <p class="title2 color" class="textS" style="display:inline-block; color:#777777">{{DefaultGateway}}</p>
-              </div>
-            </div>
-          </mat-card>
-          <h4 class="subtitle " class="col-sm-11" style="display:inline-block; color:#777777; margin-top: 2%">Bandwidth Details</h4>
-          <mat-card class="card-style">
-              <div class="row" style="text-align: center">
-                <div class="col-sm-2">
-                  <p class="title2 color" class="textS" style="display:inline-block; color:#FAFAFA">Total Upload (Mb)</p>
-                </div>
-                <div class="col-sm-2">
-                  <p class="title2 color" class="textS" style="display:inline-block; color:#FAFAFA">Total Download (Mb)</p>
-                </div>
-                <div class="col-sm-2">
-                  <p class="title2 color" class="textS" style="display:inline-block; color:#FAFAFA">Total (Mb)</p>
-                </div>
-              </div>
-              <div class="row" style="text-align: center">
-                  <div class="col-sm-2">
-                    <p class="title2 color" class=" textS" style="display:inline-block; color:#777777">{{upload}}</p>
-                  </div>
-                   <div class="col-sm-2">
-                    <p class="title2 color" class=" textS" style="display:inline-block; color:#777777">{{download}}</p>
-                  </div>
-                   <div class="col-sm-2">
-                    <p class="title2 color" class=" textS" style="display:inline-block; color:#777777">{{total}}</p>
-                  </div>
-              </div>
-            </mat-card>
+<!-- <h3 class="title1 color" class="col-sm-11" style="display:inline-block; color:#0072FF">
+  {{hostName}}</h3>
+<h4 class="subtitle " class="col-sm-11" style="display:inline-block; color:#777777">{{organizationName}}</h4>
+<h4 class="subtitle " class="col-sm-11" style="display:inline-block; color:#777777">Network Details</h4>
+<mat-card class="card-style">
+  <div class="row" style="text-align: center">
+    <div class="col-sm-2">
+      <p class="title2 color" class="textS" style="display:inline-block; color:#FAFAFA">IP Address</p>
+    </div>
+    <div class="col-sm-2">
+      <p class="title2 color" class="textS" style="display:inline-block; color:#FAFAFA">MAC Address</p>
+    </div>
+    <div class="col-sm-2">
+      <p class="title2 color" class="textS" style="display:inline-block; color:#FAFAFA">Default Gateway Address</p>
+    </div>
+  </div>
+  <div class="row" style="text-align: center">
+    <div class="col-sm-2">
+      <p class="title2 color" class=" textS" style="display:inline-block; color:#777777">{{IPAddress}}</p>
+    </div>
+    <div class="col-sm-2">
+      <p class="title2 color" class=" textS" style="display:inline-block; color:#777777">{{MACAddress}}</p>
+    </div>
+    <div class="col-sm-2">
+      <p class="title2 color" class="textS" style="display:inline-block; color:#777777">{{DefaultGateway}}</p>
+    </div>
+  </div>
+</mat-card>
+<h4 class="subtitle " class="col-sm-11" style="display:inline-block; color:#777777; margin-top: 2%">Bandwidth Details</h4>
+<mat-card class="card-style">
+  <div class="row" style="text-align: center">
+    <div class="col-sm-2">
+      <p class="title2 color" class="textS" style="display:inline-block; color:#FAFAFA">Total Upload (Mb)</p>
+    </div>
+    <div class="col-sm-2">
+      <p class="title2 color" class="textS" style="display:inline-block; color:#FAFAFA">Total Download (Mb)</p>
+    </div>
+    <div class="col-sm-2">
+      <p class="title2 color" class="textS" style="display:inline-block; color:#FAFAFA">Total (Mb)</p>
+    </div>
+  </div>
+  <div class="row" style="text-align: center">
+    <div class="col-sm-2">
+      <p class="title2 color" class=" textS" style="display:inline-block; color:#777777">{{upload}}</p>
+    </div>
+    <div class="col-sm-2">
+      <p class="title2 color" class=" textS" style="display:inline-block; color:#777777">{{download}}</p>
+    </div>
+    <div class="col-sm-2">
+      <p class="title2 color" class=" textS" style="display:inline-block; color:#777777">{{total}}</p>
+    </div>
+  </div>
+</mat-card> -->
 
-
-          <!-- <p class="title2 color" class="col-sm-11" style="display:inline-block; color:#777777">MAC Adress: {{MACAddress}}</p> -->
-          <!-- <p class="title2 color" class="col-sm-11" style="display:inline-block; color:#777777">Default Gateway:{{DefaultGateway}}</p> -->
-        </mat-card>
+    <h4 class="subtitle " class="col-sm-11" style="display:inline-block; margin-top:1%; color:#777777">Network Details</h4>
+    <mat-card class="card-style">
+      <div class="row" style="text-align: center">
+        <div class="col-sm-2">
+          <p class="title2 color" class="textS" style="display:inline-block; color:#FAFAFA">IP Address</p>
+        </div>
+        <div class="col-sm-2">
+          <p class="title2 color" class="textS" style="display:inline-block; color:#FAFAFA">MAC Address</p>
+        </div>
+        <div class="col-sm-2">
+          <p class="title2 color" class="textS" style="display:inline-block; color:#FAFAFA">Default Gateway Address</p>
+        </div>
+      </div>
+      <div class="row" style="text-align: center">
+        <div class="col-sm-2">
+          <p class="title2 color" class=" textS" style="display:inline-block; color:#777777">{{IPAddress}}</p>
+        </div>
+        <div class="col-sm-2">
+          <p class="title2 color" class=" textS" style="display:inline-block; color:#777777">{{MACAddress}}</p>
+        </div>
+        <div class="col-sm-2">
+          <p class="title2 color" class="textS" style="display:inline-block; color:#777777">{{DefaultGateway}}</p>
+        </div>
+      </div>
+    </mat-card>
+    <h4 class="subtitle " class="col-sm-11" style="display:inline-block; color:#777777; margin-top: 2%">Bandwidth Details</h4>
+    <mat-card class="card-style">
+      <div class="row" style="text-align: center">
+        <div class="col-sm-2">
+          <p class="title2 color" class="textS" style="display:inline-block; color:#FAFAFA">Total Upload (Mb)</p>
+        </div>
+        <div class="col-sm-2">
+          <p class="title2 color" class="textS" style="display:inline-block; color:#FAFAFA">Total Download (Mb)</p>
+        </div>
+        <div class="col-sm-2">
+          <p class="title2 color" class="textS" style="display:inline-block; color:#FAFAFA">Total (Mb)</p>
+        </div>
+        
 
       </div>
-      <div class="col-sm-8"></div>
+      <div class="row" style="text-align: center">
+        <div class="col-sm-2">
+          <p class="title2 color" class=" textS" style="display:inline-block; color:#777777">{{upload}}</p>
+        </div>
+        <div class="col-sm-2">
+          <p class="title2 color" class=" textS" style="display:inline-block; color:#777777">{{download}}</p>
+        </div>
+        <div class="col-sm-2">
+          <p class="title2 color" class=" textS" style="display:inline-block; color:#777777">{{total}}</p>
+        </div>
+       
+      </div>
+      <div>
+          <canvas id="individualBandwidthChart"></canvas>
+      </div>
+    </mat-card>
+    <!-- <h3 class="title1 color" class="col-sm-11" style="display:inline-block; color:#0072FF">{{hostName}}</h3> -->
 
 
-
-    </div>
-  </mat-card>
-</div>
+<!-- <p class="title2 color" class="col-sm-11" style="display:inline-block; color:#777777">MAC Adress: {{MACAddress}}</p> -->
+<!-- <p class="title2 color" class="col-sm-11" style="display:inline-block; color:#777777">Default Gateway:{{DefaultGateway}}</p> -->
