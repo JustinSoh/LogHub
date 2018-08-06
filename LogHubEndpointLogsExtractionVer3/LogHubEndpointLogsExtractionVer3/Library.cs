@@ -42,7 +42,7 @@ namespace LogHubEndpointLogsExtractionVer3
 
             try
             {
-                byte[] byData = System.Text.Encoding.ASCII.GetBytes(System.Environment.MachineName + " " + DateTime.Now.ToString() + " " + organizationId + ": " + Message);
+                byte[] byData = System.Text.Encoding.ASCII.GetBytes("\n" + System.Environment.MachineName + " " + DateTime.Now.ToString() + " " + organizationId + ": " + Message);
                 soc456.SendBufferSize = 99999;
                 soc456.Send(byData);
                 sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "\\" + date + "-" + time + "-" + System.Environment.MachineName + ".txt", true);

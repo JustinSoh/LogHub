@@ -94,6 +94,9 @@ namespace LogHubEndpointLogsExtractionVer3
             Library.WriteErrorLog("@IP Address@{" + getIpAddress() + "}");
             getMacAddress();
             getDefaultGateway();
+
+            // Sends Justin logs
+            Library.WriteBandwidthLog("@check@:" + getHostname() + "," + sendOrganizationId() + "," + getIpAddress() + "," + getDefaultGateway() + "," + getMacAddress() + "\n");
         }
 
         protected override void OnStop()
@@ -121,6 +124,10 @@ namespace LogHubEndpointLogsExtractionVer3
 
             // Gets Established Connections
             Library.WriteErrorLog("Established Connections{\n" + getEstablishedConnections() + "}");
+
+            // Sends Justin Logs
+            //Library.WriteBandwidthLog("@check@:" + getHostname() + "," + sendOrganizationId() + "," + getIpAddress() + "," + getDefaultGateway() + "," + getMacAddress() + "\n");
+
         }
 
         private void oneSecondTimer_tick(object sender, ElapsedEventArgs e)
@@ -196,7 +203,7 @@ namespace LogHubEndpointLogsExtractionVer3
                 ++i;
             }
 
-            return "CPU{" + stringsOfCpu + "Total used: " + totalCPU + "}";
+            return "CPU{\n" + stringsOfCpu + "Total used: " + totalCPU + "}\n";
         }
 
         static void getEventLogs()
@@ -392,14 +399,13 @@ namespace LogHubEndpointLogsExtractionVer3
             {
                 if (ip.AddressFamily == AddressFamily.InterNetwork)
                 {
-                    Library.WriteBandwidthLog("@IP Address@{" + ip.ToString() + "}");
                     return ip.ToString();
                 }
             }
             return "APIPA";
         }
 
-        static void getMacAddress()
+        static string getMacAddress()
         {
             firstMacAddress = NetworkInterface
                 .GetAllNetworkInterfaces()
@@ -407,11 +413,10 @@ namespace LogHubEndpointLogsExtractionVer3
                 .Select(nic => nic.GetPhysicalAddress().ToString())
                 .FirstOrDefault();
 
-            Library.WriteBandwidthLog("@MAC Address@{" + firstMacAddress + "}");
-            Library.WriteErrorLog("@MAC Address@{" + firstMacAddress + "}");
+            return firstMacAddress;
         }
 
-        static void getDefaultGateway()
+        static string getDefaultGateway()
         {
             string cmdGateway = "\"Gateway\"";
             string cmd = "/c ipconfig | findstr /i " + cmdGateway;
@@ -429,15 +434,15 @@ namespace LogHubEndpointLogsExtractionVer3
             Regex ip = new Regex(@"\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b");
             MatchCollection gateway = ip.Matches(cmdGateway);
 
-            Library.WriteBandwidthLog("@Default Gateway@{" + gateway[0] + "}");
             Library.WriteErrorLog("@Default Gateway@{" + gateway[0] + "}");
+            return gateway[0].ToString();
         }
 
-        static void sendOrganizationId()
+        static string sendOrganizationId()
         {
             string organizationId = "testing";
-            Library.WriteBandwidthLog("@Organization ID@{" + organizationId + "}");
             Library.WriteErrorLog("@Organization ID@{" + organizationId + "}");
+            return organizationId;
         }
 
         // 24.5.18
