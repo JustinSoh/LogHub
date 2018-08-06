@@ -53,6 +53,7 @@ export class BandwidthDetailsComponent implements OnInit {
       })
       
       this.individualBandwidth.getBandwidthBasedOnHostname(this.input[0]).subscribe(data => {
+        // console.log(data);
         for (var i = 0; i < data.length; i++) {
           var indId = indBwID[i];
           var indBwObj: Indivdualbandwidth = this.individualBandwidth.convertIndBandwidthFromData(indId, data[i]);
@@ -84,7 +85,7 @@ export class BandwidthDetailsComponent implements OnInit {
             }
           }
         }
-        console.log(this.organizationName)
+        // console.log(this.organizationName)
         this.organizationService.getOrgsDocumentIDbyID(this.organizationName).subscribe(data => {
           var organizationID = ""
           // console.log(data);
@@ -158,8 +159,9 @@ export class BandwidthDetailsComponent implements OnInit {
       {
         type = "day"
       }
+      // console.log(this.input[0]);
       this.hostName = [this.input[0] , type , this.input[1] , this.input[2]]
-      console.log(this.hostName);
+      // console.log(this.hostName);
     }
     else {
       this.hostDetails = false; 

@@ -44,7 +44,7 @@ export class OrganizationService {
     var organizationId = data['organizationID']
     var organizationName = data['organizationName']
     var pin = data['securePinCode']
-  
+    
     var user = new Organization(organizationId , organizationName , pin);
     return user
   }

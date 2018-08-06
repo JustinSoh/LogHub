@@ -1,5 +1,5 @@
 <div class="row">
-    <div *ngIf="!dataLoading" class="col-sm-8" style="margin-top:2% ;" ng-controller="flipCtrl">
+    <div *ngIf="!dataLoading" class="col-sm-12" style="margin-top:2% ;" ng-controller="flipCtrl">
         <!-- <button mat-button style="border-radius:30px" class="col-sm-12" (click)="showBandwidthDetails()"> -->
         <mat-card class="card-style">
             <div>
@@ -33,18 +33,7 @@
         </mat-card>
         <!-- </button> -->
     </div>
-    <div style="display:inline-block" style="margin-top:2% ;" class="col-sm-4">
-        <div class="row">
-            <mat-card class="card-style4">
-                <h3 class="title1 color" class="col-sm-12" style="width:100% !important; display:inline-block; color:#777777;text-align: center;">TCP Connection</h3>
-            </mat-card>
-        </div>
-        <div class="row">
-            <mat-card class="card-style4">
-                <h3 class="title1 color" class="col-sm-12" style="width: 100% !important;display:inline-block; color:#777777;text-align: center;">UDP Connection</h3>
-            </mat-card>
-        </div>
-    </div>
+    
 </div>
 
 <div *ngIf="showDrilledData" id="drilledData" class="hostTopDetails">

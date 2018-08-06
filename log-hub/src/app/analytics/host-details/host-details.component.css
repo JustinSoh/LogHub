@@ -21,6 +21,17 @@
     background: #262626;
 }
 
+
+.format-button{
+    outline: none !important;
+    border: none !important;
+    margin-left: 2%;
+    color: #0072FF;
+    width:auto;
+    margin-top: 1%;
+    display: inline-block;
+}
+
 .card-style {
     border-radius: 10px;
     background: #1b1b1b;
@@ -39,4 +50,31 @@
     line-height: 100%;
     margin-bottom: 0px;
     padding: 5%;
+}
+
+::ng-deep .mat-menu {
+    background-color: #262626 !important;
+}
+::ng-deep .mat-menu-content  {
+    border: 0px;
+    outline: none;
+    height: auto;
+    background-color: #1a1a1a !important;
+}
+
+::ng-deep .mat-menu-panel {
+    background-color: #1a1a1a !important;
+}
+
+.mat-menu-item {
+    color: #4c4c4c !important;
+    background: #1a1a1a !important;
+    border: 1px;
+    text-align: center;
+    outline: none;
+  }
+  
+
+.selected {
+    color: #fafafa !important;
 }

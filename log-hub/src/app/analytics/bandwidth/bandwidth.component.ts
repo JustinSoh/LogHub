@@ -130,9 +130,9 @@ export class BandwidthComponent implements OnInit, OnChanges {
           })
           // this.analyticsService.BwDataDetails(this.bwData)
           this.bwData = this.getDataThatHasBeenProcessed(this.bwData);
-          this.bwData.forEach(data => {
-            console.log(data.$usage + " check this ")
-          })
+          // this.bwData.forEach(data => {
+          //   // console.log(data.$usage + " check this ")
+          // })
           this.mainData = this.bwData;
           var type = "live"
           if (this.filterLive == true) {
@@ -442,19 +442,19 @@ export class BandwidthComponent implements OnInit, OnChanges {
                 var riskcolor = riskcolor.toLowerCase();
                 var risk = "";
                 if (riskcolor == "#4eab7e") {
-                  risk = "Low"
+                  risk = "Low: " + data.datasets[0].data[index].toString()
                 }
                 else if (riskcolor == "#ff8400") {
-                  risk = "Medium"
+                  risk = "Medium: " + data.datasets[0].data[index].toString()
                 }
                 else if (riskcolor == "#ff9eb5") {
-                  risk = "High"
+                  risk = "High: " + data.datasets[0].data[index].toString()
                 }
                 else if (riskcolor == "#d44343") {
-                  risk = "Very high"
+                  risk = "Very High: " + data.datasets[0].data[index].toString() 
                 }
                 else if (riskcolor == "#0072ff") {
-                  risk = "Training"
+                  risk = "Training in Progress"
                 }
                 return risk;
               }
@@ -639,7 +639,7 @@ export class BandwidthComponent implements OnInit, OnChanges {
       this.informationMessage = "Medium Risk"
 
     } if (overviewStatus.toLowerCase() == "high") {
-      console.log("does this happen")
+      // console.log("does this happen")
       this.highTrue = true;
       this.informationMessage = "High Risk"
 

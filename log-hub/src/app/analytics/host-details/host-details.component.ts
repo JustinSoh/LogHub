@@ -31,34 +31,48 @@ export class HostDetailsComponent implements OnInit {
   private comday:string; 
   private comhour:string;
   private chart:any;
+  private filterSec:Boolean = true; 
+  private filterMin:Boolean = false; 
+  private filterDaily:Boolean = false;
   constructor(hostMapping:HostmappingService , organizatioNService:OrganizationService , indBWService:IndividualbandwidthService ) { 
     this.hostMapService = hostMapping;
     this.organizationService = organizatioNService;
     this.individualBandwidthService = indBWService;
 
   }
-
+  getCurrentType()
+  {
+    if(this.filterSec == true)
+    {
+      return "live"
+    }
+    if(this.filterMin == true)
+    {
+      return "day"
+    }
+    if(this.filterDaily == true)
+    {
+      return "all";
+    }
+  }
   ngOnInit() {
-    console.log(this.data);
+    // console.log(this.data);
     this.hostName = this.data[0];
-    this.type = this.data[1];
+    this.type = this.getCurrentType();
     this.comday = this.data[2];
     this.comhour = this.data[3];
-    console.log(this.type) 
+    // console.log(this.type) 
+    console.log(this.data[0]);
+    
     this.hostMapService.getSpecificHostBasedOnID(this.data[0]).subscribe(data =>
     {
-      this.upload = ""; 
-      this.download = ""; 
-      this.total = "";
-      var upload = 0; 
-      var download = 0; 
-      var total = 0;
-      this.allIndBWData = new Array<Indivdualbandwidth>();
-      this.currentHM = null;
+      console.log(data)
       data.forEach(data1 => {
         this.currentHM = this.hostMapService.convertToHostMapObj(data1);
       })
+      console.log(this.currentHM);
       this.IPAddress = this.currentHM.$IPAddress;
+      console.log(this.IPAddress);
       this.MACAddress = this.currentHM.$MACAddress
       this.DefaultGateway = this.currentHM.$DefaultGateway;
       var organization:Organization;
@@ -74,7 +88,7 @@ export class HostDetailsComponent implements OnInit {
          bandwidthDocID.push((element['payload']['doc']['id']))
         })     
         this.allIndBWData = new Array<Indivdualbandwidth>();  
-        console.log(this.allIndBWData.length.toString() + "xhxfasd");
+        // console.log(this.allIndBWData.length.toString() + "xhxfasd");
         
         this.individualBandwidthService.getBandwidthBasedOnHostname(this.hostName).subscribe(data2 => {
           this.allIndBWData = new Array<Indivdualbandwidth>();  
@@ -116,7 +130,7 @@ export class HostDetailsComponent implements OnInit {
           var newInformation = this.allIndBWData.sort((a: any, b: any) =>
             (a.time).getTime() - new Date(b.time).getTime()
           );
-          console.log(this.allIndBWData.length.toString() + "cccccc") ;
+          // console.log(this.allIndBWData.length.toString() + "cccccc") ;
           // this.allIndBWData = new Array<Indivdualbandwidth>(); 
           // this.allIndBWData = newInformation;
           this.allIndBWData.forEach(data => {
@@ -128,6 +142,7 @@ export class HostDetailsComponent implements OnInit {
           this.upload = upload.toString(); 
           this.download = download.toString();
           this.total = total.toString();
+          console.log(this.type)
           this.createChart(this.allIndBWData , this.type , this.comday , this.comhour);
         })
       })
@@ -136,13 +151,36 @@ export class HostDetailsComponent implements OnInit {
 
     })
   }
+  showSeconds() 
+  {
+    this.filterSec = true; 
+    this.filterMin = false;
+    this.filterDaily = false;
+    this.type = this.getCurrentType();
+    this.createChart(this.allIndBWData , this.type , this.comday , this.comhour);
+  }
 
+  showMinutes(){
+    this.filterSec = false; 
+    this.filterMin = true;
+    this.filterDaily = false;
+    this.type = this.getCurrentType();
+    this.createChart(this.allIndBWData , this.type , this.comday , this.comhour);
+  }
+
+  showDaily(){
+    this.filterSec = false; 
+    this.filterMin = false;
+    this.filterDaily = true;
+    this.type = this.getCurrentType();
+    this.createChart(this.allIndBWData , this.type , this.comday , this.comhour);
+  }
   sortInformation(information) {
-    console.log(information.length)
+    // console.log(information.length)
     var information2 = information.sort((a: any, b: any) =>
       new Date(a.time).getTime() - new Date(b.time).getTime()
     );
-    console.log(information2)
+    // console.log(information2)
     return information2
 
   }
@@ -180,6 +218,7 @@ export class HostDetailsComponent implements OnInit {
     var downloadFirst:Array<number> = new Array<number>();
     var downloadDataset:Array<number> = new Array<number>(); 
     var uploadDataset:Array<number> = new Array<number>();
+    var stepSizeLabel;
     allIndBWData.forEach(data => {
       var day = this.getDayFromDate(data.$time)
       var date = data.$time.getDate();
@@ -204,10 +243,146 @@ export class HostDetailsComponent implements OnInit {
     })
     var labelHeader = ""
     var downloadHeader = ""
-    if (type == "all")
+    // if (type == "all")
+    // {
+    //   var counter = 0;
+    //   for(var i = 0; i < time.length; i = i + 100)
+    //   {
+    //     // var uploadTotal = 0; 
+    //     // for(var a = counter; a <= i ; a++ )
+    //     // {
+    //     //   uploadTotal = uploadTotal + uploadFirst[a];
+    //     // }
+    //     // var downloadTotal = 0; 
+    //     // for(var a = counter; a <= i ; a++ )
+    //     // {
+    //     //   downloadTotal = downloadTotal + downloadFirst[a];
+    //     // }
+
+    //     var uploadTotal = 0; 
+    //     for(var a = counter; a <= i ; a++ )
+    //     {
+    //       uploadTotal = uploadTotal + uploadFirst[a];
+    //     }
+    //     var downloadTotal = 0; 
+    //     for(var a = counter; a <= i ; a++ )
+    //     {
+    //       downloadTotal = downloadTotal + downloadFirst[a];
+    //     }
+    //     uploadDataset.push(uploadTotal);
+    //     downloadDataset.push(downloadTotal);
+
+    //     labels.push(time[i].get('DateAct') + "/" + time[i].get('Month') + "/" + time[i].get('Year'))
+    //     counter = i; 
+    //   }
+    //   var uploadRemainderTotal = 0;
+    //   var downloadRemainderTotal = 0;
+    //   if(counter != time.length-1)
+    //   {
+    //     if(counter != 0)
+    //     {
+    //       for(var i = counter; i < time.length; i++)
+    //       {
+    //         uploadRemainderTotal = uploadRemainderTotal + uploadFirst[i];
+    //         downloadRemainderTotal = downloadRemainderTotal + downloadFirst[i];
+    //       }
+  
+    //       uploadDataset.push(uploadRemainderTotal);
+    //       downloadDataset.push(downloadRemainderTotal);
+    //       labels.push(time[time.length-1].get('Date') )
+    //     }
+       
+    //   }
+
+    //   if(counter == 0)
+    //   {
+    //     uploadDataset = new Array<any>();
+    //     downloadDataset = new Array<any>();
+    //     for(var i = 0; i < time.length; i++)
+    //     {
+    //       uploadRemainderTotal = uploadRemainderTotal + uploadFirst[i];
+    //       downloadRemainderTotal = downloadRemainderTotal + downloadFirst[i];
+    //     }
+
+    //     uploadDataset.push(uploadRemainderTotal);
+    //     downloadDataset.push(downloadRemainderTotal);
+    //     labels.push(time[time.length-1].get('Date') )
+    //   }
+    //   console.log(uploadDataset);
+    //   console.log(downloadDataset);
+    //   // if(this.chart != null)
+    //   // {
+    //   //   console.log("is this happening")
+    //   //    this.chart.options.scales.yAxes.ticks.stepSize = 1000;
+    //   // }
+    //   labelHeader = "Upload Usage (Daily) "
+    //   downloadHeader = "Download Usage (Daily)"
+
+    // }
+    console.log(type);
+    if(type =="all")
+    {
+      console.log(type + "does thsi run");
+
+      var counter = 0;
+      for(var i = 0; i < time.length; i = i + 86400)
+      {
+        var uploadTotal = 0; 
+        for(var a = counter; a <= i ; a++ )
+        {
+          uploadTotal = uploadTotal + uploadFirst[a];
+        }
+        var downloadTotal = 0; 
+        for(var a = counter; a <= i ; a++ )
+        {
+          downloadTotal = downloadTotal + downloadFirst[a];
+        }
+        uploadDataset.push(uploadTotal);
+        downloadDataset.push(downloadTotal);
+        labels.push(time[i].get('Date'))
+        counter = i; 
+      }
+      var uploadRemainderTotal = 0;
+      var downloadRemainderTotal = 0;
+      if(counter != time.length-1)
+      {
+        if(counter == 0)
+        {
+          for(var i = counter; i < time.length; i++)
+          {
+            uploadRemainderTotal = uploadRemainderTotal + uploadFirst[i];
+            downloadRemainderTotal = downloadRemainderTotal + downloadFirst[i];
+          }
+    
+          uploadDataset.push(uploadRemainderTotal);
+          downloadDataset.push(downloadRemainderTotal);
+          labels.push(time[time.length-1].get('Date') )
+        }
+
+        // if(counter != 0)
+        //     {
+        //       for(var i = counter; i < time.length; i++)
+        //       {
+        //         uploadRemainderTotal = uploadRemainderTotal + uploadFirst[i];
+        //         downloadRemainderTotal = downloadRemainderTotal + downloadFirst[i];
+        //       }
+      
+        //       uploadDataset.push(uploadRemainderTotal);
+        //       downloadDataset.push(downloadRemainderTotal);
+        //       labels.push(time[time.length-1].get('Date') )
+        //     }
+      }
+     
+      labelHeader = "Upload Usage (Daily )"
+      downloadHeader = "Download Usage (Daily)"
+
+    }
+
+    if(type == "day")
     {
       var counter = 0;
-     
+
+      
       for(var i = 0; i < time.length; i = i + 600)
       {
         var uploadTotal = 0; 
@@ -222,26 +397,33 @@ export class HostDetailsComponent implements OnInit {
         }
         uploadDataset.push(uploadTotal);
         downloadDataset.push(downloadTotal);
-        labels.push(time[i].get('Min') + ":" + time[i].get('Sec'))
+        labels.push(time[i].get('Date'))
         counter = i; 
       }
       var uploadRemainderTotal = 0;
       var downloadRemainderTotal = 0;
-      
-      for(var i = counter; i < time.length; i++)
+      if(counter != time.length-1)
       {
-        uploadRemainderTotal = uploadRemainderTotal + uploadFirst[i];
-        downloadRemainderTotal = downloadRemainderTotal + downloadFirst[i];
+        if(counter == 0)
+        {
+          for(var i = counter; i < time.length; i++)
+          {
+            uploadRemainderTotal = uploadRemainderTotal + uploadFirst[i];
+            downloadRemainderTotal = downloadRemainderTotal + downloadFirst[i];
+          }
+    
+          uploadDataset.push(uploadRemainderTotal);
+          downloadDataset.push(downloadRemainderTotal);
+          labels.push(time[time.length-1].get('Date') )
+        }
+       
       }
-
-      uploadDataset.push(uploadRemainderTotal);
-      downloadDataset.push(downloadRemainderTotal);
-      labels.push(time[time.length-1].get('Min') + ":" + time[time.length-1].get('Sec'))
-
-
-      labelHeader = "Upload Usage " + comday + " from " + comhour + ":00 to " + (Number(comhour)+1).toString() + ":00 (10mins Interval)"
-      downloadHeader = "Download Usage " + comday + " from " + comhour + ":00 to " + (Number(comhour)+1).toString() + ":00 (10mins Interval)"
+     
+      labelHeader = "Upload Usage (10 Minutes)"
+      downloadHeader = "Download Usage (10 Minutes)"
+     
     }
+
     if (type == "live")
     {
       var counter = 0;
@@ -265,44 +447,71 @@ export class HostDetailsComponent implements OnInit {
       }
       var uploadRemainderTotal = 0;
       var downloadRemainderTotal = 0;
-      
-      for(var i = counter; i < time.length; i++)
+    
+
+      if(counter != time.length-1)
       {
-        uploadRemainderTotal = uploadRemainderTotal + uploadFirst[i];
-        downloadRemainderTotal = downloadRemainderTotal + downloadFirst[i];
+        if(counter == 0)
+        {
+          for(var i = counter; i < time.length; i++)
+          {
+            uploadRemainderTotal = uploadRemainderTotal + uploadFirst[i];
+            downloadRemainderTotal = downloadRemainderTotal + downloadFirst[i];
+          }
+          uploadDataset.push(uploadRemainderTotal);
+          downloadDataset.push(downloadRemainderTotal);
+          labels.push(time[time.length-1].get('Min') + ":" + time[time.length-1].get('Sec'))
+        }
+       
+
       }
+    
 
-      uploadDataset.push(uploadRemainderTotal);
-      downloadDataset.push(downloadRemainderTotal);
-      labels.push(time[time.length-1].get('Min') + ":" + time[time.length-1].get('Sec'))
-
-
-      labelHeader = "Upload Usage " + comday + " from " + comhour + ":00 to " + (Number(comhour)+1).toString() + ":00 (30secs Interval)"
-      downloadHeader = "Download Usage " + comday + " from " + comhour + ":00 to " + (Number(comhour)+1).toString() + ":00 (30secs Interval)"
-
+      labelHeader = "Upload Usage " + comday + " from " + comhour + ":00 to " + (Number(comhour)+1).toString() + ":00 (10 secs Interval)"
+      downloadHeader = "Download Usage " + comday + " from " + comhour + ":00 to " + (Number(comhour)+1).toString() + ":00 (10 secs Interval)"
+      
     }
 
     
-    console.log(labels);
-
-    if(this.chart == null)
+    // console.log(labels);
+    // console.log(type);
+    // console.log(type + "check thois");
+    stepSizeLabel = 10;
+    if(type == "live")
     {
-      this.chart = new Chart('individualBandwidthChart', {
-        type: 'bar',
-        options: {
-          animation: false,
-          scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero: true,
-                stepSize: 10,
-                // Include a dollar sign in the ticks
-              }
-            }]
-          }
-        }
-      })
+      stepSizeLabel = 10;
+      
     }
+    if(type == "all")
+    {
+      stepSizeLabel = 10000;
+    }
+    if(type == "day")
+    {
+      stepSizeLabel = 1000;
+    }
+
+    
+    if(this.chart == null)
+      {
+        this.chart = new Chart('individualBandwidthChart', {
+          type: 'bar',
+          options: {
+            animation: false,
+            scales: {
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true,
+                  stepSize: stepSizeLabel,
+                  // Include a dollar sign in the ticks
+                }
+              }]
+            }
+          }
+        })
+      }
+     
+    
     
     this.chart.data.labels = labels;
     this.chart.data.datasets = [

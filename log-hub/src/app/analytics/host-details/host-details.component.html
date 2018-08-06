@@ -77,7 +77,10 @@
         </div>
       </div>
     </mat-card>
-    <h4 class="subtitle " class="col-sm-11" style="display:inline-block; color:#777777; margin-top: 2%">Bandwidth Details</h4>
+    <div class="row" >
+      <h4 class="subtitle " class="col-sm-11" style="display:inline-block; color:#777777; margin-left:1% ;margin-top: 2%">Bandwidth Details</h4>
+      <button mat-icon-button [matMenuTriggerFor]="frequency" class="fa fa-bars format-button"></button>
+    </div>
     <mat-card class="card-style">
       <div class="row" style="text-align: center">
         <div class="col-sm-2">
@@ -104,9 +107,16 @@
         </div>
        
       </div>
+     
+      <mat-menu #frequency="matMenu" style="color: #fafafa !important" class="mat-elevation-z0">
+          <button mat-menu-item [ngClass]="{'selected': filterSec}" (click)="showSeconds()">10 Seconds</button>
+          <button mat-menu-item [ngClass]="{'selected': filterMin}" (click)="showMinutes()">10 Minutes</button>
+          <button mat-menu-item [ngClass]="{'selected': filterDay}" (click)="showDaily()">Daily</button>
+      </mat-menu>
       <div>
           <canvas id="individualBandwidthChart"></canvas>
       </div>
+
     </mat-card>
     <!-- <h3 class="title1 color" class="col-sm-11" style="display:inline-block; color:#0072FF">{{hostName}}</h3> -->
 
