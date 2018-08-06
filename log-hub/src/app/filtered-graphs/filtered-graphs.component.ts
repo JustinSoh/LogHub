@@ -21,7 +21,9 @@ export class FilteredGraphsComponent implements OnInit {
   dataset2 = [];
   timeset = [];
   colorset = [];
+  colorset2 = [];
 
+  currentHost: string;
   //CPU Values
   cpuAverage: number;
   chromeAverage: number;
@@ -41,6 +43,7 @@ export class FilteredGraphsComponent implements OnInit {
 
   //Session Values
   sessions = [];
+  hosts = [];
 
   createLineChart() {
     if (this.chart != null) {
@@ -80,7 +83,7 @@ export class FilteredGraphsComponent implements OnInit {
           enabled: true,
           mode: 'single',
           callbacks: {
-            label: function(tooltipItems, data) {
+            label: function (tooltipItems, data) {
               return tooltipItems.yLabel + '% CPU Usage'
             }
           }
@@ -99,8 +102,8 @@ export class FilteredGraphsComponent implements OnInit {
         labels: this.timeset,
         datasets: [{
           data: this.dataset2,
-          pointBackgroundColor: this.colorset,
-          pointBorderColor: this.colorset,
+          pointBackgroundColor: this.colorset2,
+          pointBorderColor: this.colorset2,
           pointRadius: 4,
           pointHoverRadius: 8,
           borderColor: 'grey',
@@ -127,7 +130,7 @@ export class FilteredGraphsComponent implements OnInit {
           enabled: true,
           mode: 'single',
           callbacks: {
-            label: function(tooltipItems, data) {
+            label: function (tooltipItems, data) {
               return tooltipItems.yLabel + '% Chrome Usage'
             }
           }
@@ -192,6 +195,19 @@ export class FilteredGraphsComponent implements OnInit {
     }
   }
 
+  hostChange(selected: any) {
+    this.cpuLogsService.getItems2(selected).subscribe(data => {
+      this.chart.destroy()
+      this.dataset = []
+      this.timeset = []
+      for (var i = 0; i < data.length; i++) {
+        this.dataset.push(data[i]['usage'])
+        this.timeset.push(data[i]['time'])
+      }
+      this.createLineChart();
+    })
+  }
+
   constructor(private modalService: NgbModal, private elementRef: ElementRef, private cpuDetailsService: CpuDetailsService, private cpuLogsService: CpuLogsService) {
   }
 
@@ -200,9 +216,8 @@ export class FilteredGraphsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.sessions = ["CPU Usage", "Chrome Usage"] 
+    this.sessions = ["CPU Usage", "Chrome Usage"]
     this.cpuDetailsService.getItem().subscribe(data => {
-      this.cpuAverage = data[0]['cpuAverage']
       this.chromeAverage = data[0]['chromeAverage']
       this.firstTitle = data[0]['ev1']
       this.secondTitle = data[0]['ev2']
@@ -219,24 +234,56 @@ export class FilteredGraphsComponent implements OnInit {
       this.dataset2 = []
       this.timeset = []
       this.colorset = []
+      this.colorset2 = []
+
+      var duplicates = []
+
+      var total = 0
+      var count = 0
 
       for (var i = 0; i < data.length; i++) {
+        duplicates.push(data[i]['hostname'])
+
+        for (let i = 0; i < duplicates.length; i++) {
+          if (this.hosts.indexOf(duplicates[i]) == -1) {
+            this.hosts.push(duplicates[i])
+          }
+        }
+
         this.dataset.push(data[i]['usage'])
         this.dataset2.push(data[i]['chrome'])
         this.timeset.push(data[i]['time'])
-        if (data[i]['riskValue'] == 'high') {
+
+        total += data[i]['usage']
+        count++
+
+        if (data[i]['cpuRisk'] == 'high') {
           this.colorset.push('red')
         }
-        else if (data[i]['riskValue'] == 'low') {
+        else if (data[i]['cpuRisk'] == 'low') {
           this.colorset.push('lime')
         }
-        else if (data[i]['riskValue'] == 'medium') {
+        else if (data[i]['cpuRisk'] == 'medium') {
           this.colorset.push('yellow')
         }
-        else if (data[i]['riskValue'] == 'training') {
+        else if (data[i]['cpuRisk'] == 'training') {
           this.colorset.push('cyan')
         }
+
+        if (data[i]['chromeRisk'] == 'high') {
+          this.colorset2.push('red')
+        }
+        else if (data[i]['chromeRisk'] == 'low') {
+          this.colorset2.push('lime')
+        }
+        else if (data[i]['chromeRisk'] == 'medium') {
+          this.colorset2.push('yellow')
+        }
+        else if (data[i]['chromeRisk'] == 'training') {
+          this.colorset2.push('cyan')
+        }
       }
+      this.cpuAverage = total/count
       this.createLineChart();
     })
 

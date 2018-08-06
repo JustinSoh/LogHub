@@ -51,6 +51,11 @@
         <option *ngFor="let session of sessions" [value]="session">{{session}}</option>
       </select>
     </div>
+    <div class="select-session">
+        <select name="slct" id="slct" (change)="hostChange($event.target.value)">
+          <option *ngFor="let host of hosts" [value]="host">{{host}}</option>
+        </select>
+      </div>
   </div>
   <div class="container">
     <div class="line-canvas-container">

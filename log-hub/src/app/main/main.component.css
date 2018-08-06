@@ -76,6 +76,7 @@ h1:after {
     -webkit-animation-delay: 1.2s;
     -moz-animation-delay: 1.2s;
     animation-delay: 1.2s;
+    text-align: center;
 }
 
 .fade-in.network {
@@ -87,6 +88,7 @@ h1:after {
     -webkit-animation-delay: 1.5s;
     -moz-animation-delay:1.5s;
     animation-delay: 1.5s;
+    text-align: center;
 }
 
 p {
