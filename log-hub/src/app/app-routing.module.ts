@@ -27,6 +27,7 @@ import { MainComponent } from './main/main.component';
 import { OverviewChartComponent } from './analytics/modules/overview-chart/overview-chart.component';
 import { CpuChartComponent } from './analytics/modules/cpu-chart/cpu-chart.component';
 import { AnalyticsNavComponent } from './analytics/modules/analytics-nav/analytics-nav.component';
+import { FilteredGraphsComponent } from './filtered-graphs/filtered-graphs.component';
 
 const routes: Routes = [
   {path: "" , redirectTo: "login" , pathMatch:"full"},
@@ -39,7 +40,9 @@ const routes: Routes = [
     { path: "forgotPassword",component: ForgetPasswordComponent , outlet: 'loginPath'},
   ] },
   { path: "home", component: MainComponent},
-  { path: "home/analytics" , component: AnalyticsNavComponent }
+  { path: "home/analytics" , component: AnalyticsNavComponent },
+  { path: "home/endpoint", component: FilteredGraphsComponent}
+  
   
   // { path: "home", component: MainComponent , children: [
   //   {path: "", component: AnalyticsMainComponent , outlet: 'mainPath'} //Change this to the main page next time

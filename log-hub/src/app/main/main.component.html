@@ -1,2 +1,22 @@
-<app-template></app-template>
 <router-outlet style="background: #1a1a1a; height: 80vh !important" name="mainPath"></router-outlet>
+<div id="main" class="is-loading">
+    <h1>
+        <span id="blue">LOG</span>
+        <span></span>HUB
+    </h1>
+</div>
+<div class="fade-in endpoint">
+    <h2 [routerLink]="['/home/endpoint']">Endpoint Analysis</h2>
+    <h4>Chrome &amp; CPU Analysis</h4>
+    <p>
+        Analyses CPU activity of your machine, including chrome, where cryptomining thrives.
+        Identifies high risk activities including spikes in usage.
+    </p>
+</div>
+<div class="fade-in network">
+    <h2 [routerLink]="['/home/analytics']" routerLinkActive="active">Network Analysis</h2>
+    <h4>Bandwidth Analysis</h4>
+    <p>
+        Analysis bandwidth of an organization's endpoint computers and determines if the activity is anomalous.
+    </p>
+</div>
