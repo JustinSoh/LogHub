@@ -32,8 +32,8 @@ namespace LogHubEndpointLogsExtractionVer3
 
         public static void closeConnection()
         {
-            soc123.Close();
-            soc456.Close();
+           soc123.Close();
+           soc456.Close();
         }
 
         public static void WriteBandwidthLog(string Message)
@@ -62,9 +62,8 @@ namespace LogHubEndpointLogsExtractionVer3
                 soc123.SendBufferSize = 99999;
                 byte[] byData = System.Text.Encoding.ASCII.GetBytes(System.Environment.MachineName + " " + DateTime.Now.ToString() + ": " + ex.Source.ToString().Trim() + "; " + ex.Message.ToString().Trim());
                 soc123.Send(byData);
-                int abc = soc123.Send(byData);
                 sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "\\" + date + "-" + time + "-" + System.Environment.MachineName + ".txt", true);
-                sw.WriteLine(System.Environment.MachineName + " " + DateTime.Now.ToString() + ": " + ex.Source.ToString().Trim() + "; " + ex.Message.ToString().Trim() + "\nBuffer" + abc);
+                sw.WriteLine(System.Environment.MachineName + " " + DateTime.Now.ToString() + ": " + ex.Source.ToString().Trim() + "; " + ex.Message.ToString().Trim());
                 sw.Flush();
                 sw.Close();
             }
@@ -80,9 +79,8 @@ namespace LogHubEndpointLogsExtractionVer3
                 byte[] byData = System.Text.Encoding.ASCII.GetBytes(System.Environment.MachineName + " " + DateTime.Now.ToString() + ": " + Message);
                 soc123.SendBufferSize = 99999;
                 soc123.Send(byData);
-                int abc = soc123.Send(byData);
                 sw = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "\\" + date + "-" + time + "-" + System.Environment.MachineName + ".txt", true);
-                sw.WriteLine(System.Environment.MachineName + " " + DateTime.Now.ToString() + ": " + Message + "\nBuffer:" + abc);
+                sw.WriteLine(System.Environment.MachineName + " " + DateTime.Now.ToString() + ": " + Message);
                 sw.Flush();
                 sw.Close();
             }
