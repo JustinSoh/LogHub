@@ -6,6 +6,9 @@ import { Organization } from '../../class/organization';
 import { IndividualbandwidthService } from '../../services/individualbandwidth.service';
 import { Indivdualbandwidth } from '../../class/indivdualbandwidth';
 import { Chart } from 'node_modules/chart.js';
+import { FormControl, Validators } from '../../../../node_modules/@angular/forms';
+import { WebapiService } from '../../services/webapi.service';
+import { User } from '../../class/user';
 
 @Component({
   selector: 'app-host-details',
@@ -31,13 +34,23 @@ export class HostDetailsComponent implements OnInit {
   private comday:string; 
   private comhour:string;
   private chart:any;
+  private thresholdChart:any;
+  private thresholdRange;
+
   private filterSec:Boolean = true; 
   private filterMin:Boolean = false; 
   private filterDaily:Boolean = false;
-  constructor(hostMapping:HostmappingService , organizatioNService:OrganizationService , indBWService:IndividualbandwidthService ) { 
+  private webApiService:WebapiService;
+  private currentUser:User;
+  private thresholdLevelMessage:Number = 0;
+  private thresholdLevelEndMessage:Number = 0;
+
+  private warningLevelMessage:string = "Warning Message"
+  constructor(hostMapping:HostmappingService , organizatioNService:OrganizationService , indBWService:IndividualbandwidthService , webApiService:WebapiService ) { 
     this.hostMapService = hostMapping;
     this.organizationService = organizatioNService;
     this.individualBandwidthService = indBWService;
+    this.webApiService = webApiService;
 
   }
   getCurrentType()
@@ -66,6 +79,8 @@ export class HostDetailsComponent implements OnInit {
     
     this.hostMapService.getSpecificHostBasedOnID(this.data[0]).subscribe(data =>
     {
+      this.webApiService.user.subscribe(testing => {
+      this.currentUser = testing;
       console.log(data)
       data.forEach(data1 => {
         this.currentHM = this.hostMapService.convertToHostMapObj(data1);
@@ -143,9 +158,27 @@ export class HostDetailsComponent implements OnInit {
           this.download = download.toString();
           this.total = total.toString();
           console.log(this.type)
-          this.createChart(this.allIndBWData , this.type , this.comday , this.comhour);
+          this.individualBandwidthService.getSpecificThreshold(this.currentUser.$userId , this.currentHM.$Hostname).valueChanges().subscribe(
+            data => {
+              data.forEach(thresh => {
+                this.thresholdLevelMessage = Number(thresh['thresholdLevel']);
+                this.thresholdLevelEndMessage = Number(thresh['thresholdLevelEnd'])
+                this.thresholdRange = Number(thresh['thresholdLevel']).toString() + " - " +  Number(thresh['thresholdLevelEnd']).toString();
+
+                this.warningLevelMessage = thresh['warningMessage'];
+              })
+            }
+          )
+          this.createChart(this.allIndBWData , this.type , this.comday , this.comhour , this.thresholdLevelMessage);
+          // this.thresholdChart = new Chart('individualBandwidthChart' , {
+          //   type: 'line'
+          // })
+          // this.thresholdChart.data.labels = ['threshold']
+          // this.thresholdChart.data.datasets = [{label: "Threshold" , data: 100}]
+         
         })
       })
+    })
   
      
 
@@ -157,7 +190,7 @@ export class HostDetailsComponent implements OnInit {
     this.filterMin = false;
     this.filterDaily = false;
     this.type = this.getCurrentType();
-    this.createChart(this.allIndBWData , this.type , this.comday , this.comhour);
+    this.createChart(this.allIndBWData , this.type , this.comday , this.comhour,  this.thresholdLevel);
   }
 
   showMinutes(){
@@ -165,7 +198,7 @@ export class HostDetailsComponent implements OnInit {
     this.filterMin = true;
     this.filterDaily = false;
     this.type = this.getCurrentType();
-    this.createChart(this.allIndBWData , this.type , this.comday , this.comhour);
+    this.createChart(this.allIndBWData , this.type , this.comday , this.comhour,  this.thresholdLevel);
   }
 
   showDaily(){
@@ -173,7 +206,7 @@ export class HostDetailsComponent implements OnInit {
     this.filterMin = false;
     this.filterDaily = true;
     this.type = this.getCurrentType();
-    this.createChart(this.allIndBWData , this.type , this.comday , this.comhour);
+    this.createChart(this.allIndBWData , this.type , this.comday , this.comhour , this.thresholdLevel);
   }
   sortInformation(information) {
     // console.log(information.length)
@@ -210,314 +243,337 @@ export class HostDetailsComponent implements OnInit {
     }
   }
 
-  createChart(allIndBWData:Array<Indivdualbandwidth> , type , comday , comhour) 
+  createChart(allIndBWData:Array<Indivdualbandwidth> , type , comday , comhour , thresholdLevelMessagee) 
   {
-    var time:Array<Map<string , any>> = new Array<Map<string, any>>();
-    var labels:Array<string>= new Array<string>();
-    var uploadFirst:Array<number> = new Array<number>();
-    var downloadFirst:Array<number> = new Array<number>();
-    var downloadDataset:Array<number> = new Array<number>(); 
-    var uploadDataset:Array<number> = new Array<number>();
-    var stepSizeLabel;
-    allIndBWData.forEach(data => {
-      var day = this.getDayFromDate(data.$time)
-      var date = data.$time.getDate();
-      var month = data.$time.getMonth() + 1;
-      var year = data.$time.getFullYear();
-      var hour = data.$time.getHours();
-      var t = data.$time.getMinutes();
-      var sec = data.$time.getSeconds();
-      var timeMap: Map<string, any> = new Map<string, any>();
-      timeMap.set("Day", day);
-      timeMap.set("DateAct", date.toString());
-      timeMap.set("Date", data.$time.getDate() + "/" + month + " " + hour + ":" + t);
-      timeMap.set("Month", month.toString());
-      timeMap.set("Year", year.toString());
-      timeMap.set("Time", hour.toString() + ":" + t.toString() + ":" + sec)
-      timeMap.set("Hour", hour.toString());
-      timeMap.set("Min", t.toString())
-      timeMap.set("Sec", sec.toString())
-      time.push(timeMap) 
-      uploadFirst.push(data.$upload);
-      downloadFirst.push(data.$download);
-    })
-    var labelHeader = ""
-    var downloadHeader = ""
-    // if (type == "all")
-    // {
-    //   var counter = 0;
-    //   for(var i = 0; i < time.length; i = i + 100)
-    //   {
-    //     // var uploadTotal = 0; 
-    //     // for(var a = counter; a <= i ; a++ )
-    //     // {
-    //     //   uploadTotal = uploadTotal + uploadFirst[a];
-    //     // }
-    //     // var downloadTotal = 0; 
-    //     // for(var a = counter; a <= i ; a++ )
-    //     // {
-    //     //   downloadTotal = downloadTotal + downloadFirst[a];
-    //     // }
-
-    //     var uploadTotal = 0; 
-    //     for(var a = counter; a <= i ; a++ )
-    //     {
-    //       uploadTotal = uploadTotal + uploadFirst[a];
-    //     }
-    //     var downloadTotal = 0; 
-    //     for(var a = counter; a <= i ; a++ )
-    //     {
-    //       downloadTotal = downloadTotal + downloadFirst[a];
-    //     }
-    //     uploadDataset.push(uploadTotal);
-    //     downloadDataset.push(downloadTotal);
-
-    //     labels.push(time[i].get('DateAct') + "/" + time[i].get('Month') + "/" + time[i].get('Year'))
-    //     counter = i; 
-    //   }
-    //   var uploadRemainderTotal = 0;
-    //   var downloadRemainderTotal = 0;
-    //   if(counter != time.length-1)
-    //   {
-    //     if(counter != 0)
-    //     {
-    //       for(var i = counter; i < time.length; i++)
-    //       {
-    //         uploadRemainderTotal = uploadRemainderTotal + uploadFirst[i];
-    //         downloadRemainderTotal = downloadRemainderTotal + downloadFirst[i];
-    //       }
+    this.individualBandwidthService.getSpecificThreshold(this.currentUser.$userId , this.currentHM.$Hostname).valueChanges().subscribe(data => {
+      var thresholdLevelMessage = 0; 
+      var thresholdLevelEndMessage = 0;
+      data.forEach(tres => {
+        thresholdLevelMessage = tres['thresholdLevel']
+        thresholdLevelEndMessage = tres['thresholdLevelEnd']
+      })
+      var time:Array<Map<string , any>> = new Array<Map<string, any>>();
+      var labels:Array<string>= new Array<string>();
+      var uploadFirst:Array<number> = new Array<number>();
+      var downloadFirst:Array<number> = new Array<number>();
+      var downloadDataset:Array<number> = new Array<number>(); 
+      var uploadDataset:Array<number> = new Array<number>();
+      var threshold:Array<number> = new Array<number>();
+      var thresholdEnd:Array<number> = new Array<number>();
+      var stepSizeLabel;
+      allIndBWData.forEach(data => {
+        var day = this.getDayFromDate(data.$time)
+        var date = data.$time.getDate();
+        var month = data.$time.getMonth() + 1;
+        var year = data.$time.getFullYear();
+        var hour = data.$time.getHours();
+        var t = data.$time.getMinutes();
+        var sec = data.$time.getSeconds();
+        var timeMap: Map<string, any> = new Map<string, any>();
+        timeMap.set("Day", day);
+        timeMap.set("DateAct", date.toString());
+        timeMap.set("Date", data.$time.getDate() + "/" + month + " " + hour + ":" + t);
+        timeMap.set("Month", month.toString());
+        timeMap.set("Year", year.toString());
+        timeMap.set("Time", hour.toString() + ":" + t.toString() + ":" + sec)
+        timeMap.set("Hour", hour.toString());
+        timeMap.set("Min", t.toString())
+        timeMap.set("Sec", sec.toString())
+        time.push(timeMap) 
+        uploadFirst.push(data.$upload);
+        downloadFirst.push(data.$download);
+      })
+      var labelHeader = ""
+      var downloadHeader = ""
+      var thresholdHeader = ""
+     
+      console.log(type);
+      if(type =="all")
+      {
+        console.log(type + "does thsi run");
   
-    //       uploadDataset.push(uploadRemainderTotal);
-    //       downloadDataset.push(downloadRemainderTotal);
-    //       labels.push(time[time.length-1].get('Date') )
-    //     }
-       
-    //   }
-
-    //   if(counter == 0)
-    //   {
-    //     uploadDataset = new Array<any>();
-    //     downloadDataset = new Array<any>();
-    //     for(var i = 0; i < time.length; i++)
-    //     {
-    //       uploadRemainderTotal = uploadRemainderTotal + uploadFirst[i];
-    //       downloadRemainderTotal = downloadRemainderTotal + downloadFirst[i];
-    //     }
-
-    //     uploadDataset.push(uploadRemainderTotal);
-    //     downloadDataset.push(downloadRemainderTotal);
-    //     labels.push(time[time.length-1].get('Date') )
-    //   }
-    //   console.log(uploadDataset);
-    //   console.log(downloadDataset);
-    //   // if(this.chart != null)
-    //   // {
-    //   //   console.log("is this happening")
-    //   //    this.chart.options.scales.yAxes.ticks.stepSize = 1000;
-    //   // }
-    //   labelHeader = "Upload Usage (Daily) "
-    //   downloadHeader = "Download Usage (Daily)"
-
-    // }
-    console.log(type);
-    if(type =="all")
-    {
-      console.log(type + "does thsi run");
-
-      var counter = 0;
-      for(var i = 0; i < time.length; i = i + 86400)
-      {
-        var uploadTotal = 0; 
-        for(var a = counter; a <= i ; a++ )
+        var counter = 0;
+        for(var i = 0; i < time.length; i = i + 3600)
         {
-          uploadTotal = uploadTotal + uploadFirst[a];
-        }
-        var downloadTotal = 0; 
-        for(var a = counter; a <= i ; a++ )
-        {
-          downloadTotal = downloadTotal + downloadFirst[a];
-        }
-        uploadDataset.push(uploadTotal);
-        downloadDataset.push(downloadTotal);
-        labels.push(time[i].get('Date'))
-        counter = i; 
-      }
-      var uploadRemainderTotal = 0;
-      var downloadRemainderTotal = 0;
-      if(counter != time.length-1)
-      {
-        if(counter == 0)
-        {
-          for(var i = counter; i < time.length; i++)
+          var uploadTotal = 0; 
+          for(var a = counter; a <= i ; a++ )
           {
-            uploadRemainderTotal = uploadRemainderTotal + uploadFirst[i];
-            downloadRemainderTotal = downloadRemainderTotal + downloadFirst[i];
+            uploadTotal = uploadTotal + uploadFirst[a];
           }
-    
-          uploadDataset.push(uploadRemainderTotal);
-          downloadDataset.push(downloadRemainderTotal);
-          labels.push(time[time.length-1].get('Date') )
-        }
-
-        // if(counter != 0)
-        //     {
-        //       for(var i = counter; i < time.length; i++)
-        //       {
-        //         uploadRemainderTotal = uploadRemainderTotal + uploadFirst[i];
-        //         downloadRemainderTotal = downloadRemainderTotal + downloadFirst[i];
-        //       }
-      
-        //       uploadDataset.push(uploadRemainderTotal);
-        //       downloadDataset.push(downloadRemainderTotal);
-        //       labels.push(time[time.length-1].get('Date') )
-        //     }
-      }
-     
-      labelHeader = "Upload Usage (Daily )"
-      downloadHeader = "Download Usage (Daily)"
-
-    }
-
-    if(type == "day")
-    {
-      var counter = 0;
-
-      
-      for(var i = 0; i < time.length; i = i + 600)
-      {
-        var uploadTotal = 0; 
-        for(var a = counter; a <= i ; a++ )
-        {
-          uploadTotal = uploadTotal + uploadFirst[a];
-        }
-        var downloadTotal = 0; 
-        for(var a = counter; a <= i ; a++ )
-        {
-          downloadTotal = downloadTotal + downloadFirst[a];
-        }
-        uploadDataset.push(uploadTotal);
-        downloadDataset.push(downloadTotal);
-        labels.push(time[i].get('Date'))
-        counter = i; 
-      }
-      var uploadRemainderTotal = 0;
-      var downloadRemainderTotal = 0;
-      if(counter != time.length-1)
-      {
-        if(counter == 0)
-        {
-          for(var i = counter; i < time.length; i++)
+          var downloadTotal = 0; 
+          for(var a = counter; a <= i ; a++ )
           {
-            uploadRemainderTotal = uploadRemainderTotal + uploadFirst[i];
-            downloadRemainderTotal = downloadRemainderTotal + downloadFirst[i];
+            downloadTotal = downloadTotal + downloadFirst[a];
           }
-    
-          uploadDataset.push(uploadRemainderTotal);
-          downloadDataset.push(downloadRemainderTotal);
-          labels.push(time[time.length-1].get('Date') )
+          uploadDataset.push(uploadTotal);
+          downloadDataset.push(downloadTotal);
+          threshold.push(thresholdLevelMessage)
+          thresholdEnd.push(thresholdLevelEndMessage)
+
+          labels.push(time[i].get('Date'))
+          counter = i; 
+        }
+        var uploadRemainderTotal = 0;
+        var downloadRemainderTotal = 0;
+        if(counter != time.length-1)
+        {
+          if(counter == 0)
+          {
+            for(var i = counter; i < time.length; i++)
+            {
+              uploadRemainderTotal = uploadRemainderTotal + uploadFirst[i];
+              downloadRemainderTotal = downloadRemainderTotal + downloadFirst[i];
+            }
+      
+            uploadDataset.push(uploadRemainderTotal);
+            downloadDataset.push(downloadRemainderTotal);
+            threshold.push(thresholdLevelMessage)
+            thresholdEnd.push(thresholdLevelEndMessage)
+            labels.push(time[time.length-1].get('Date') )
+          }
+  
+          if(counter != 0)
+              {
+                for(var i = counter; i < time.length; i++)
+                {
+                  uploadRemainderTotal = uploadRemainderTotal + uploadFirst[i];
+                  downloadRemainderTotal = downloadRemainderTotal + downloadFirst[i];
+                }
+        
+                uploadDataset.push(uploadRemainderTotal);
+                downloadDataset.push(downloadRemainderTotal);
+                threshold.push(thresholdLevelMessage)
+                thresholdEnd.push(thresholdLevelEndMessage)
+                labels.push(time[time.length-1].get('Date') )
+              }
         }
        
+        labelHeader = "Upload Usage (Hourly)"
+        downloadHeader = "Download Usage (Hourly)"
+        thresholdHeader = "Threshold";
       }
-     
-      labelHeader = "Upload Usage (10 Minutes)"
-      downloadHeader = "Download Usage (10 Minutes)"
-     
-    }
-
-    if (type == "live")
-    {
-      var counter = 0;
-     
-      for(var i = 0; i < time.length; i = i + 10)
+  
+      if(type == "day")
       {
-        var uploadTotal = 0; 
-        for(var a = counter; a <= i ; a++ )
+        var counter = 0;
+  
+        
+        for(var i = 0; i < time.length; i = i + 600)
         {
-          uploadTotal = uploadTotal + uploadFirst[a];
-        }
-        var downloadTotal = 0; 
-        for(var a = counter; a <= i ; a++ )
-        {
-          downloadTotal = downloadTotal + downloadFirst[a];
-        }
-        uploadDataset.push(uploadTotal);
-        downloadDataset.push(downloadTotal);
-        labels.push(time[i].get('Min') + ":" + time[i].get('Sec'))
-        counter = i; 
-      }
-      var uploadRemainderTotal = 0;
-      var downloadRemainderTotal = 0;
-    
-
-      if(counter != time.length-1)
-      {
-        if(counter == 0)
-        {
-          for(var i = counter; i < time.length; i++)
+          var uploadTotal = 0; 
+          for(var a = counter; a <= i ; a++ )
           {
-            uploadRemainderTotal = uploadRemainderTotal + uploadFirst[i];
-            downloadRemainderTotal = downloadRemainderTotal + downloadFirst[i];
+            uploadTotal = uploadTotal + uploadFirst[a];
           }
-          uploadDataset.push(uploadRemainderTotal);
-          downloadDataset.push(downloadRemainderTotal);
-          labels.push(time[time.length-1].get('Min') + ":" + time[time.length-1].get('Sec'))
+          var downloadTotal = 0; 
+          for(var a = counter; a <= i ; a++ )
+          {
+            downloadTotal = downloadTotal + downloadFirst[a];
+          }
+          uploadDataset.push(uploadTotal);
+          downloadDataset.push(downloadTotal);
+          threshold.push(thresholdLevelMessage)
+          thresholdEnd.push(thresholdLevelEndMessage)
+
+          labels.push(time[i].get('Date'))
+          counter = i; 
+        }
+        var uploadRemainderTotal = 0;
+        var downloadRemainderTotal = 0;
+        if(counter != time.length-1)
+        {
+          if(counter == 0)
+          {
+            for(var i = counter; i < time.length; i++)
+            {
+              uploadRemainderTotal = uploadRemainderTotal + uploadFirst[i];
+              downloadRemainderTotal = downloadRemainderTotal + downloadFirst[i];
+            }
+      
+            uploadDataset.push(uploadRemainderTotal);
+            downloadDataset.push(downloadRemainderTotal);
+            threshold.push(thresholdLevelMessage)
+            thresholdEnd.push(thresholdLevelEndMessage)
+            
+
+            labels.push(time[time.length-1].get('Date') )
+          }
+         
         }
        
+        labelHeader = "Upload Usage (10 Minutes)"
+        downloadHeader = "Download Usage (10 Minutes)"
+        thresholdHeader = "Threshold";
 
+       
       }
-    
+  
+      if (type == "live")
+      {
+        var counter = 0;
+       
+        for(var i = 0; i < time.length; i = i + 10)
+        {
+          var uploadTotal = 0; 
+          for(var a = counter; a <= i ; a++ )
+          {
+            uploadTotal = uploadTotal + uploadFirst[a];
+          }
+          var downloadTotal = 0; 
+          for(var a = counter; a <= i ; a++ )
+          {
+            downloadTotal = downloadTotal + downloadFirst[a];
+          }
+          uploadDataset.push(uploadTotal);
+          downloadDataset.push(downloadTotal);
+          threshold.push(thresholdLevelMessage)
+          thresholdEnd.push(thresholdLevelEndMessage)
 
-      labelHeader = "Upload Usage " + comday + " from " + comhour + ":00 to " + (Number(comhour)+1).toString() + ":00 (10 secs Interval)"
-      downloadHeader = "Download Usage " + comday + " from " + comhour + ":00 to " + (Number(comhour)+1).toString() + ":00 (10 secs Interval)"
+  
+          labels.push(time[i].get('Min') + ":" + time[i].get('Sec'))
+          counter = i; 
+        }
+        var uploadRemainderTotal = 0;
+        var downloadRemainderTotal = 0;
       
-    }
+  
+        if(counter != time.length-1)
+        {
+          if(counter == 0)
+          {
+            for(var i = counter; i < time.length; i++)
+            {
+              uploadRemainderTotal = uploadRemainderTotal + uploadFirst[i];
+              downloadRemainderTotal = downloadRemainderTotal + downloadFirst[i];
+            }
+            uploadDataset.push(uploadRemainderTotal);
+            downloadDataset.push(downloadRemainderTotal);
+            threshold.push(thresholdLevelMessage)
+            thresholdEnd.push(thresholdLevelEndMessage)
 
-    
-    // console.log(labels);
-    // console.log(type);
-    // console.log(type + "check thois");
-    stepSizeLabel = 10;
-    if(type == "live")
-    {
+            labels.push(time[time.length-1].get('Min') + ":" + time[time.length-1].get('Sec'))
+          }
+         
+  
+        }
+      
+  
+        labelHeader = "Upload Usage " + comday + " from " + comhour + ":00 to " + (Number(comhour)+1).toString() + ":00 (10 secs Interval)"
+        downloadHeader = "Download Usage " + comday + " from " + comhour + ":00 to " + (Number(comhour)+1).toString() + ":00 (10 secs Interval)"
+        thresholdHeader = "Threshold";
+      }
+  
+      
+      // console.log(labels);
+      // console.log(type);
+      // console.log(type + "check thois");
       stepSizeLabel = 10;
       
-    }
-    if(type == "all")
-    {
-      stepSizeLabel = 10000;
-    }
-    if(type == "day")
-    {
-      stepSizeLabel = 1000;
-    }
-
-    
-    if(this.chart == null)
+  
+      if(type == "live")
       {
-        this.chart = new Chart('individualBandwidthChart', {
-          type: 'bar',
-          options: {
-            animation: false,
-            scales: {
-              yAxes: [{
-                ticks: {
-                  beginAtZero: true,
-                  stepSize: stepSizeLabel,
-                  // Include a dollar sign in the ticks
-                }
-              }]
-            }
-          }
-        })
+        stepSizeLabel = 10;
+        
       }
-     
-    
-    
-    this.chart.data.labels = labels;
-    this.chart.data.datasets = [
-    { label: labelHeader, data: uploadDataset, backgroundColor: "#FF8400", pointBackgroundColor: ["#0042ff"], pointRadius: 5 } , 
-    { label: downloadHeader, data: downloadDataset, backgroundColor: "#4EAB7E", pointBackgroundColor: ["#4EAB7E"], pointRadius: 5 }];
-    this.chart.update();
+      if(type == "all")
+      {
+        stepSizeLabel = 10000;
+      }
+      if(type == "day")
+      {
+        stepSizeLabel = 1000;
+      }
+      if(this.chart == null)
+        {
+        
+          this.chart = new Chart('individualBandwidthChart', {
+            type: 'line',
+            options: {
+              animation: false,
+              scales: {
+                yAxes: [{
+                  ticks: {
+                    beginAtZero: true,
+                    stepSize: stepSizeLabel,
+                    // Include a dollar sign in the ticks
+                  }
+                }]
+              }
+            }
+          })
+        }
+      console.log(thresholdLevelMessage);
+      this.chart.options.scales.yAxes= [{ticks: { beginAtZero:true , stepSize: stepSizeLabel}}];
+      this.chart.data.labels = labels;
+      this.chart.data.datasets = [{ label: thresholdHeader, data: thresholdEnd, backgroundColor: '#fafafa', borderColor:'#fafafa' , fill:false ,  pointBackgroundColor: "#fafafa", pointRadius: 0 } ,
+      { label: thresholdHeader, data: threshold, backgroundColor: '#fafafa', borderColor:'#fafafa' , fill:false ,  pointBackgroundColor: "#fafafa", pointRadius: 0 } , 
+      { label: labelHeader, data: uploadDataset, backgroundColor: "#FF8400", pointBackgroundColor: "#777777", pointRadius: 2 } , 
+      { label: downloadHeader, data: downloadDataset, backgroundColor: "#4EAB7E", pointBackgroundColor: "#777777", pointRadius: 2 }];
+      this.chart.update();
+    })
+  }
+  private threshold = false; 
+  private thresholdLevel = new FormControl('', [Validators.required]);
+  private thresholdLevelEnd = new FormControl('', [Validators.required]);
+  
+  private warningMessage = new FormControl('', [Validators.required]);
+  showThreshold()
+  {
+    console.log("Is thsi working");
+    this.threshold = true;
+  }
+
+  thresholdMethod()
+  {
+    console.log(this.thresholdLevel.value)
+    console.log("Threshold method")
+  }
+
+  warningMessageMethod()
+  {
+    console.log(this.warningMessage.value)
+    console.log("Warning message")
+  }
+
+  confirm()
+  {
+    if(this.thresholdLevel.valid && this.warningMessage.valid && this.thresholdLevelEnd.valid)
+    {
+      var arrayOfId:Array<string> = new Array<string>();
+      this.individualBandwidthService.getThresholdID().subscribe(uidp => {
+        uidp.forEach(data => {
+          arrayOfId.push(data['payload']['doc']['id']);
+          
+        })
+      })
+     console.log(arrayOfId);
+     this.individualBandwidthService.getThresholdLevel(this.currentUser.$userId , this.currentHM.$Hostname , this.currentHM.$OrganizationID , this.thresholdLevel.value , this.warningMessage.value).subscribe(
+       data => {
+         for (var i = 0; i < data.length; i++)
+         {
+          if(this.currentUser.$userId == data[i]['UserID'] && this.currentHM.$Hostname == data[i]['TargetHostName'] && this.currentHM.$OrganizationID == data[i]['organizationId'] )
+            {
+              this.individualBandwidthService.updateThresholdLevel(arrayOfId[i],this.currentUser.$userId , this.currentHM.$Hostname , this.currentHM.$OrganizationID , this.thresholdLevel.value, this.warningMessage.value , this.thresholdLevelEnd.value);
+            }
+          else
+          {
+            this.individualBandwidthService.setThresholdLevel(this.currentUser.$userId , this.currentHM.$Hostname , this.currentHM.$OrganizationID , this.thresholdLevel.value, this.warningMessage.value , this.thresholdLevelEnd.value);
+          }
+         }
+        
+       }
+     )
+    }
+    console.log(this.thresholdLevel.value)
+    console.log(this.warningMessage.value)
+    console.log("Confirm")
+    this.threshold = false;
+  }
+
+  cancel()
+  {
+    this.threshold = false;
+    console.log("Cancel")
   }
 
 }

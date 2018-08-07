@@ -57,9 +57,9 @@ export class FilteredGraphsComponent implements OnInit {
           data: this.dataset,
           pointBackgroundColor: this.colorset,
           pointBorderColor: this.colorset,
-          pointRadius: 4,
-          pointHoverRadius: 8,
-          borderColor: 'grey',
+          pointRadius: 2,
+          pointHoverRadius: 4,
+          backgroundColor: 'black',
           fill: true
         }]
       },
@@ -104,9 +104,9 @@ export class FilteredGraphsComponent implements OnInit {
           data: this.dataset2,
           pointBackgroundColor: this.colorset2,
           pointBorderColor: this.colorset2,
-          pointRadius: 4,
-          pointHoverRadius: 8,
-          borderColor: 'grey',
+          pointRadius: 2,
+          pointHoverRadius: 4,
+          backgroundColor: 'black',
           fill: true
         }]
       },
@@ -217,17 +217,6 @@ export class FilteredGraphsComponent implements OnInit {
 
   ngOnInit() {
     this.sessions = ["CPU Usage", "Chrome Usage"]
-    this.cpuDetailsService.getItem().subscribe(data => {
-      this.chromeAverage = data[0]['chromeAverage']
-      this.firstTitle = data[0]['ev1']
-      this.secondTitle = data[0]['ev2']
-      this.thirdTitle = data[0]['ev3']
-      this.firstDesc = data[0]['desc1']
-      this.secondDesc = data[0]['desc2']
-      this.thirdDesc = data[0]['desc3']
-      this.createDoughnut();
-      this.createDoughnut2();
-    })
 
     this.cpuLogsService.getItems().subscribe(data => {
       this.dataset = []
@@ -285,6 +274,18 @@ export class FilteredGraphsComponent implements OnInit {
       }
       this.cpuAverage = total/count
       this.createLineChart();
+    })
+
+    this.cpuDetailsService.getItem().subscribe(data => {
+      this.chromeAverage = data[0]['chromeAverage']
+      this.firstTitle = data[0]['ev1']
+      this.secondTitle = data[0]['ev2']
+      this.thirdTitle = data[0]['ev3']
+      this.firstDesc = data[0]['desc1']
+      this.secondDesc = data[0]['desc2']
+      this.thirdDesc = data[0]['desc3']
+      this.createDoughnut();
+      this.createDoughnut2();
     })
 
   }
