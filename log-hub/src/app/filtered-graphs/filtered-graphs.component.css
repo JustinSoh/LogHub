@@ -1,14 +1,14 @@
 .container {
     float: left;
     width: 68%;
-    height: 400px;
+    height: 480px;
     margin-top: 1%;
     margin-left: 2%;
 }
 
 .webpage-information {
     float: left;
-    margin-top: 2%;
+    margin-top: 0.5%;
     margin-left: 2%;
     width: 68%;
 }

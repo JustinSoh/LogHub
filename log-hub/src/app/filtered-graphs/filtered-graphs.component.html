@@ -4,7 +4,6 @@
     <div class="cpu-container">
       <div class="cpu">
         <p class="header" style="padding-top: 5px">CPU</p>
-        <p class="subtext">Average CPU Usage</p>
         <div class="doughnut-canvas-container">
           <canvas id="doughnut-canvas" class="chartjs-render-monitor"></canvas>
         </div>
@@ -13,11 +12,12 @@
             <span>%</span>
           </span>
           <p class="average-usage-text">Average CPU Usage</p>
+          <hr>
+          <hr>
         </div>
       </div>
       <div class="chrome">
         <p class="header" style="padding-top: 5px">Chrome</p>
-        <p class="subtext">Average Chrome Usage</p>
         <div class="doughnut-canvas-container">
           <canvas id="doughnut-canvas2" class="chartjs-render-monitor"></canvas>
         </div>
@@ -26,12 +26,13 @@
             <span>%</span>
           </span>
           <p class="average-usage-text">Average Chrome Usage</p>
+          <hr>
+          <hr>
         </div>
       </div>
       <div class="event">
         <p class="header">Event Viewer
         </p>
-        <p class="subtext">Recently logged events</p>
         <p class="event-log-header">{{firstTitle}}</p>
         <p class="event-log-description">{{firstDesc}}</p>
         <p class="event-log-header">{{secondTitle}}</p>
@@ -42,20 +43,16 @@
     </div>
   </div>
   <div class="webpage-information">
-    <span class="subtext" style="padding: 0">The chart below shows the CPU usage of the selected session. If the selected session is your current usage, the chart
-      will be live and update everytime there is a change in CPU usage (every 20 seconds). Green points indicate low risk,
-      yellow indicates medium risk, orange indicates high risk, and red indicates very high risk.
-    </span>
     <div class="select-session">
       <select name="slct" id="slct" (change)="sessionChange($event.target.value)">
         <option *ngFor="let session of sessions" [value]="session">{{session}}</option>
       </select>
     </div>
-    <div class="select-session">
+    <!-- <div class="select-session">
         <select name="slct" id="slct" (change)="hostChange($event.target.value)">
           <option *ngFor="let host of hosts" [value]="host">{{host}}</option>
         </select>
-      </div>
+      </div> -->
   </div>
   <div class="container">
     <div class="line-canvas-container">
