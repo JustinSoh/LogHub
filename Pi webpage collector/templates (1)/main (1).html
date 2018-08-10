@@ -1,0 +1,65 @@
+<html>
+<head>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+var stateOfLog = '{{ logState }}';
+
+var cars = [
+	{ "make":"Porsche", "model":"911S" },
+	{ "make":"Mercedes-Benz", "model":"220SE" },
+	{ "make":"Jaguar","model": "Mark VII" }
+];
+
+
+window.onload = function() {
+	// setup the button click
+	document.getElementById("theButton").onclick = function() {
+		doWork()
+	};
+}
+
+
+$.ajax({
+    type: "POST",
+    url: "/",
+    contentType: "application/json",
+    data: JSON.stringify({hello: "world"}),
+    dataType: "json",
+    success: function(response) {
+        console.log(response);
+    },
+    error: function(err) {
+        console.log(err);
+    }
+});
+
+function doWork() {
+	// ajax the JSON to the server
+	$.post("receiver" , cars, function(){
+		console.log("come out")
+	});
+	// stop link reloading the page
+ event.preventDefault();
+}
+
+</script>
+</head>
+<body>
+
+<h1>Collect Logs</h1>
+{% if logState == 1 %}
+<h2> Log collection is currently <strong>on</strong></h2>
+
+
+<button type="button"> Turn Off </button></a>
+
+{% elif logState == 0 %}
+<h2> Log collection is currently <strong>off</strong></h2>
+
+<button type="button" id="theButton"> Turn On </button></a>
+
+{% endif %}
+   
+
+</body>
+</html>

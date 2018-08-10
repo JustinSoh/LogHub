@@ -1,0 +1,28 @@
+import socket
+from threading import *
+
+serversocket = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+
+port = 5888
+
+serversocket.bind(('',port))
+
+class client(Thread):
+    def __init__(self, socket, address):
+        Thread.__init__(self)
+        self.sock = socket
+        self.addr = address
+        self.start()
+        print("Started connection")
+    def run(self):
+        while 1:
+            print('Client sent:', self.sock.recv(1024).decode())
+            self.sock.send(b'Oi you sent something to me')
+
+serversocket.listen(5)
+
+while True:
+ 
+   # Establish connection with client.
+   clientsocket, address = serversocket.accept()
+   client(clientsocket, address)

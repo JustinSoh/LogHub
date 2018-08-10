@@ -1,0 +1,2648 @@
+Packet #         1
+TimeStamp: 06:29:58 06/08/2018
+Packet (Length: 896)
+Layer ETH:
+	Destination: b0:6e:bf:df:d3:40
+	Source: 9c:b6:d0:88:16:21
+	Type: IPv4 (0x0800)
+	Address: b0:6e:bf:df:d3:40
+	.... ...0 .... .... .... .... = IG bit: Individual address (unicast)
+	.... ..0. .... .... .... .... = LG bit: Globally unique address (factory default)
+	Address: 9c:b6:d0:88:16:21
+	.... ...0 .... .... .... .... = IG bit: Individual address (unicast)
+	.... ..0. .... .... .... .... = LG bit: Globally unique address (factory default)
+Layer IP:
+	0000 00.. = Differentiated Services Codepoint: Default (0)
+	Differentiated Services Field: 0x00 (DSCP: CS0, ECN: Not-ECT)
+	Destination GeoIP Latitude: 37.769699
+	Destination GeoIP Country: United States
+	Source GeoIP: Unknown
+	Destination GeoIP City: San Francisco, CA
+	Protocol: TCP (6)
+	Destination GeoIP AS Number: AS54113 Fastly
+	.... 0101 = Header Length: 20 bytes (5)
+	Identification: 0x580f (22543)
+	Fragment offset: 0
+	Flags: 0x02 (Don't Fragment)
+	Destination GeoIP Longitude: -122.393303
+	Header checksum status: Unverified
+	0100 .... = Version: 4
+	..0. .... = More fragments: Not set
+	Time to live: 128
+	.... ..00 = Explicit Congestion Notification: Not ECN-Capable Transport (0)
+	Source: 192.168.1.42
+	0... .... = Reserved bit: Not set
+	.1.. .... = Don't fragment: Set
+	Total Length: 882
+	Header checksum: 0xf9ed [validation disabled]
+	Destination: 151.101.76.81
+	Destination GeoIP: San Francisco, CA, United States, AS54113 Fastly, 37.769699, -122.393303
+Layer TCP:
+	Next sequence number: 843    (relative sequence number)
+	Header Length: 20 bytes
+	TCP Segment Len: 842
+	Bytes sent since last PSH flag: 842
+	SEQ/ACK analysis
+	Checksum: 0xecc7 [unverified]
+	Urgent pointer: 0
+	...0 .... .... = Nonce: Not set
+	Stream index: 7
+	.... .0.. .... = ECN-Echo: Not set
+	Checksum Status: Unverified
+	Calculated window size: 66
+	.... .... .0.. = Reset: Not set
+	.... 0... .... = Congestion Window Reduced (CWR): Not set
+	TCP Flags: \xc2\xb7\xc2\xb7\xc2\xb7\xc2\xb7\xc2\xb7\xc2\xb7\xc2\xb7AP\xc2\xb7\xc2\xb7\xc2\xb7
+	Destination Port: 80
+	Window size value: 66
+	.... .... 1... = Push: Set
+	000. .... .... = Reserved: Not set
+	Source Port: 61783
+	Flags: 0x018 (PSH, ACK)
+	.... ...1 .... = Acknowledgment: Set
+	Bytes in flight: 842
+	.... .... ..0. = Syn: Not set
+	.... .... ...0 = Fin: Not set
+	Window size scaling factor: -1 (unknown)
+	.... ..0. .... = Urgent: Not set
+	Sequence number: 1    (relative sequence number)
+	Acknowledgment number: 1    (relative ack number)
+Layer HTTP:
+	GET / HTTP/1.1\r\n
+	Request Version: HTTP/1.1
+	Cookie pair: BBC-UID=3a52cc25337c04fc3a7bc259db6a61e094eb02b4c51a3946e5cb4234b53922e90Mozilla%2F5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F
+	Request Method: GET
+	HTTP request 1/1
+	Severity level: Chat
+	Host: www.bbc.com\r\n
+	 [truncated]Cookie: BBC-UID=3a52cc25337c04fc3a7bc259db6a61e094eb02b4c51a3946e5cb4234b53922e90Mozilla%2F5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F; ckpf_sa_labels_p
+	Accept-Language: en-US,en;q=0.9\r\n
+	Full request URI: http://www.bbc.com/
+	GET / HTTP/1.1\r\n
+	Accept-Encoding: gzip, deflate\r\n
+	Request URI: /
+	Group: Sequence
+	Connection: keep-alive\r\n
+	Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8\r\n
+	Expert Info (Chat/Sequence): GET / HTTP/1.1\r\n
+	User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.84 Safari/537.36\r\n
+	Cache-Control: max-age=0\r\n
+	\r\n
+	Cookie pair: ckpf_sa_labels_persist={}
+	Cookie pair: ckns_orb_fig_cache={%22uk%22:0%2C%22ck%22:0%2C%22ad%22:1%2C%22ap%22:0%2C%22tb%22:0%2C%22mb%22:0%2C%22eu%22:0}
+	Cookie pair: test_group=b
+	Cookie pair: ecos.dt=1533508152553
+	Upgrade-Insecure-Requests: 1\r\n
+	If-None-Match: "07caaa87cabcd0d94794976b2a8c4f1b"\r\n
+
+Packet #         2
+TimeStamp: 06:30:00 06/08/2018
+Packet (Length: 301)
+Layer ETH:
+	Destination: 9c:b6:d0:88:16:21
+	Source: b0:6e:bf:df:d3:40
+	Type: IPv4 (0x0800)
+	Address: 9c:b6:d0:88:16:21
+	.... ...0 .... .... .... .... = IG bit: Individual address (unicast)
+	.... ..0. .... .... .... .... = LG bit: Globally unique address (factory default)
+	Address: b0:6e:bf:df:d3:40
+	.... ...0 .... .... .... .... = IG bit: Individual address (unicast)
+	.... ..0. .... .... .... .... = LG bit: Globally unique address (factory default)
+Layer IP:
+	0000 00.. = Differentiated Services Codepoint: Default (0)
+	Differentiated Services Field: 0x00 (DSCP: CS0, ECN: Not-ECT)
+	Source GeoIP: San Francisco, CA, United States, AS54113 Fastly, 37.769699, -122.393303
+	Protocol: TCP (6)
+	Source GeoIP Longitude: -122.393303
+	.... 0101 = Header Length: 20 bytes (5)
+	Identification: 0xea8f (60047)
+	Fragment offset: 0
+	Flags: 0x02 (Don't Fragment)
+	Source GeoIP Latitude: 37.769699
+	Source GeoIP City: San Francisco, CA
+	Header checksum status: Unverified
+	0100 .... = Version: 4
+	..0. .... = More fragments: Not set
+	Source GeoIP Country: United States
+	Source GeoIP AS Number: AS54113 Fastly
+	Time to live: 251
+	.... ..00 = Explicit Congestion Notification: Not ECN-Capable Transport (0)
+	Source: 151.101.76.81
+	0... .... = Reserved bit: Not set
+	.1.. .... = Don't fragment: Set
+	Total Length: 287
+	Header checksum: 0xeebf [validation disabled]
+	Destination: 192.168.1.42
+	Destination GeoIP: Unknown
+Layer TCP:
+	Next sequence number: 37896    (relative sequence number)
+	Header Length: 20 bytes
+	TCP Segment Len: 247
+	Bytes sent since last PSH flag: 247
+	SEQ/ACK analysis
+	Checksum: 0x79ce [unverified]
+	Urgent pointer: 0
+	...0 .... .... = Nonce: Not set
+	Stream index: 7
+	.... .0.. .... = ECN-Echo: Not set
+	Checksum Status: Unverified
+	Calculated window size: 1607
+	.... .... .0.. = Reset: Not set
+	.... 0... .... = Congestion Window Reduced (CWR): Not set
+	TCP Flags: \xc2\xb7\xc2\xb7\xc2\xb7\xc2\xb7\xc2\xb7\xc2\xb7\xc2\xb7AP\xc2\xb7\xc2\xb7\xc2\xb7
+	Destination Port: 61783
+	Window size value: 1607
+	.... .... 1... = Push: Set
+	000. .... .... = Reserved: Not set
+	Source Port: 80
+	Flags: 0x018 (PSH, ACK)
+	.... ...1 .... = Acknowledgment: Set
+	Bytes in flight: 247
+	.... .... ..0. = Syn: Not set
+	.... .... ...0 = Fin: Not set
+	Window size scaling factor: -1 (unknown)
+	.... ..0. .... = Urgent: Not set
+	TCP segment data (247 bytes)
+	Sequence number: 37649    (relative sequence number)
+	Acknowledgment number: 843    (relative ack number)
+DATALayer HTTP:
+	HTTP/1.1 200 OK\r\n
+	Request Version: HTTP/1.1
+	Content-Length: 37278\r\n
+	Time since request: 0.066301000 seconds
+	Date: Sun, 05 Aug 2018 22:29:58 GMT\r\n
+	Severity level: Chat
+	Status Code: 200
+	Content-Encoding: gzip\r\n
+	File Data: 220794 bytes
+	HTTP/1.1 200 OK\r\n
+	Response Phrase: OK
+	Group: Sequence
+	HTTP response 1/1
+	Connection: keep-alive\r\n
+	Request in frame: 25
+	Expert Info (Chat/Sequence): HTTP/1.1 200 OK\r\n
+	Content length: 37278
+	Content-Type: text/html\r\n
+	Cache-Control: max-age=60\r\n
+	Server: Apache\r\n
+	\r\n
+	Content-encoded entity body (gzip): 37278 bytes -> 220794 bytes
+	X-Cache-Action: MISS\r\n
+	X-Cache-Age: 0\r\n
+	Expires: Sun, 05 Aug 2018 22:29:52 GMT\r\n
+	Content-Language: en\r\n
+	Etag: "6345d61a6bd1c789fddfa32012efc747"\r\n
+	X-PAL-Host: pal133.back.live.telhc.local:80\r\n
+	Accept-Ranges: bytes\r\n
+	Via: 1.1 varnish\r\n
+	Age: 66\r\n
+	X-LB-NoCache: true\r\n
+	X-Fastly-Cache-Status: HIT-STALE-CLUSTER\r\n
+	X-Served-By: cache-hkg17929-HKG\r\n
+	X-Cache: HIT\r\n
+	X-Cache-Hits: 1\r\n
+	X-Timer: S1533508198.046040,VS0,VE1\r\n
+	Vary: Accept-Encoding\r\n
+Layer DATA-TEXT-LINES:
+	 [truncated] <!DOCTYPE html> <html class=" b-pw-1280" lang="en" > <head> <!-- Barlesque 3.22.55 --> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> <meta name="description" content="Breaking news, sport, TV, radio and
+	<!--[if (gt IE 8) | (IEMobile)]><!-->\n
+	<link rel="stylesheet" href="http://static.bbci.co.uk/frameworks/barlesque/3.22.55/orb/4/style/orb.min.css">\n
+	<!--<![endif]-->\n
+	\n
+	<!--[if (lt IE 9) & (!IEMobile)]>\n
+	<link rel="stylesheet" href="http://static.bbci.co.uk/frameworks/barlesque/3.22.55/orb/4/style/orb-ie.min.css">\n
+	<![endif]-->\n
+	\n
+	 [truncated]  <!--orb.ws.require.lib--> <script class="js-require-lib" src="http://static.bbci.co.uk/frameworks/requirejs/lib.js"></script> <script type="text/javascript">  bbcRequireMap = {"jquery-1":"http://static.bbci.co.uk/frameworks/j
+	/*!\n
+	 * contentloaded.js\n
+	 *\n
+	 * Author: Diego Perini (diego.perini at gmail.com)\n
+	 * Summary: cross-browser wrapper for DOMContentLoaded\n
+	 * Updated: 20101020\n
+	 * License: MIT\n
+	 * Version: 1.2\n
+	 *\n
+	 * URL:\n
+	 * http://javascript.nwbox.com/ContentLoaded/\n
+	 * http://javascript.nwbox.com/ContentLoaded/MIT-LICENSE\n
+	 *\n
+	 */\n
+	 [truncated]function contentLoaded(d,i){var c=false,h=true,k=d.document,j=k.documentElement,a=k.addEventListener,n=a?"addEventListener":"attachEvent",l=a?"removeEventListener":"detachEvent",b=a?"":"on",m=function(o){if(o.type==="readystate
+	 [truncated](function(){window.orb={};window.orb.figState={ad:0,ap:0,ck:1,eu:1,mb:0,tb:0,uk:1,df:1};window.orb.fig=function(a){return(arguments.length)?window.orb.figState[a]:window.orb.figState};window.orb.fig.device={};window.orb.fig.geo
+	 [truncated] <script type="text/javascript"> define('orb/cookies', function() { return window.bbccookies; }); define('orb/fig', function() { return window.orb.fig; }); window.orb.fig.load = function (callback) { callback(window.orb.fig); }
+	 [truncated]<script type="text/javascript">window.bbcFlagpoles_istats="ON",require.config({paths:{"istats-1":"//nav.files.bbci.co.uk/nav-analytics/0.1.0-95/js/istats-1","megavolt-client":"//nav.files.bbci.co.uk/nav-analytics/0.1.0-95/js/me
+	\n
+	<script type="text/javascript">/*<![CDATA[*/\n
+	    window.bbcFlagpoles_istats = 'ON';\n
+	    window.orb = window.orb || {};\n
+	\n
+	    if (typeof bbccookies !== 'undefined' && bbccookies.isAllowed('s1')) {\n
+	        var istatsTrackingUrl = '//sa.bbc.co.uk/bbc/bbc/s?name=SET-COUNTER&pal_route=index&app_type=responsive&language=en-GB&pal_webapp=wwhp';\n
+	        require(['istats-1'], function (istats) {\n
+	            var counterName = (window.istats_countername) ? window.istats_countername : istatsTrackingUrl.match(/[\?&]name=([^&]*)/i)[1];\n
+	            istats.setCountername(counterName);\n
+	\n
+	            istats.addLabels('pal_route=index&app_type=responsive&language=en-GB&pal_webapp=wwhp');\n
+	            var c = (document.cookie.match(/\bckns_policy=(\d\d\d)/) || []).pop() || '';\n
+	            istats.addLabels({\n
+	                                        'blq_s': '4d',\n
+	                    'blq_r': '3.5',\n
+	                    'blq_v': 'default',\n
+	                    'blq_e': 'pal',\n
+	                                        'bbc_mc': (c ? 'ad' + c.charAt(0) + 'ps' + c.charAt(1) + 'pf' + c.charAt(2) : 'not_set')\n
+	                }\n
+	            );\n
+	        });\n
+	    }\n
+	    /*]]>*/</script>\n
+	 [truncated] <script type="text/javascript">/*<![CDATA[*/ (function(undefined){if(!window.bbc){window.bbc={}}var ROLLING_PERIOD_DAYS=30;window.bbc.Mandolin=function(id,segments,opts){var now=new Date().getTime(),storedItem,DEFAULT_START=no
+	 [truncated]        <!-- BBCDOTCOM head --><script type="text/javascript"> /*<![CDATA[*/ var _sf_startpt = (new Date()).getTime(); /*]]>*/ </script><style type="text/css">.bbccom_display_none{display:none;}</style><script type="text/javasc
+	  // Globally available search context\n
+	 [truncated]  window.SEARCHBOX={"variant":"default","locale":"en","navSearchboxStaticPrefix":"//nav.files.bbci.co.uk/searchbox/1.0.0-137","searchboxAppStaticPrefix":"//search.files.bbci.co.uk/searchbox-app/1.0.26","searchFormHtml":"<div ta
+	  window.SEARCHBOX.suppress = false;\n
+	  window.SEARCHBOX.searchScope = SEARCHBOX.searchScopeTemplate.split('-')[0];\n
+	</script>\n
+	<link rel="stylesheet" href="//nav.files.bbci.co.uk/searchbox/1.0.0-137/css/main.css">\n
+	<!--[if IE 8]>\n
+	  <script type="text/javascript" src="//nav.files.bbci.co.uk/searchbox/1.0.0-137/script/html5shiv.min.js"></script>\n
+	  <script type="text/javascript">window['searchboxIEVersion'] = 8;</script>\n
+	  <link rel="stylesheet" href="//nav.files.bbci.co.uk/searchbox/1.0.0-137/css/ie8.css">\n
+	<![endif]-->\n
+	<!--[if IE 9]>\n
+	  <script type="text/javascript">window['searchboxIEVersion'] = 9;</script>\n
+	<![endif]-->\n
+	 [truncated]  <!--NavID:0.2.0-152--> <link rel="stylesheet" href="//static.bbc.co.uk/id/0.37.24/style/id-cta.css" /> <link rel="stylesheet" href="//static.bbc.co.uk/id/0.37.24/style/id-cta-v5.css" /> <!--[if IE 8]><link href="//static.bbc.
+	\n
+	    <link rel="stylesheet" href="//mybbc.files.bbci.co.uk/notification-ui/3.8.4/css/main.min.css"/>\n
+	    <!-- Webapp: WWHP international homepage -->\n
+	    <meta property="fb:page_id" content="228735667216" />\n
+	    <meta property="fb:admins" content="297814326937641" />\n
+	    <meta property="fb:app_id" content="187214818032936" />\n
+	    <meta property="og:title" content="BBC - Homepage" />\n
+	    <meta property="og:type" content="website" />\n
+	    <meta property="og:url" content="http://www.bbc.com/" />\n
+	    <meta name="msvalidate.01" content="A09EF0BF1FC5CDBB37D921CBC3776943" />\n
+	    <meta property="wwhp-edition" content="asia" />\n
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n
+	\n
+	    <!-- Start Facebook Instant Articles Ownership Verification -->\n
+	    <meta property="fb:pages" content="228735667216" />\n
+	    <!-- End Facebook Instant Articles Ownership Verification -->\n
+	\n
+	            <link rel="canonical" href="http://www.bbc.com/" />\n
+	        <link rel="alternate" hreflang="en-gb" href="http://www.bbc.co.uk/" />\n
+	        <link rel="alternate" hreflang="gd-gb" href="http://www.bbc.co.uk/alba/" />\n
+	        <link rel="alternate" hreflang="cy-gb" href="http://www.bbc.co.uk/cymru/" />\n
+	        <link rel="alternate" hreflang="en" href="http://www.bbc.com/" />\n
+	    \n
+	    <link rel="apple-touch-icon" href="//static.bbci.co.uk/wwhp/1.127.0/responsive/img/apple-touch/apple-touch-180.jpg">\n
+	\n
+	    <!--[if (gt IE 8) | (IEMobile)]><!-->\r\n
+	<link href="//static.bbci.co.uk/wwhp/1.127.0/responsive/css/wwhp.min.css" rel="stylesheet" />\r\n
+	<!--<![endif]-->\r\n
+	<!--[if (lt IE 9) & (!IEMobile)]>\r\n
+	<link href="//static.bbci.co.uk/wwhp/1.127.0/responsive/css/old-ie.min.css" rel="stylesheet" />\r\n
+	<![endif]-->    <script src="//static.bbci.co.uk/wwhp/1.127.0/modules/vendor/bower/modernizr/modernizr.js"></script>\n
+	    <script>\n
+	        (function () {\n
+	            if (window.bbcdotcom) {\n
+	                bbcdotcom.init({ adsToDisplay: ["parallax","native","mpu","platinum","infeed","module_feature-1","module_feature-2","mpu_bottom"] });\n
+	            }\n
+	\n
+	            require.config({\n
+	                paths: {\n
+	                    'bump-3': window.location.protocol === 'https:' ? 'https://ssl.live.bbc.co.uk/emp/bump-3/ssl' : 'http://emp.bbci.co.uk/emp/bump-3/bump-3'\n
+	                },\n
+	                map: {\n
+	                    '*': {\n
+	                        jquery: 'jquery-1.9'\n
+	                    }\n
+	                },\n
+	                shim: {\n
+	                    'vendor/bower/underscore/underscore': {\n
+	                        exports: '_'\n
+	                    },\n
+	                    'vendor/bower/js-breakpoints/breakpoints': {\n
+	                        exports: 'Breakpoints'\n
+	                    },\n
+	                    'vendor/bower/cookie-monster/cookie-monster': {\n
+	                        exports: 'monster'\n
+	                    }\n
+	                }\n
+	            });\n
+	            require(["domReady","compiled"], function (domReady) {\n
+	                domReady(function () {\n
+	                    require(['app'], function (app) {\n
+	                        app.init(window, {\n
+	                            staticPrefix: '//static.bbci.co.uk/wwhp/1.127.0/',\n
+	                            continuousPlayEnabled: false                        });\n
+	                    });\n
+	                });\n
+	            });\n
+	        }());\n
+	    </script>\n
+	 [truncated]              </head> <body id="wwhp" class="wwhp disable-wide-advert responsive default asia responsive-default responsive-asia default-asia">          <!-- BBCDOTCOM bodyFirst --><div id="bbccom_interstitial_ad" class="bbccom
+	 [truncated] <!--[if (gt IE 8) | (IEMobile)]><!--> <header id="orb-banner" role="banner"> <!--<![endif]--> <!--[if (lt IE 9) & (!IEMobile)]> <![if (IE 8)]> <header id="orb-banner" role="banner" class="orb-old-ie orb-ie8"> <![endif]> <![if 
+	\n
+	    <a id="notification-link" class="js-notification-link animated three" href="#">\n
+	        <span class="hidden-span">Notifications</span>\n
+	        <div class="notification-link--triangle"></div>\n
+	        <div class="notification-link--triangle"></div>\n
+	        <span id="not-num"></span>\n
+	    </a>\n
+	 [truncated] </div>  <nav role="navigation" class="orb-nav"> <div class="orb-nav-section orb-nav-links orb-nav-focus" id="orb-nav-links"> <h2>BBC navigation</h2> <ul>    <li  class="orb-nav-home orb-d"  > <a href="http://www.bbc.co.uk/">Ho
+	\n
+	<form class="b-f" id="orb-search-form" role="search" method="get"\n
+	      action="https://search.bbc.co.uk/search" accept-charset="utf-8">\n
+	    <div>\n
+	        \n
+	        <label for="orb-search-q">Search the BBC</label>\n
+	            <input\n
+	                id="orb-search-q"\n
+	                type="text"\n
+	                autocomplete="off"\n
+	                autocorrect="off"\n
+	                autocapitalize="off"\n
+	                spellcheck="false"\n
+	                name="q"\n
+	                placeholder="Search"\n
+	            >\n
+	            <button id="orb-search-button" class="orb-search__button">Search the BBC</button>\n
+	            <input type="hidden" name="suggid" id="orb-search-suggid"/>\n
+	    </div>\n
+	</form>\n
+	\n
+	\n
+	 [truncated] </div>  </div> <div id="orb-panels"  > <script type="text/template" id="orb-panel-template"><![CDATA[ <div id="orb-panel-<%= panelname %>" class="orb-panel" aria-labelledby="orb-nav-<%= panelname %>"> <div class="orb-panel-con
+	\n
+	\n
+	<!--[if lt IE 9]>\n
+	    <div class="browser-notify">\n
+	        <p class="browser-notify__message">This site is optimised for modern web browsers, and does not fully support your version of Internet Explorer.</p>\n
+	    </div>\n
+	<![endif]-->\n
+	\n
+	<h1 id="page-title">BBC Homepage</h1>\n
+	    <div id="page" role="main" class="content" data-wwhp-module="images, media">\n
+	            <section class="module module--leaderboard module--highlight">\n
+	 [truncated]        <div class="advert advert--leaderboard"><!-- BBCDOTCOM slot leaderboard --><div id="bbccom_leaderboard_1_2_3_4" class="bbccom_slot" aria-hidden="true"><div class="bbccom_advert"><script type="text/javascript"> /*<![CDAT
+	    \n
+	<section class="module module--header" data-wwhp-module="header">\n
+	    <h2 class="module__title">&nbsp;</h2>\n
+	</section>      <section class="module module--promo"> <div class="module__content"> <ul class="media-list">     \n
+	        <li class="media-list__item media-list__item--1">\n
+	            <div class="media media--hero media--primary media--overlay block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/C14B/production/_102838494_2fc1c9b5-85c0-4708-a4be-61e0a4dbba4d.jpg" data-alt="Parts of a sho
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/world-asia-45076800"\n
+	                                      rev="hero1|headline" >\n
+	                                                                    Scores killed in Indonesia island quake                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                                            <p class="media__summary">\n
+	                                                            At least 82 people are killed in Lombok, just a week after another quake on the same holiday island.                                                    </p>\n
+	                    \n
+	                                            <a class="media__tag tag tag--news" href="/news/world/asia"\n
+	                                  rev="hero1|source" >Asia</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/world-asia-45076800"\n
+	                          rev="hero1|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Scores killed in Indonesia island quake                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	            \n
+	        <li class="media-list__item media-list__item--2">\n
+	            <div class="media media--overlay block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/AF5D/production/_102839844_mourinho_getty.jpg" data-alt="Jose Mourinho"><img src="//ichef.bbc
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/sport/football/45078237"\n
+	                                      rev="hero2|headline" >\n
+	                                                                    Mourinho warns of 'difficult season'                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                    \n
+	                                            <a class="media__tag tag tag--sport" href="/sport/football"\n
+	                                  rev="hero2|source" >Football</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/sport/football/45078237"\n
+	                          rev="hero2|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Mourinho warns of 'difficult season'                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	        \n
+	        <li class="media-list__item media-list__item--3">\n
+	            <div class="media media--overlay block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/ibroadcast/images/live/p0/6g/8z/p06g8z9t.jpg" data-alt="Young people (Credit: Alamy)"><img src="//ichef
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="http://www.bbc.com/future/story/20180801-what-you-should-and-shouldnt-do-in-a-heatwave"\n
+	                                      rev="hero3|headline" >\n
+	                                                                    Five myths about heatwaves                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                    \n
+	                                            <a class="media__tag tag tag--did-you-miss-" href="http://www.bbc.com/future"\n
+	                                  rev="hero3|source" >Did you miss?</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="http://www.bbc.com/future/story/20180801-what-you-should-and-shouldnt-do-in-a-heatwave"\n
+	                          rev="hero3|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Five myths about heatwaves                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	        \n
+	        <li class="media-list__item media-list__item--4">\n
+	            <div class="media media--overlay block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/ibroadcast/images/live/p0/6g/h2/p06gh264.jpg" data-alt="(Credit: Getty Images)"><img src="//ichef.bbci.
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="http://www.bbc.com/capital/story/20180803-stopping-bullies-rising-to-the-top"\n
+	                                      rev="hero4|headline" >\n
+	                                                                    Why bullies still get promoted                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                    \n
+	                                            <a class="media__tag tag tag--capital" href="http://www.bbc.com/capital"\n
+	                                  rev="hero4|source" >Capital</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="http://www.bbc.com/capital/story/20180803-stopping-bullies-rising-to-the-top"\n
+	                          rev="hero4|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Why bullies still get promoted                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	        \n
+	        <li class="media-list__item media-list__item--5">\n
+	            <div class="media media--overlay block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/ibroadcast/images/live/p0/6g/6d/p06g6df4.jpg" data-alt="(Credit: BBC Three/David Weller)"><img src="//i
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="https://www.bbc.com/bbcthree/article/6cef9532-852d-4c78-a396-fdd9d7ab49c5"\n
+	                                      rev="hero5|headline" >\n
+	                                                                    'This is why we hate public transport'                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                    \n
+	                                            <a class="media__tag tag tag--bbc-three" href="https://www.bbc.com/bbcthree"\n
+	                                  rev="hero5|source" >BBC Three</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="https://www.bbc.com/bbcthree/article/6cef9532-852d-4c78-a396-fdd9d7ab49c5"\n
+	                          rev="hero5|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    'This is why we hate public transport'                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	     </ul> </div> </section>     <section class="module module--leaderboard module--highlight">\n
+	 [truncated]        <div class="advert advert--leaderboard"><!-- BBCDOTCOM slot leaderboard --><div id="bbccom_leaderboard_1_2_3_4" class="bbccom_slot" aria-hidden="true"><div class="bbccom_advert"><script type="text/javascript"> /*<![CDAT
+	 [truncated]     <section class="module module--compound module--news-sport"> <div class="module__content module__content--compound"> <div class="container">  <section class="module module--news   module--collapse-images">             <h2 
+	                            <a class="module__title__link tag tag--news" href="/news"\n
+	                      rev="news|header"                     >News</a>\n
+	                    </h2>\n
+	     <div class="module__content"> <ul class="media-list media-list--fixed-height">         \n
+	        <li class="media-list__item media-list__item--1">\n
+	            <div class="media media--icon block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/9DD4/production/_102840404_p06gngnq.jpg" data-alt="earthquake"><img src="data:image/gif;base6
+	\n
+	                                    <span class="media__icon icon icon--video" aria-hidden="true"></span>\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/world-asia-45076912"\n
+	                                      rev="news|headline" >\n
+	                                                                    Fatal earthquake caught on camera                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                                            <p class="media__summary">\n
+	                                                            The moment an earthquake struck the Indonesian island of Lombok has been filmed.                                                    </p>\n
+	                    \n
+	                                            <a class="media__tag tag tag--news" href="/news/world/asia"\n
+	                                  rev="news|source" >Asia</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/world-asia-45076912"\n
+	                          rev="news|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Fatal earthquake caught on camera                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	        \n
+	        <li class="media-list__item media-list__item--2">\n
+	            <div class="media  block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/C191/production/_102835594_plane.jpg" data-alt="A Junker JU-52 HB-HOT in flight"><img src="da
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/world-europe-45076060"\n
+	                                      rev="news|headline" >\n
+	                                                                    Twenty people dead in WW2 plane crash                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                                            <p class="media__summary">\n
+	                                                            A vintage plane crashes into a Swiss mountainside while on a sightseeing tour.                                                    </p>\n
+	                    \n
+	                                            <a class="media__tag tag tag--news" href="/news/world/europe"\n
+	                                  rev="news|source" >Europe</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/world-europe-45076060"\n
+	                          rev="news|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Twenty people dead in WW2 plane crash                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	        \n
+	        <li class="media-list__item media-list__item--3">\n
+	            <div class="media  block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/13500/production/_102840197_mediaitem102840196.jpg" data-alt="Aerial view of the compound"><i
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/world-us-canada-45079090"\n
+	                                      rev="news|headline" >\n
+	                                                                    Starving US children rescued from compound                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                                            <p class="media__summary">\n
+	                                                            Police searched the site after receiving a message that said: &quot;We are starving and need food and water.&quot;                                                    </p>\n
+	                    \n
+	                                            <a class="media__tag tag tag--news" href="/news/world/us_and_canada"\n
+	                                  rev="news|source" >US &amp; Canada</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/world-us-canada-45079090"\n
+	                          rev="news|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Starving US children rescued from compound                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	     </ul> </div> </section>  <section class="module module--sport   module--collapse-images">             <h2 class="module__title">\n
+	                            <a class="module__title__link tag tag--sport" href="/sport"\n
+	                      rev="sport|header"                     >Sport</a>\n
+	                    </h2>\n
+	     <div class="module__content"> <ul class="media-list media-list--fixed-height">         \n
+	        <li class="media-list__item media-list__item--1">\n
+	            <div class="media  block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/C669/production/_102839705_phil_foden1_epa.jpg" data-alt="Phil Foden"><img src="data:image/gi
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/sport/football/45078617"\n
+	                                      rev="sport|headline" >\n
+	                                                                    Foden Premier League ready - Guardiola                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                                            <p class="media__summary">\n
+	 [truncated]                                                            Manchester City's teenage midfielder Phil Foden has proved he is &quot;mature&quot; enough for the Premier League, says boss Pep Guardiola.                            
+	                    \n
+	                                            <a class="media__tag tag tag--sport" href="/sport/football"\n
+	                                  rev="sport|source" >Football</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/sport/football/45078617"\n
+	                          rev="sport|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Foden Premier League ready - Guardiola                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	        \n
+	        <li class="media-list__item media-list__item--2">\n
+	            <div class="media  block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/A17F/production/_102834314_kohli.jpg" data-alt="Virat Kohli"><img src="data:image/gif;base64,
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/sport/cricket/45074672"\n
+	                                      rev="sport|headline" >\n
+	                                                                    Kohli becomes world number one batsman                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                                            <p class="media__summary">\n
+	 [truncated]                                                            Virat Kohli becomes the top-ranked Test batsman in the world following his century in India's 31-run defeat by England at Edgbaston.                                   
+	                    \n
+	                                            <a class="media__tag tag tag--sport" href="/sport/cricket"\n
+	                                  rev="sport|source" >Cricket</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/sport/cricket/45074672"\n
+	                          rev="sport|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Kohli becomes world number one batsman                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	        \n
+	        <li class="media-list__item media-list__item--3">\n
+	            <div class="media  block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/D69F/production/_102834945_stokes_pa.jpg" data-alt="Ben Stokes"><img src="data:image/gif;base
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/sport/cricket/45075722"\n
+	                                      rev="sport|headline" >\n
+	                                                                    'Two or three must step up for Stokes'                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                                            <p class="media__summary">\n
+	 [truncated]                                                            England will need &quot;two or three guys&quot; to cover for the absent Ben Stokes in the second Test against India, says coach Trevor Bayliss.                        
+	                    \n
+	                                            <a class="media__tag tag tag--sport" href="/sport/cricket"\n
+	                                  rev="sport|source" >Cricket</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/sport/cricket/45075722"\n
+	                          rev="sport|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    'Two or three must step up for Stokes'                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	 [truncated]     </ul> </div> </section> <div class="advert advert--mpu"><!-- BBCDOTCOM slot mpu --><div id="bbccom_mpu_1_2_3_4" class="bbccom_slot" aria-hidden="true"><div class="bbccom_advert"><script type="text/javascript"> /*<![CDATA[*
+	 [truncated]      <section class="module module--weather" data-wwhp-module="weather"> <div class="module__content"> <div class="weather"> <h2 class="weather__location"> Singapore Weather <a class="weather__edit" role="link" href="#">Edit</
+	                            <a class="module__title__link tag tag--news" href="/news/world/asia"\n
+	                      rev="regional-news|header"                     >Asia News</a>\n
+	                    </h2>\n
+	     <div class="module__content"> <ul class="media-list media-list--fixed-height">         \n
+	        <li class="media-list__item media-list__item--1">\n
+	            <div class="media  block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/7A97/production/_102838313_mediaitem102833742.jpg" data-alt="People assist an injured student
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/world-asia-45074384"\n
+	                                      rev="regional-news|headline" >\n
+	                                                                    US envoy's cars attacked in Dhaka unrest                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                                            <p class="media__summary">\n
+	                                                            The US ambassador's convoy is attacked by armed men while teens continue to protest for road safety.                                                    </p>\n
+	                    \n
+	                                            <a class="media__tag tag tag--asian-news" href="/news/world/asia"\n
+	                                  rev="regional-news|source" >Asia</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/world-asia-45074384"\n
+	                          rev="regional-news|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    US envoy's cars attacked in Dhaka unrest                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	        \n
+	        <li class="media-list__item media-list__item--2">\n
+	            <div class="media  block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/AAD5/production/_102833734_mediaitem102834332.jpg" data-alt="Afghan security officials patrol
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/world-asia-45074383"\n
+	                                      rev="regional-news|headline" >\n
+	                                                                    Afghan bombing kills Czech Nato soldiers                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                                            <p class="media__summary">\n
+	                                                            The three soldiers were targeted while on a foot patrol in eastern Afghanistan.                                                    </p>\n
+	                    \n
+	                                            <a class="media__tag tag tag--asian-news" href="/news/world/asia"\n
+	                                  rev="regional-news|source" >Asia</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/world-asia-45074383"\n
+	                          rev="regional-news|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Afghan bombing kills Czech Nato soldiers                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	        \n
+	        <li class="media-list__item media-list__item--3">\n
+	            <div class="media  block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/15985/production/_102835488_db.jpg" data-alt="Demba Ba"><img src="data:image/gif;base64,R0lGO
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/sport/football/45075564"\n
+	                                      rev="regional-news|headline" >\n
+	                                                                    Ba is victim of 'racial abuse' in China                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                                            <p class="media__summary">\n
+	 [truncated]                                                            Senegal striker Demba Ba is the victim of alleged racial abuse in a Chinese Super League game, according to his Shanghai Shenhua manager Wu Jingui.                    
+	                    \n
+	                                            <a class="media__tag tag tag--asian-news" href="/sport/football"\n
+	                                  rev="regional-news|source" >Football</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/sport/football/45075564"\n
+	                          rev="regional-news|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Ba is victim of 'racial abuse' in China                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	        \n
+	        <li class="media-list__item media-list__item--4">\n
+	            <div class="media  block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/13EB8/production/_102829518_4b3749bf-4fc6-48ac-b5b0-feae38ad68b2.jpg" data-alt="An excavator 
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/world-asia-china-45070214"\n
+	                                      rev="regional-news|headline" >\n
+	                                                                    Ai Weiwei's Beijing studio demolished                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                                            <p class="media__summary">\n
+	                                                            The dissident artist says authorities demolished this building without giving him notice.                                                    </p>\n
+	                    \n
+	                                            <a class="media__tag tag tag--asian-news" href="/news/world/asia/china"\n
+	                                  rev="regional-news|source" >China</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/world-asia-china-45070214"\n
+	                          rev="regional-news|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Ai Weiwei's Beijing studio demolished                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	     </ul> </div> </section>        <section class="module module--collapse-images module--collapse-images module--highlight module--editors-picks">             <h2 class="module__title">\n
+	                            <span class="module__title__link tag tag--feature">Editor\342\200\231s Picks</span>\n
+	                    </h2>\n
+	     <div class="module__content"> <div class="container"> <div class="editors-picks "> <ul class="media-list media-list--fixed-height layout--featured">         \n
+	        <li class="media-list__item media-list__item--1">\n
+	            <div class="media media--padded media--primary block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/ibroadcast/images/live/p0/6d/kq/p06dkqwb.jpg" data-alt="It\342\200\231s almost as awkward as turning up
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="http://www.bbc.com/travel/story/20180729-why-brazilians-are-always-late"\n
+	                                      rev="editors-picks|headline" >\n
+	                                                                    Where it's rude to be on time                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                                            <p class="media__summary">\n
+	                                                            It\342\200\231s almost as awkward as turning up to a party when you weren\342\200\231t invited at all                                                    </p>\n
+	                    \n
+	                                            <a class="media__tag tag tag--travel" href="http://www.bbc.com/travel"\n
+	                                  rev="editors-picks|source" >Travel</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="http://www.bbc.com/travel/story/20180729-why-brazilians-are-always-late"\n
+	                          rev="editors-picks|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Where it's rude to be on time                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	        \n
+	        <li class="media-list__item media-list__item--2">\n
+	            <div class="media media--padded block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/ibroadcast/images/live/p0/6g/cg/p06gcghw.jpg" data-alt="Rethinking the value of mindful meditation at w
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="http://www.bbc.com/capital/story/20180802-why-everything-you-thought-about-mindfulness-may-not-be-true"\n
+	                                      rev="editors-picks|headline" >\n
+	                                                                    Does 'mindfulness' kill motivation?                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                                            <p class="media__summary">\n
+	                                                            Rethinking the value of mindful meditation at work                                                    </p>\n
+	                    \n
+	                                            <a class="media__tag tag tag--capital" href="http://www.bbc.com/capital"\n
+	                                  rev="editors-picks|source" >Capital</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="http://www.bbc.com/capital/story/20180802-why-everything-you-thought-about-mindfulness-may-not-be-true"\n
+	                          rev="editors-picks|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Does 'mindfulness' kill motivation?                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	        \n
+	        <li class="media-list__item media-list__item--3">\n
+	            <div class="media media--padded block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/ibroadcast/images/live/p0/6g/gc/p06ggc4t.jpg" data-alt="How can it avoid the pitfalls of Earthly societ
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="http://www.bbc.com/future/story/20180803-asgardia-the-problems-in-building-a-space-society"\n
+	                                      rev="editors-picks|headline" >\n
+	                                                                    Asgardia: The first space nation?                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                                            <p class="media__summary">\n
+	                                                            How can it avoid the pitfalls of Earthly society?                                                    </p>\n
+	                    \n
+	                                            <a class="media__tag tag tag--future" href="http://www.bbc.com/future"\n
+	                                  rev="editors-picks|source" >Future</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="http://www.bbc.com/future/story/20180803-asgardia-the-problems-in-building-a-space-society"\n
+	                          rev="editors-picks|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Asgardia: The first space nation?                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	        \n
+	        <li class="media-list__item media-list__item--4">\n
+	            <div class="media media--padded block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/ibroadcast/images/live/p0/6g/dk/p06gdks5.jpg" data-alt="Critics say Heathers glamorised violence"><img 
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="http://www.bbc.com/culture/story/20180803-is-heathers-too-shocking-for-2018"\n
+	                                      rev="editors-picks|headline" >\n
+	                                                                    The teen satire too shocking for 2018?                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                                            <p class="media__summary">\n
+	                                                            Critics say Heathers glamorised violence                                                    </p>\n
+	                    \n
+	                                            <a class="media__tag tag tag--culture" href="http://www.bbc.com/culture"\n
+	                                  rev="editors-picks|source" >Culture</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="http://www.bbc.com/culture/story/20180803-is-heathers-too-shocking-for-2018"\n
+	                          rev="editors-picks|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    The teen satire too shocking for 2018?                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	        \n
+	        <li class="media-list__item media-list__item--5">\n
+	            <div class="media media--padded block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/ibroadcast/images/live/p0/6f/vy/p06fvy8h.jpg" data-alt="Blox building"><img src="data:image/gif;base64,
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="http://www.bbc.com/culture/story/20180802-brave-bold-and-very-danish"\n
+	                                      rev="editors-picks|headline" >\n
+	                                                                    Brave, bold and very Danish                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                                            <p class="media__summary">\n
+	                                                            How a new building aims to capture the spirit of Copenhagen                                                    </p>\n
+	                    \n
+	                                            <a class="media__tag tag tag--designed" href="http://www.bbc.com/culture/designed"\n
+	                                  rev="editors-picks|source" >Designed</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="http://www.bbc.com/culture/story/20180802-brave-bold-and-very-danish"\n
+	                          rev="editors-picks|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Brave, bold and very Danish                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	        \n
+	        <li class="media-list__item media-list__item--6">\n
+	            <div class="media media--padded block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/ibroadcast/images/live/p0/6g/fc/p06gfchc.jpg" data-alt="Quiche Lorraine"><img src="data:image/gif;base6
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="https://www.bbcgoodfood.com/howto/guide/how-make-next-level-quiche-lorraine"\n
+	                                      rev="editors-picks|headline" >\n
+	                                                                    How to make next level quiche Lorraine                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                                            <p class="media__summary">\n
+	                                                            Perfect for picnics, lazy lunches or summer parties                                                    </p>\n
+	                    \n
+	                                            <a class="media__tag tag tag--good-food" href="https://www.bbcgoodfood.com"\n
+	                                  rev="editors-picks|source" >Good Food</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="https://www.bbcgoodfood.com/howto/guide/how-make-next-level-quiche-lorraine"\n
+	                          rev="editors-picks|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    How to make next level quiche Lorraine                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	        \n
+	        <li class="media-list__item media-list__item--7">\n
+	            <div class="media media--padded block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/151AD/production/_102754468_976xeyesclosed.jpg" data-alt="Tracy hugs her daughter"><img src="
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/stories-45005609"\n
+	                                      rev="editors-picks|headline" >\n
+	                                                                    'My ex secretly took our child out of the country'                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                                            <p class="media__summary">\n
+	                                                            A mother is finally reunited with her nine-year-old daughter after she was taken abroad by her dad.                                                    </p>\n
+	                    \n
+	                                            <a class="media__tag tag tag--magazine" href="/news/stories"\n
+	                                  rev="editors-picks|source" >Stories</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/stories-45005609"\n
+	                          rev="editors-picks|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    'My ex secretly took our child out of the country'                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	 [truncated]     </ul> </div>   <div class="most-popular"> <div class="top-list"> <h2 class="top-list__heading">Latest Business News</h2> <ul class="top-list__list">  <li class="top-list-item top-list-item__1 top-list-item--ranked top-list
+	        \n
+	            <div class="media media--primary block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/14543/production/_102776238_bbc4.png" data-alt="Crop-spraying drone over crop field"><img src
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                    \n
+	                    \n
+	                                            <a class="media__tag tag tag--business" href="/news/business"\n
+	                                  rev="primary-special-features|source" >Business</a>\n
+	                    \n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="https://www.bbc.com/news/business-45020853"\n
+	                                      rev="primary-special-features|headline" >\n
+	                                                                    The crop-spraying drones that go where tractors can't                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="https://www.bbc.com/news/business-45020853"\n
+	                          rev="primary-special-features|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    The crop-spraying drones that go where tractors can't                </a>\n
+	            </div>\n
+	\n
+	        \n
+	 [truncated]     </div>  <div class="feature__ad"> <div class="advert advert--module_feature-1 advert--sponsor"><!-- BBCDOTCOM slot module_feature-1 --><div id="bbccom_module_feature-1_1_2_3_4" class="bbccom_slot" aria-hidden="true"><div c
+	        \n
+	            <div class="media media--primary block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/17471/production/_102754359_mursal1.jpg" data-alt="Mursal Hedayat"><img src="data:image/gif;b
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                    \n
+	                    \n
+	                                            <a class="media__tag tag tag--business" href="/news/business"\n
+	                                  rev="primary-special-features|source" >Business</a>\n
+	                    \n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="https://www.bbc.com/news/business-44716925"\n
+	                                      rev="primary-special-features|headline" >\n
+	                                                                    School where refugees are the teachers                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="https://www.bbc.com/news/business-44716925"\n
+	                          rev="primary-special-features|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    School where refugees are the teachers                </a>\n
+	            </div>\n
+	\n
+	        \n
+	 [truncated]     </div>  <div class="feature__ad"> <div class="advert advert--module_feature-2 advert--sponsor"><!-- BBCDOTCOM slot module_feature-2 --><div id="bbccom_module_feature-2_1_2_3_4" class="bbccom_slot" aria-hidden="true"><div c
+	                            <span class="module__title__link tag tag--default">Featured video</span>\n
+	                    </h2>\n
+	     <div class="module__content"> <div class="video video--noslick" id="video" data-wwhp-module="video"> <div class="video__player"> <div id="player" class="video__smp"></div>     \n
+	        \n
+	            <div class="media media--primary media--overlay block-link--no-filter media--icon block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/D870/production/_102780455_p06g90v6.jpg" data-alt="Mural of Thai cave heroes"><img src="data:
+	\n
+	                                    <span class="media__icon icon icon--video" aria-hidden="true"></span>\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/world-asia-45029013"\n
+	                                      rev="video|headline" >\n
+	                                                                    Thailand mural celebrates cave heroes                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                                            <p class="media__summary">\n
+	                                                            The artwork features the rescued schoolboys and those who helped to get them out of the cave.                                                    </p>\n
+	                    \n
+	                                            <a class="media__tag tag tag--videos-must-see" href="/news/world/asia"\n
+	                                  rev="video|source" >Asia</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/world-asia-45029013"\n
+	                          rev="video|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Thailand mural celebrates cave heroes                </a>\n
+	            </div>\n
+	\n
+	        \n
+	 [truncated]     </div> <div class="video__content"> <ul class="video__tabs">  <li class="video__tab"> <a class="video__tab__link" role="link" data-category="recommended" href="#"> Recommended </a> </li>  <li class="video__tab"> <a class="
+	        \n
+	            <div class="media media--video media--horizontal media--primary media--icon block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/D870/production/_102780455_p06g90v6.jpg" data-alt="Mural of Thai cave heroes"><img src="data:
+	\n
+	                                    <span class="media__icon icon icon--video" aria-hidden="true"></span>\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/world-asia-45029013"\n
+	                                      rev="video|headline" >\n
+	                                                                    Thailand mural celebrates cave heroes                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                    \n
+	                                            <a class="media__tag tag tag--videos-must-see" href="/news/world/asia"\n
+	                                  rev="video|source" >Asia</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/world-asia-45029013"\n
+	                          rev="video|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Thailand mural celebrates cave heroes                </a>\n
+	            </div>\n
+	\n
+	        \n
+	 [truncated]     </li>  <li class="video__item video__item video__item--1 video__item--recommended" data-category="recommended" data-index="1" data-category-index="1" data-video="{&quot;contenttype&quot;:&quot;video&quot;,&quot;num&quot;:&
+	        \n
+	            <div class="media media--video media--horizontal media--icon block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/04C7/production/_102832210_p06glbp1.jpg" data-alt="Venezuelan soldiers running"><img src="dat
+	\n
+	                                    <span class="media__icon icon icon--video" aria-hidden="true"></span>\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/world-latin-america-45073420"\n
+	                                      rev="video|headline" >\n
+	                                                                    Soldiers run amid 'drone attack'                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                    \n
+	                                            <a class="media__tag tag tag--videos" href="/news/world/latin_america"\n
+	                                  rev="video|source" >Latin America &amp; Caribbean</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/world-latin-america-45073420"\n
+	                          rev="video|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Soldiers run amid 'drone attack'                </a>\n
+	            </div>\n
+	\n
+	        \n
+	 [truncated]     </li>  <li class="video__item video__item video__item--2 video__item--recommended" data-category="recommended" data-index="2" data-category-index="2" data-video="{&quot;contenttype&quot;:&quot;video&quot;,&quot;num&quot;:&
+	        \n
+	            <div class="media media--video media--horizontal media--icon block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/9D29/production/_102833204_p06glth5.jpg" data-alt="Ai Weiwei's studio destroyed"><img src="da
+	\n
+	                                    <span class="media__icon icon icon--video" aria-hidden="true"></span>\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/world-asia-china-45073421"\n
+	                                      rev="video|headline" >\n
+	                                                                    'They said they would smash our windows'                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                    \n
+	                                            <a class="media__tag tag tag--videos" href="/news/world/asia/china"\n
+	                                  rev="video|source" >China</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/world-asia-china-45073421"\n
+	                          rev="video|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    'They said they would smash our windows'                </a>\n
+	            </div>\n
+	\n
+	        \n
+	 [truncated]     </li>  <li class="video__item video__item video__item--3 video__item--recommended" data-category="recommended" data-index="3" data-category-index="3" data-video="{&quot;contenttype&quot;:&quot;video&quot;,&quot;num&quot;:&
+	        \n
+	            <div class="media media--video media--horizontal media--icon block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/13E46/production/_102787418_mediaitem102773208.jpg" data-alt="A child's teddy lies abandoned 
+	\n
+	                                    <span class="media__icon icon icon--video" aria-hidden="true"></span>\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/world-africa-45010297"\n
+	                                      rev="video|headline" >\n
+	                                                                    Gaddafi's home still a ghost town                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                    \n
+	                                            <a class="media__tag tag tag--videos-must-see" href="/news/world/africa"\n
+	                                  rev="video|source" >Africa</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/world-africa-45010297"\n
+	                          rev="video|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Gaddafi's home still a ghost town                </a>\n
+	            </div>\n
+	\n
+	        \n
+	 [truncated]     </li>  <li class="video__item video__item video__item--4 video__item--recommended" data-category="recommended" data-index="4" data-category-index="4" data-video="{&quot;contenttype&quot;:&quot;video&quot;,&quot;num&quot;:&
+	        \n
+	            <div class="media media--video media--horizontal media--icon block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/14BBA/production/_102822948_screenshot2018-08-03at15.45.32.png" data-alt="youtube child stars
+	\n
+	                                    <span class="media__icon icon icon--video" aria-hidden="true"></span>\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/technology-45060902"\n
+	                                      rev="video|headline" >\n
+	                                                                    What's life as a YouTube child star really...                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                    \n
+	                                            <a class="media__tag tag tag--videos" href="/news/technology"\n
+	                                  rev="video|source" >Technology</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/technology-45060902"\n
+	                          rev="video|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    What's life as a YouTube child star really like?                </a>\n
+	            </div>\n
+	\n
+	        \n
+	 [truncated]     </li>  <li class="video__item video__item video__item--5 video__item--most-watched" data-category="most-watched" data-index="5" data-category-index="0" data-video="{&quot;contenttype&quot;:&quot;video&quot;,&quot;num&quot;
+	        \n
+	            <div class="media media--video media--horizontal media--icon block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/13914/production/_96584108_p056l3xn.jpg" data-alt="The foreign secretary struggled to explain
+	\n
+	                                    <span class="media__icon icon icon--video" aria-hidden="true"></span>\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/uk-40358825"\n
+	                                      rev="video|headline" >\n
+	                                                                    Boris Johnson struggles in interview                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                    \n
+	                                            <a class="media__tag tag tag--" href="/news/uk"\n
+	                                  rev="video|source" >UK</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/uk-40358825"\n
+	                          rev="video|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Boris Johnson struggles in interview                </a>\n
+	            </div>\n
+	\n
+	        \n
+	 [truncated]     </li>  <li class="video__item video__item video__item--6 video__item--most-watched" data-category="most-watched" data-index="6" data-category-index="1" data-video="{&quot;contenttype&quot;:&quot;video&quot;,&quot;num&quot;
+	        \n
+	            <div class="media media--video media--horizontal media--icon block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/5EBA/production/_96505242_p056l5st.jpg" data-alt="Solar eclipse to cross North America"><img 
+	\n
+	                                    <span class="media__icon icon icon--video" aria-hidden="true"></span>\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/world-us-canada-40362067"\n
+	                                      rev="video|headline" >\n
+	                                                                    Ready for the total solar eclipse?                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                    \n
+	                                            <a class="media__tag tag tag--" href="/news/world/us_and_canada"\n
+	                                  rev="video|source" >US &amp; Canada</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/world-us-canada-40362067"\n
+	                          rev="video|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Ready for the total solar eclipse?                </a>\n
+	            </div>\n
+	\n
+	        \n
+	 [truncated]     </li>  <li class="video__item video__item video__item--7 video__item--most-watched" data-category="most-watched" data-index="7" data-category-index="2" data-video="{&quot;contenttype&quot;:&quot;video&quot;,&quot;num&quot;
+	        \n
+	            <div class="media media--video media--horizontal media--icon block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/11A11/production/_96590227_p056m0y4.jpg" data-alt="Koala"><img src="data:image/gif;base64,R0l
+	\n
+	                                    <span class="media__icon icon icon--video" aria-hidden="true"></span>\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/world-australia-40365981"\n
+	                                      rev="video|headline" >\n
+	                                                                    Koalas 'face extinction' in parts of...                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                    \n
+	                                            <a class="media__tag tag tag--" href="/news/world/australia"\n
+	                                  rev="video|source" >Australia</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/world-australia-40365981"\n
+	                          rev="video|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Koalas 'face extinction' in parts of Australia                </a>\n
+	            </div>\n
+	\n
+	        \n
+	 [truncated]     </li>  <li class="video__item video__item video__item--8 video__item--most-watched" data-category="most-watched" data-index="8" data-category-index="3" data-video="{&quot;contenttype&quot;:&quot;video&quot;,&quot;num&quot;
+	        \n
+	            <div class="media media--video media--horizontal media--icon block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/4C2A/production/_96589491_p056m4gs.jpg" data-alt="File image of Mosul's Great Mosque of al-Nu
+	\n
+	                                    <span class="media__icon icon icon--video" aria-hidden="true"></span>\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/world-middle-east-40366136"\n
+	                                      rev="video|headline" >\n
+	                                                                    Video 'shows Mosul mosque's destruction'                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                    \n
+	                                            <a class="media__tag tag tag--" href="/news/world/middle_east"\n
+	                                  rev="video|source" >Middle East</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/world-middle-east-40366136"\n
+	                          rev="video|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Video 'shows Mosul mosque's destruction'                </a>\n
+	            </div>\n
+	\n
+	        \n
+	 [truncated]     </li>  <li class="video__item video__item video__item--9 video__item--most-watched" data-category="most-watched" data-index="9" data-category-index="4" data-video="{&quot;contenttype&quot;:&quot;video&quot;,&quot;num&quot;
+	        \n
+	            <div class="media media--video media--horizontal media--icon block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/A5C6/production/_96583424_p056kgt9.jpg" data-alt="Karmila Purba"><img src="data:image/gif;bas
+	\n
+	                                    <span class="media__icon icon icon--video" aria-hidden="true"></span>\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/world-asia-40360168"\n
+	                                      rev="video|headline" >\n
+	                                                                    Indonesia's female 'devil wheel' riders                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                    \n
+	                                            <a class="media__tag tag tag--" href="/news/world/asia"\n
+	                                  rev="video|source" >Asia</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/world-asia-40360168"\n
+	                          rev="video|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Indonesia's female 'devil wheel' riders                </a>\n
+	            </div>\n
+	\n
+	        \n
+	 [truncated]     </li>  <li class="video__item video__item video__item--10 video__item--latest" data-category="latest" data-index="10" data-category-index="0" data-video="{&quot;contenttype&quot;:&quot;video&quot;,&quot;num&quot;:&quot;10&
+	        \n
+	            <div class="media media--video media--horizontal media--icon block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/15C7E/production/_90041298_p01tlf61.jpg" data-alt="BBC News"><img src="data:image/gif;base64,
+	\n
+	                                    <span class="media__icon icon icon--video" aria-hidden="true"></span>\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/10462520"\n
+	                                      rev="video|headline" >\n
+	                                                                    One-minute World News                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                    \n
+	                                            <a class="media__tag tag tag--" href="/news/video_and_audio"\n
+	                                  rev="video|source" >Video</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/10462520"\n
+	                          rev="video|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    One-minute World News                </a>\n
+	            </div>\n
+	\n
+	        \n
+	 [truncated]     </li>  <li class="video__item video__item video__item--11 video__item--latest" data-category="latest" data-index="11" data-category-index="1" data-video="{&quot;contenttype&quot;:&quot;video&quot;,&quot;num&quot;:&quot;10&
+	        \n
+	            <div class="media media--video media--horizontal media--icon block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/C551/production/_102831505_p06gl0xn.jpg" data-alt="Following elections in Zimbabwe, the BBC h
+	\n
+	                                    <span class="media__icon icon icon--video" aria-hidden="true"></span>\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/world-africa-45072412"\n
+	                                      rev="video|headline" >\n
+	                                                                    'I thought I was going to be killed'                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                    \n
+	                                            <a class="media__tag tag tag--" href="/news/world/africa"\n
+	                                  rev="video|source" >Africa</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/world-africa-45072412"\n
+	                          rev="video|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    'I thought I was going to be killed'                </a>\n
+	            </div>\n
+	\n
+	        \n
+	 [truncated]     </li>  <li class="video__item video__item video__item--12 video__item--latest" data-category="latest" data-index="12" data-category-index="2" data-video="{&quot;contenttype&quot;:&quot;video&quot;,&quot;num&quot;:&quot;10&
+	        \n
+	            <div class="media media--video media--horizontal media--icon block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/7731/production/_102831503_p06gl0d4.jpg" data-alt="Onlookers caught sight of police chasing p
+	\n
+	                                    <span class="media__icon icon icon--video" aria-hidden="true"></span>\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/uk-45069290"\n
+	                                      rev="video|headline" >\n
+	                                                                    Jet ski police chase on the Thames                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                    \n
+	                                            <a class="media__tag tag tag--" href="/news/uk"\n
+	                                  rev="video|source" >UK</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/uk-45069290"\n
+	                          rev="video|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Jet ski police chase on the Thames                </a>\n
+	            </div>\n
+	\n
+	        \n
+	 [truncated]     </li>  <li class="video__item video__item video__item--13 video__item--latest" data-category="latest" data-index="13" data-category-index="3" data-video="{&quot;contenttype&quot;:&quot;video&quot;,&quot;num&quot;:&quot;10&
+	        \n
+	            <div class="media media--video media--horizontal media--icon block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/B4DF/production/_102830364_p06gkq3g.jpg" data-alt="Brian Weatherall, 45, thought the aircraft
+	\n
+	                                    <span class="media__icon icon icon--video" aria-hidden="true"></span>\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/uk-england-cumbria-45069217"\n
+	                                      rev="video|headline" >\n
+	                                                                    Low-flying helicopter startles driver                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                    \n
+	                                            <a class="media__tag tag tag--" href="/news/england/cumbria"\n
+	                                  rev="video|source" >Cumbria</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/uk-england-cumbria-45069217"\n
+	                          rev="video|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Low-flying helicopter startles driver                </a>\n
+	            </div>\n
+	\n
+	        \n
+	     </li>  </ul> </div> </div> </div> </div> </section> <!-- Error: (null) Module not found or invalid -->\r\n
+	 [truncated]      <section class="module module--world-service"> <div class="module__content"> <div class="wsradio"> <h2 class="wsradio__title"> <a class="wsradio__title__link" href="http://www.bbc.co.uk/worldserviceradio/"   rev="world-se
+	                            <span class="module__title__link tag tag--feature">More from around the BBC</span>\n
+	                    </h2>\n
+	     <div class="module__content"> <div class="container"> <div class="more-bbc "> <ul class="media-list media-list--fixed-height layout--featured">         \n
+	        <li class="media-list__item media-list__item--1">\n
+	            <div class="media media--padded media--primary block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/9CBA/production/_102822104_mediaitem102822103.jpg" data-alt="Fortnite characters"><img src="d
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/technology-45063002"\n
+	                                      rev="more-bbc|headline" >\n
+	                                                                    Fortnite to skip Google Play on Android                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                                            <p class="media__summary">\n
+	                                                            Epic Games confirms Fortnite will bypass the Google Play app store when it appears on Android.                                                    </p>\n
+	                    \n
+	                                            <a class="media__tag tag tag--technology" href="/news/technology"\n
+	                                  rev="more-bbc|source" >Technology</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/technology-45063002"\n
+	                          rev="more-bbc|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Fortnite to skip Google Play on Android                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	        \n
+	        <li class="media-list__item media-list__item--2">\n
+	            <div class="media media--padded block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/68CF/production/_102813862_gettyimages-941940884.jpg" data-alt="Woman on a bike"><img src="da
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/health-45034972"\n
+	                                      rev="more-bbc|headline" >\n
+	                                                                    Even low air pollution may damage heart                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                                            <p class="media__summary">\n
+	                                                            The changes are similar to those seen in the early stages of heart failure, experts say.                                                    </p>\n
+	                    \n
+	                                            <a class="media__tag tag tag--health" href="/news/health"\n
+	                                  rev="more-bbc|source" >Health</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/health-45034972"\n
+	                          rev="more-bbc|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Even low air pollution may damage heart                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	        \n
+	        <li class="media-list__item media-list__item--3">\n
+	            <div class="media media--padded block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/DD6A/production/_102828665_047606458.jpg" data-alt="A shopper selects items inside a plastic 
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/science-environment-45058971"\n
+	                                      rev="more-bbc|headline" >\n
+	                                                                    Two-thirds of plastic food pots unrecyclable                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                                            <p class="media__summary">\n
+	                                                            The majority of plastic containers used for yoghurts, ice cream, ready meals and fruit end up in...                                                    </p>\n
+	                    \n
+	                                            <a class="media__tag tag tag--science" href="/news/science_and_environment"\n
+	                                  rev="more-bbc|source" >Science &amp; Environment</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/science-environment-45058971"\n
+	                          rev="more-bbc|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Two-thirds of plastic food pots unrecyclable                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	        \n
+	        <li class="media-list__item media-list__item--4">\n
+	            <div class="media media--padded block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/AEED/production/_102818744_hi048450665.jpg" data-alt="In this file photo taken on July 6, 201
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/business-45061511"\n
+	                                      rev="more-bbc|headline" >\n
+	                                                                    China plans tariffs after latest US threat                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                                            <p class="media__summary">\n
+	                                                            China targets $60bn of US products, as tensions between the world's two biggest economies escalate.                                                    </p>\n
+	                    \n
+	                                            <a class="media__tag tag tag--business" href="/news/business"\n
+	                                  rev="more-bbc|source" >Business</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/business-45061511"\n
+	                          rev="more-bbc|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    China plans tariffs after latest US threat                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	        \n
+	        <li class="media-list__item media-list__item--5">\n
+	            <div class="media media--padded block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/A567/production/_102834324_gettyimages-71050433.jpg" data-alt="Patrick Stewart, star of TV's 
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/entertainment-arts-45074382"\n
+	                                      rev="more-bbc|headline" >\n
+	                                                                    Patrick Stewart to reprise Star Trek role                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                                            <p class="media__summary">\n
+	                                                            The British actor is to play Jean-Luc Picard in a series chronicling life after The Next Generation.                                                    </p>\n
+	                    \n
+	                                            <a class="media__tag tag tag--entertainment" href="/news/entertainment_and_arts"\n
+	                                  rev="more-bbc|source" >Entertainment &amp; Arts</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/entertainment-arts-45074382"\n
+	                          rev="more-bbc|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Patrick Stewart to reprise Star Trek role                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	        \n
+	        <li class="media-list__item media-list__item--6">\n
+	            <div class="media media--padded block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/0FD2/production/_102805040_gettyimages-698061982.jpg" data-alt="A woman with a pierced tongue
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/health-45047819"\n
+	                                      rev="more-bbc|headline" >\n
+	                                                                    Surgeons warn of tongue-splitting risks                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                                            <p class="media__summary">\n
+	                                                            The process, where the tongue is cut in half, can lead to blood loss and nerve damage, experts say.                                                    </p>\n
+	                    \n
+	                                            <a class="media__tag tag tag--health" href="/news/health"\n
+	                                  rev="more-bbc|source" >Health</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/health-45047819"\n
+	                          rev="more-bbc|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Surgeons warn of tongue-splitting risks                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	        \n
+	        <li class="media-list__item media-list__item--7">\n
+	            <div class="media media--padded block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/4472/production/_102822571_mediaitem102822570.jpg" data-alt="Apple chief executive Tim Cook">
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/technology-45063005"\n
+	                                      rev="more-bbc|headline" >\n
+	                                                                    Tech Tent: Who can topple trillion-dollar Apple?                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                                            <p class="media__summary">\n
+	                                                            When it comes to sales, China's Huawei has leapfrogged into second place.                                                    </p>\n
+	                    \n
+	                                            <a class="media__tag tag tag--technology" href="/news/technology"\n
+	                                  rev="more-bbc|source" >Technology</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/technology-45063005"\n
+	                          rev="more-bbc|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Tech Tent: Who can topple trillion-dollar Apple?                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	 [truncated]     </ul> </div>   <div class="correspondent-headlines"> <div class="top-list"> <h2 class="top-list__heading"><span class="top-list__heading__intro">From Our </span>Correspondents</h2> <ul class="top-list__list">  <li class="t
+	        \n
+	            <div class="media media--overlay media--primary block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/14E35/production/_102675558_briananddebbie.jpg" data-alt="Brian Harrison and Debbie Williamso
+	\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="https://www.bbc.com/news/business-44902103"\n
+	                                      rev="secondary-special-features|headline" >\n
+	                                                                    A stylishly affordable success story                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                    \n
+	                                            <a class="media__tag tag tag--business" href="/news/business"\n
+	                                  rev="secondary-special-features|source" >Business</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="https://www.bbc.com/news/business-44902103"\n
+	                          rev="secondary-special-features|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    A stylishly affordable success story                </a>\n
+	            </div>\n
+	\n
+	        \n
+	 [truncated]     </div>  </div> </li>  <li class="feature-ad">  <div class="advert advert--mpu_bottom"><!-- BBCDOTCOM slot mpu_bottom --><div id="bbccom_mpu_bottom_1_2_3_4" class="bbccom_slot" aria-hidden="true"><div class="bbccom_advert">
+	        \n
+	            <div class="media media--overlay media--primary media--icon block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/ibroadcast/images/live/p0/6f/w2/p06fw2fg.jpg" data-alt="How the Netherlands keeps water at bay"><img sr
+	\n
+	                                    <span class="media__icon icon icon--video" aria-hidden="true"></span>\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="http://www.bbc.com/future/story/20180727-how-a-country-below-sea-level-keeps-the-water-at-bay"\n
+	                                      rev="secondary-special-features|headline" >\n
+	                                                                    How the Netherlands keeps water at bay                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                    \n
+	                                            <a class="media__tag tag tag--future" href="http://www.bbc.com/future"\n
+	                                  rev="secondary-special-features|source" >Future</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="http://www.bbc.com/future/story/20180727-how-a-country-below-sea-level-keeps-the-water-at-bay"\n
+	                          rev="secondary-special-features|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    How the Netherlands keeps water at bay                </a>\n
+	            </div>\n
+	\n
+	        \n
+	     </div>  </div> </li>  </ul> </div> </section>  <section class="module module--world-in-pictures module--highlight"> <div class="module__title__container"> <div class="module__ad">  </div>             <h2 class="module__title">\n
+	                            <a class="module__title__link tag tag--feature" href="/news/in_pictures"\n
+	                      rev="world-in-pictures|header"                     >World in pictures</a>\n
+	                    </h2>\n
+	     </div> <div class="module__content"> <ul class="media-list media-list--fixed-height">         \n
+	        <li class="media-list__item media-list__item--1">\n
+	            <div class="media media--padded media--primary media--icon block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/94F3/production/_102813183_harp976index.jpg" data-alt="Choir members play harps during a welc
+	\n
+	                                    <span class="media__icon icon icon--gallery" aria-hidden="true"></span>\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/world-africa-45049645"\n
+	                                      rev="world-in-pictures1|headline" >\n
+	                                                                    Africa's top shots: Singing harpists and power poses                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                    \n
+	                                            <a class="media__tag tag tag--in-pictures" href="/news/world/africa"\n
+	                                  rev="world-in-pictures1|source" >Africa</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/world-africa-45049645"\n
+	                          rev="world-in-pictures1|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Africa's top shots: Singing harpists and power poses                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	        \n
+	        <li class="media-list__item media-list__item--2">\n
+	            <div class="media media--padded media--icon block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/147D0/production/_102802938_st-32.jpg" data-alt="A tribesman of the Garasha looks over the ru
+	\n
+	                                    <span class="media__icon icon icon--gallery" aria-hidden="true"></span>\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/in-pictures-44846905"\n
+	                                      rev="world-in-pictures2|headline" >\n
+	                                                                    In pictures: Hiking the Sinai Trail                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                    \n
+	                                            <a class="media__tag tag tag--in-pictures" href="/news/in_pictures"\n
+	                                  rev="world-in-pictures2|source" >In Pictures</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/in-pictures-44846905"\n
+	                          rev="world-in-pictures2|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    In pictures: Hiking the Sinai Trail                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	        \n
+	        <li class="media-list__item media-list__item--3">\n
+	            <div class="media media--padded media--icon block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/789F/production/_102797803_mediaitem102797568.jpg" data-alt="Farmer May McKeown feeds her rem
+	\n
+	                                    <span class="media__icon icon icon--gallery" aria-hidden="true"></span>\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/world-australia-45043299"\n
+	                                      rev="world-in-pictures3|headline" >\n
+	                                                                    Australia's drought seen from the air                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                    \n
+	                                            <a class="media__tag tag tag--in-pictures" href="/news/world/australia"\n
+	                                  rev="world-in-pictures3|source" >Australia</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/world-australia-45043299"\n
+	                          rev="world-in-pictures3|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Australia's drought seen from the air                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	        \n
+	        <li class="media-list__item media-list__item--4">\n
+	            <div class="media media--padded media--icon block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/D636/production/_102783845_petarsabol-215379.jpg" data-alt="Two mayflies perched on a plant s
+	\n
+	                                    <span class="media__icon icon icon--gallery" aria-hidden="true"></span>\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/in-pictures-45032352"\n
+	                                      rev="world-in-pictures4|headline" >\n
+	                                                                    Close-up winners of garden photography competition                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                    \n
+	                                            <a class="media__tag tag tag--in-pictures" href="/news/in_pictures"\n
+	                                  rev="world-in-pictures4|source" >In Pictures</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/in-pictures-45032352"\n
+	                          rev="world-in-pictures4|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    Close-up winners of garden photography competition                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	        \n
+	        <li class="media-list__item media-list__item--5">\n
+	            <div class="media media--padded media--icon block-link">\n
+	                <div class="media__image">\n
+	 [truncated]                    <div class="responsive-image"><div class="delayed-image-load" data-src="//ichef.bbci.co.uk/wwhp/{width}/cpsprodpb/7689/production/_102754303_davidbamberjulianbleachciarnhinds.jpg" data-alt="David Bamber, Jul
+	\n
+	                                    <span class="media__icon icon icon--gallery" aria-hidden="true"></span>\n
+	                \n
+	                <div class="media__content">\n
+	\n
+	                                            <h3 class="media__title">\n
+	                            <a class="media__link" href="/news/in-pictures-45004510"\n
+	                                      rev="world-in-pictures5|headline" >\n
+	                                                                    In pictures: Behind the mask                                                            </a>\n
+	                        </h3>\n
+	                    \n
+	                    \n
+	                                            <a class="media__tag tag tag--in-pictures" href="/news/in_pictures"\n
+	                                  rev="world-in-pictures5|source" >In Pictures</a>\n
+	                    \n
+	                    \n
+	                </div>\n
+	\n
+	                <a class="block-link__overlay-link"\n
+	                   href="/news/in-pictures-45004510"\n
+	                          rev="world-in-pictures5|overlay"                    tabindex="-1"\n
+	                   aria-hidden="true">\n
+	                    In pictures: Behind the mask                </a>\n
+	            </div>\n
+	\n
+	        </li>\n
+	     </ul> </div> </section>       <section class="module module--highlight module--languages">             <h2 class="module__title">\n
+	                            <a class="module__title__link" href="/worldserviceradio"\n
+	                      rev="languages|header"                     >BBC in other languages</a>\n
+	                    </h2>\n
+	 [truncated]     <div class="module__content"> <div class="ws">  <div class="ws-headlines"> <ul class="ws-headlines__list">  <li class="ws-headline ws-headline--urdu"> <h3 class="ws-headline__language"> <a class="ws-headline__language-link
+	\n
+	\n
+	\n
+	\n
+	\n
+	\n
+	\n
+	\n
+	\n
+	\n
+	\n
+	\n
+	\n
+	\n
+	\n
+	\n
+	\n
+	\n
+	\n
+	 [truncated]       </div> <div id="orb-footer"  class="orb-footer orb-footer-grey b-footer--grey--white" >  <div id="navp-orb-footer-promo" class="orb-footer-grey"></div>  <aside role="complementary"> <div id="orb-aside" class="orb-nav-sec
+	    'use strict';\n
+	\n
+	    var promoManager = {\n
+	        url: '',\n
+	        promoLoaded: false,\n
+	                makeUrl: function (theme, site, win) {\n
+	            var loc = win? win.location : window.location,\n
+	                proto = loc.protocol,\n
+	                host = loc.host,\n
+	                url = proto + '//' + ((proto.match(/s:/i) && !host.match(/^www\.(int|test)\./i))? 'ssl.' : 'www.'),\n
+	                themes = ['light', 'dark'];\n
+	\n
+	            if ( host.match(/^(?:www|ssl|m)\.(int|test|stage|live)\.bbc\./i) ) {\n
+	                url += RegExp.$1 + '.';\n
+	            }\n
+	            else if ( host.match(/^pal\.sandbox\./i) ) {\n
+	                url += 'test.';\n
+	            }\n
+	\n
+	                        theme = themes[ +(theme === themes[0]) ];\n
+	           \n
+	           return url + 'bbc.co.uk/navpromo/card/' + site + '/' + theme;\n
+	        },\n
+	                init: function(node) {\n
+	            var disabledByCookie = (document.cookie.indexOf('ckns_orb_nopromo=1') > -1),\n
+	                that = this;\n
+	            \n
+	            if (window.promomanagerOverride) {\n
+	                for (var p in promomanagerOverride) {\n
+	                    that[p] = promomanagerOverride[p];\n
+	                }\n
+	            }\n
+	                \n
+	            if ( window.orb.fig('uk') && !disabledByCookie ) {\n
+	                require(['orb/async/_footerpromo', 'istats-1'], function(promo, istats) {\n
+	\n
+	                    var virtualSite = istats.getSite() || 'default';\n
+	                    that.url = (window.promomanagerOverride || that).makeUrl('light', virtualSite);\n
+	\n
+	                    if (that.url) { \n
+	                        promo.load(that.url, node, {\n
+	                                                          onSuccess: function(e) {\n
+	                                if(e.status === 'success') {\n
+	                                    node.parentNode.className = node.parentNode.className + ' orb-footer-promo-loaded';\n
+	                                    promoManager.promoLoaded = true;\n
+	                                    promoManager.event('promo-loaded').fire(e);\n
+	                                }\n
+	                             },\n
+	                             onError: function() {\n
+	                                istats.log('error', 'orb-footer-promo-failed');\n
+	                                bbccookies.set('ckns_orb_nopromo=1; expires=' + new Date(new Date().getTime() + 1000 * 60 * 10).toGMTString() + ';path=/;');\n
+	                             }\n
+	                        });   \n
+	                    }\n
+	                });\n
+	            }\n
+	        }\n
+	    };\n
+	    \n
+	        \n
+	    define('orb/promomanager', ['orb/lib/_event'], function (event) {\n
+	        event.mixin(promoManager);\n
+	        return promoManager;\n
+	    });\n
+	    \n
+	    require(['orb/promomanager'], function (promoManager) {\n
+	        promoManager.init(document.getElementById('navp-orb-footer-promo'));\n
+	    })\n
+	})();\n
+	 </script>   \n
+	    <script type="text/javascript">\n
+	\n
+	        require.config({\n
+	            paths: {\n
+	                "mybbc/templates": '//mybbc.files.bbci.co.uk/notification-ui/3.8.4/templates',\n
+	                "mybbc/notifications": '//mybbc.files.bbci.co.uk/notification-ui/3.8.4/js'\n
+	            }\n
+	        });\n
+	\n
+	        require(['mybbc/notifications/NotificationsMain', 'idcta/idcta-1'], function (NotificationsMain, idcta) {\n
+	            var loadNotifications = function (fig) {\n
+	                if (fig.geo.isUK()) {\n
+	                    NotificationsMain.run(idcta, '//mybbc.files.bbci.co.uk/notification-ui/3.8.4/');\n
+	                }\n
+	            };\n
+	            var orbFig = window.orb.fig;\n
+	            if (typeof orbFig.load === 'function') {\n
+	                // Use new async API from Orbit\n
+	                orbFig.load(loadNotifications, loadNotifications);\n
+	            } else {\n
+	                // Use old sync-only API from PAL orbfig project\n
+	                loadNotifications(orbFig);\n
+	            }\n
+	        });\n
+	    </script>\n
+	\n
+	 [truncated] <script type="text/javascript"> if (typeof require !== 'undefined') { require(['istats-1'], function(istats){ istats.track('external', { region: document.getElementsByTagName('body')[0] }); istats.track('download', { region: d
+	  if (window.SEARCHBOX.suppress === false && window.SEARCHBOX.locale && /^en-?.*?/.test(window.SEARCHBOX.locale)) {\n
+	    require.config({\n
+	      paths: {\n
+	        "search/searchbox": window.SEARCHBOX.searchboxAppStaticPrefix,\n
+	        "disco-layer": "//nav.files.bbci.co.uk/discovery-layer/0.0.1-272.f146f82/app"\n
+	      }\n
+	    });\n
+	\n
+	    var orbFig = window.orb.fig;\n
+	\n
+	    var loadSearchSuggest = function (fig) {\n
+	        if (fig.geo.isUK()) {\n
+	            require(['search/searchbox/searchboxDrawer'], function (SearchboxDrawer) {\n
+	              SearchboxDrawer.run(window.SEARCHBOX);\n
+	            });\n
+	        }\n
+	    };\n
+	    if (typeof orbFig.load === 'function') {\n
+	        // Use new async API from Orbit\n
+	        // In event of fig failure provide search suggest functionality by default\n
+	        orbFig.load(loadSearchSuggest, loadSearchSuggest);\n
+	    } else {\n
+	        // Use old sync-only API from PAL orbfig project\n
+	        loadSearchSuggest(orbFig);\n
+	    }\n
+	\n
+	        var loadDiscoveryLayer = function (fig) {\n
+	            if (fig.geo.isUK()) {\n
+	                require(['disco-layer'], function (discoLayer) {\n
+	                  discoLayer.run("//nav.files.bbci.co.uk/discovery-layer/content/", "//nav.files.bbci.co.uk/discovery-layer/0.0.1-272.f146f82/main.css");\n
+	                });\n
+	            }\n
+	        };\n
+	        if (typeof orbFig.load === 'function') {\n
+	            orbFig.load(loadDiscoveryLayer);\n
+	        } else {\n
+	            loadDiscoveryLayer(orbFig);\n
+	        }\n
+	  }\n
+	</script>\n
+	 [truncated] <script>"use strict";define("orb/cookies-adapter",["orb/cookies"],function(c){return{isOrbitEnvironment:function(){return"object"==typeof bbccookies&&"function"!=typeof bbccookies._getCookieName},set:function(e,n){var o=new Da
+
+Packet #         3
+TimeStamp: 06:30:00 06/08/2018
+Packet (Length: 513)
+Layer ETH:
+	Destination: b0:6e:bf:df:d3:40
+	Source: 9c:b6:d0:88:16:21
+	Type: IPv4 (0x0800)
+	Address: b0:6e:bf:df:d3:40
+	.... ...0 .... .... .... .... = IG bit: Individual address (unicast)
+	.... ..0. .... .... .... .... = LG bit: Globally unique address (factory default)
+	Address: 9c:b6:d0:88:16:21
+	.... ...0 .... .... .... .... = IG bit: Individual address (unicast)
+	.... ..0. .... .... .... .... = LG bit: Globally unique address (factory default)
+Layer IP:
+	0000 00.. = Differentiated Services Codepoint: Default (0)
+	Differentiated Services Field: 0x00 (DSCP: CS0, ECN: Not-ECT)
+	Destination GeoIP Latitude: 51.509201
+	Destination GeoIP Country: United Kingdom
+	Source GeoIP: Unknown
+	Destination GeoIP City: London, H9
+	Protocol: TCP (6)
+	Destination GeoIP AS Number: AS2818 BBC
+	.... 0101 = Header Length: 20 bytes (5)
+	Identification: 0x0a3f (2623)
+	Fragment offset: 0
+	Flags: 0x02 (Don't Fragment)
+	Destination GeoIP Longitude: -0.095500
+	Header checksum status: Unverified
+	0100 .... = Version: 4
+	..0. .... = More fragments: Not set
+	Time to live: 128
+	.... ..00 = Explicit Congestion Notification: Not ECN-Capable Transport (0)
+	Source: 192.168.1.42
+	0... .... = Reserved bit: Not set
+	.1.. .... = Don't fragment: Set
+	Total Length: 499
+	Header checksum: 0x625e [validation disabled]
+	Destination: 212.58.246.90
+	Destination GeoIP: London, H9, United Kingdom, AS2818 BBC, 51.509201, -0.095500
+Layer TCP:
+	Next sequence number: 460    (relative sequence number)
+	Header Length: 20 bytes
+	TCP Segment Len: 459
+	Bytes sent since last PSH flag: 459
+	SEQ/ACK analysis
+	Checksum: 0x47e0 [unverified]
+	Urgent pointer: 0
+	...0 .... .... = Nonce: Not set
+	Stream index: 8
+	.... .0.. .... = ECN-Echo: Not set
+	Checksum Status: Unverified
+	Calculated window size: 17408
+	.... .... .0.. = Reset: Not set
+	.... 0... .... = Congestion Window Reduced (CWR): Not set
+	TCP Flags: \xc2\xb7\xc2\xb7\xc2\xb7\xc2\xb7\xc2\xb7\xc2\xb7\xc2\xb7AP\xc2\xb7\xc2\xb7\xc2\xb7
+	Destination Port: 80
+	Window size value: 68
+	.... .... 1... = Push: Set
+	000. .... .... = Reserved: Not set
+	Source Port: 61817
+	Flags: 0x018 (PSH, ACK)
+	.... ...1 .... = Acknowledgment: Set
+	Bytes in flight: 459
+	.... .... ..0. = Syn: Not set
+	.... .... ...0 = Fin: Not set
+	Window size scaling factor: 256
+	.... ..0. .... = Urgent: Not set
+	iRTT: 0.005545000 seconds
+	Sequence number: 1    (relative sequence number)
+	Acknowledgment number: 1    (relative ack number)
+Layer HTTP:
+	GET /idcta/config?callback&locale=en-GB&ptrt=http://www.bbc.com/ HTTP/1.1\r\n
+	Request Version: HTTP/1.1
+	Request Method: GET
+	HTTP request 1/1
+	Severity level: Chat
+	Referer: http://www.bbc.com/\r\n
+	Host: www.bbc.co.uk\r\n
+	Request URI Query: callback&locale=en-GB&ptrt=http://www.bbc.com/
+	Accept-Language: en-US,en;q=0.9\r\n
+	Full request URI: http://www.bbc.co.uk/idcta/config?callback&locale=en-GB&ptrt=http://www.bbc.com/
+	Request URI Query Parameter: callback
+	GET /idcta/config?callback&locale=en-GB&ptrt=http://www.bbc.com/ HTTP/1.1\r\n
+	Accept-Encoding: gzip, deflate\r\n
+	Request URI: /idcta/config?callback&locale=en-GB&ptrt=http://www.bbc.com/
+	Group: Sequence
+	Connection: keep-alive\r\n
+	Accept: */*\r\n
+	Expert Info (Chat/Sequence): GET /idcta/config?callback&locale=en-GB&ptrt=http://www.bbc.com/ HTTP/1.1\r\n
+	User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.84 Safari/537.36\r\n
+	Request URI Path: /idcta/config
+	\r\n
+	If-None-Match: "bf28cba932370d9eb1b18972ef0dfbb3"\r\n
+	If-Modified-Since: Sun, 05 Aug 2018 22:21:54 GMT\r\n
+	Request URI Query Parameter: locale=en-GB
+	Request URI Query Parameter: ptrt=http://www.bbc.com/
+
+Packet #         4
+TimeStamp: 06:30:05 06/08/2018
+Packet (Length: 345)
+Layer ETH:
+	Destination: 9c:b6:d0:88:16:21
+	Source: b0:6e:bf:df:d3:40
+	Type: IPv4 (0x0800)
+	Address: 9c:b6:d0:88:16:21
+	.... ...0 .... .... .... .... = IG bit: Individual address (unicast)
+	.... ..0. .... .... .... .... = LG bit: Globally unique address (factory default)
+	Address: b0:6e:bf:df:d3:40
+	.... ...0 .... .... .... .... = IG bit: Individual address (unicast)
+	.... ..0. .... .... .... .... = LG bit: Globally unique address (factory default)
+Layer IP:
+	0000 00.. = Differentiated Services Codepoint: Default (0)
+	Differentiated Services Field: 0x00 (DSCP: CS0, ECN: Not-ECT)
+	Source GeoIP: London, H9, United Kingdom, AS2818 BBC, 51.509201, -0.095500
+	Protocol: TCP (6)
+	Source GeoIP Longitude: -0.095500
+	.... 0101 = Header Length: 20 bytes (5)
+	Identification: 0x1b85 (7045)
+	Fragment offset: 0
+	Flags: 0x02 (Don't Fragment)
+	Source GeoIP Latitude: 51.509201
+	Source GeoIP City: London, H9
+	Header checksum status: Unverified
+	0100 .... = Version: 4
+	..0. .... = More fragments: Not set
+	Source GeoIP Country: United Kingdom
+	Source GeoIP AS Number: AS2818 BBC
+	Time to live: 251
+	.... ..00 = Explicit Congestion Notification: Not ECN-Capable Transport (0)
+	Source: 212.58.246.90
+	0... .... = Reserved bit: Not set
+	.1.. .... = Don't fragment: Set
+	Total Length: 331
+	Header checksum: 0xd6bf [validation disabled]
+	Destination: 192.168.1.42
+	Destination GeoIP: Unknown
+Layer TCP:
+	Next sequence number: 292    (relative sequence number)
+	Header Length: 20 bytes
+	TCP Segment Len: 291
+	Bytes sent since last PSH flag: 291
+	SEQ/ACK analysis
+	Checksum: 0xa8ec [unverified]
+	Urgent pointer: 0
+	...0 .... .... = Nonce: Not set
+	Stream index: 8
+	.... .0.. .... = ECN-Echo: Not set
+	Checksum Status: Unverified
+	Calculated window size: 23808
+	.... .... .0.. = Reset: Not set
+	.... 0... .... = Congestion Window Reduced (CWR): Not set
+	TCP Flags: \xc2\xb7\xc2\xb7\xc2\xb7\xc2\xb7\xc2\xb7\xc2\xb7\xc2\xb7AP\xc2\xb7\xc2\xb7\xc2\xb7
+	Destination Port: 61817
+	Window size value: 1488
+	.... .... 1... = Push: Set
+	000. .... .... = Reserved: Not set
+	Source Port: 80
+	Flags: 0x018 (PSH, ACK)
+	.... ...1 .... = Acknowledgment: Set
+	Bytes in flight: 291
+	.... .... ..0. = Syn: Not set
+	.... .... ...0 = Fin: Not set
+	Window size scaling factor: 16
+	.... ..0. .... = Urgent: Not set
+	iRTT: 0.005545000 seconds
+	Sequence number: 1    (relative sequence number)
+	Acknowledgment number: 460    (relative ack number)
+Layer HTTP:
+	HTTP/1.1 304 Not Modified\r\n
+	HTTP/1.1 304 Not Modified\r\n
+	Status Code: 304
+	Time since request: 0.536111000 seconds
+	Response Phrase: Not Modified
+	Group: Sequence
+	HTTP response 1/1
+	Connection: keep-alive\r\n
+	Date: Sun, 05 Aug 2018 22:29:59 GMT\r\n
+	Severity level: Chat
+	Request Version: HTTP/1.1
+	Expert Info (Chat/Sequence): HTTP/1.1 304 Not Modified\r\n
+	Last-Modified: Sun, 05 Aug 2018 22:21:54 GMT\r\n
+	Cache-Control: private, max-age=0, must-revalidate\r\n
+	Request in frame: 75
+	\r\n
+	ETag: "bf28cba932370d9eb1b18972ef0dfbb3"\r\n
+	X-Cache-Action: HIT\r\n
+	X-Cache-Hits: 1163\r\n
+	Vary: X-CDN,Origin\r\n
+
+Packet #         5
+TimeStamp: 06:30:05 06/08/2018
+Packet (Length: 827)
+Layer ETH:
+	Destination: b0:6e:bf:df:d3:40
+	Source: 9c:b6:d0:88:16:21
+	Type: IPv4 (0x0800)
+	Address: b0:6e:bf:df:d3:40
+	.... ...0 .... .... .... .... = IG bit: Individual address (unicast)
+	.... ..0. .... .... .... .... = LG bit: Globally unique address (factory default)
+	Address: 9c:b6:d0:88:16:21
+	.... ...0 .... .... .... .... = IG bit: Individual address (unicast)
+	.... ..0. .... .... .... .... = LG bit: Globally unique address (factory default)
+Layer IP:
+	0000 00.. = Differentiated Services Codepoint: Default (0)
+	Differentiated Services Field: 0x00 (DSCP: CS0, ECN: Not-ECT)
+	Destination GeoIP Latitude: 37.769699
+	Destination GeoIP Country: United States
+	Source GeoIP: Unknown
+	Destination GeoIP City: San Francisco, CA
+	Protocol: TCP (6)
+	Destination GeoIP AS Number: AS54113 Fastly
+	.... 0101 = Header Length: 20 bytes (5)
+	Identification: 0x581f (22559)
+	Fragment offset: 0
+	Flags: 0x02 (Don't Fragment)
+	Destination GeoIP Longitude: -122.393303
+	Header checksum status: Unverified
+	0100 .... = Version: 4
+	..0. .... = More fragments: Not set
+	Time to live: 128
+	.... ..00 = Explicit Congestion Notification: Not ECN-Capable Transport (0)
+	Source: 192.168.1.42
+	0... .... = Reserved bit: Not set
+	.1.. .... = Don't fragment: Set
+	Total Length: 813
+	Header checksum: 0xfa22 [validation disabled]
+	Destination: 151.101.76.81
+	Destination GeoIP: San Francisco, CA, United States, AS54113 Fastly, 37.769699, -122.393303
+Layer TCP:
+	Next sequence number: 1616    (relative sequence number)
+	Header Length: 20 bytes
+	TCP Segment Len: 773
+	Bytes sent since last PSH flag: 773
+	SEQ/ACK analysis
+	Checksum: 0xfbbc [unverified]
+	Urgent pointer: 0
+	...0 .... .... = Nonce: Not set
+	Stream index: 7
+	.... .0.. .... = ECN-Echo: Not set
+	Checksum Status: Unverified
+	Calculated window size: 67
+	.... .... .0.. = Reset: Not set
+	.... 0... .... = Congestion Window Reduced (CWR): Not set
+	TCP Flags: \xc2\xb7\xc2\xb7\xc2\xb7\xc2\xb7\xc2\xb7\xc2\xb7\xc2\xb7AP\xc2\xb7\xc2\xb7\xc2\xb7
+	Destination Port: 80
+	Window size value: 67
+	.... .... 1... = Push: Set
+	000. .... .... = Reserved: Not set
+	Source Port: 61783
+	Flags: 0x018 (PSH, ACK)
+	.... ...1 .... = Acknowledgment: Set
+	Bytes in flight: 773
+	.... .... ..0. = Syn: Not set
+	.... .... ...0 = Fin: Not set
+	Window size scaling factor: -1 (unknown)
+	.... ..0. .... = Urgent: Not set
+	Sequence number: 843    (relative sequence number)
+	Acknowledgment number: 37896    (relative ack number)
+Layer HTTP:
+	GET /favicon.ico HTTP/1.1\r\n
+	Request Version: HTTP/1.1
+	Cookie pair: BBC-UID=3a52cc25337c04fc3a7bc259db6a61e094eb02b4c51a3946e5cb4234b53922e90Mozilla%2F5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F
+	Prev request in frame: 25
+	Request Method: GET
+	HTTP request 2/2
+	Severity level: Chat
+	Referer: http://www.bbc.com/\r\n
+	Host: www.bbc.com\r\n
+	 [truncated]Cookie: BBC-UID=3a52cc25337c04fc3a7bc259db6a61e094eb02b4c51a3946e5cb4234b53922e90Mozilla%2F5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F; ckpf_sa_labels_p
+	Accept-Language: en-US,en;q=0.9\r\n
+	Full request URI: http://www.bbc.com/favicon.ico
+	GET /favicon.ico HTTP/1.1\r\n
+	Accept-Encoding: gzip, deflate\r\n
+	Request URI: /favicon.ico
+	Group: Sequence
+	Connection: keep-alive\r\n
+	Accept: image/webp,image/apng,image/*,*/*;q=0.8\r\n
+	Expert Info (Chat/Sequence): GET /favicon.ico HTTP/1.1\r\n
+	User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.84 Safari/537.36\r\n
+	Cache-Control: no-cache\r\n
+	\r\n
+	Cookie pair: ckpf_sa_labels_persist={}
+	Cookie pair: ckns_orb_fig_cache={%22uk%22:0%2C%22ck%22:0%2C%22ad%22:1%2C%22ap%22:0%2C%22tb%22:0%2C%22mb%22:0%2C%22eu%22:0}
+	Cookie pair: test_group=b
+	Cookie pair: ecos.dt=1533508154779
+	Pragma: no-cache\r\n
+
+Packet #         6
+TimeStamp: 06:30:06 06/08/2018
+Packet (Length: 837)
+Layer ETH:
+	Destination: 9c:b6:d0:88:16:21
+	Source: b0:6e:bf:df:d3:40
+	Type: IPv4 (0x0800)
+	Address: 9c:b6:d0:88:16:21
+	.... ...0 .... .... .... .... = IG bit: Individual address (unicast)
+	.... ..0. .... .... .... .... = LG bit: Globally unique address (factory default)
+	Address: b0:6e:bf:df:d3:40
+	.... ...0 .... .... .... .... = IG bit: Individual address (unicast)
+	.... ..0. .... .... .... .... = LG bit: Globally unique address (factory default)
+Layer IP:
+	0000 00.. = Differentiated Services Codepoint: Default (0)
+	Differentiated Services Field: 0x00 (DSCP: CS0, ECN: Not-ECT)
+	Source GeoIP: San Francisco, CA, United States, AS54113 Fastly, 37.769699, -122.393303
+	Protocol: TCP (6)
+	Source GeoIP Longitude: -122.393303
+	.... 0101 = Header Length: 20 bytes (5)
+	Identification: 0xf7e6 (63462)
+	Fragment offset: 0
+	Flags: 0x02 (Don't Fragment)
+	Source GeoIP Latitude: 37.769699
+	Source GeoIP City: San Francisco, CA
+	Header checksum status: Unverified
+	0100 .... = Version: 4
+	..0. .... = More fragments: Not set
+	Source GeoIP Country: United States
+	Source GeoIP AS Number: AS54113 Fastly
+	Time to live: 251
+	.... ..00 = Explicit Congestion Notification: Not ECN-Capable Transport (0)
+	Source: 151.101.76.81
+	0... .... = Reserved bit: Not set
+	.1.. .... = Don't fragment: Set
+	Total Length: 823
+	Header checksum: 0xdf50 [validation disabled]
+	Destination: 192.168.1.42
+	Destination GeoIP: Unknown
+Layer TCP:
+	Next sequence number: 38679    (relative sequence number)
+	Header Length: 20 bytes
+	TCP Segment Len: 783
+	Bytes sent since last PSH flag: 783
+	SEQ/ACK analysis
+	Checksum: 0xf0cc [unverified]
+	Urgent pointer: 0
+	...0 .... .... = Nonce: Not set
+	Stream index: 7
+	.... .0.. .... = ECN-Echo: Not set
+	Checksum Status: Unverified
+	Calculated window size: 1655
+	.... .... .0.. = Reset: Not set
+	.... 0... .... = Congestion Window Reduced (CWR): Not set
+	TCP Flags: \xc2\xb7\xc2\xb7\xc2\xb7\xc2\xb7\xc2\xb7\xc2\xb7\xc2\xb7AP\xc2\xb7\xc2\xb7\xc2\xb7
+	Destination Port: 61783
+	Window size value: 1655
+	.... .... 1... = Push: Set
+	000. .... .... = Reserved: Not set
+	Source Port: 80
+	Flags: 0x018 (PSH, ACK)
+	.... ...1 .... = Acknowledgment: Set
+	Bytes in flight: 783
+	.... .... ..0. = Syn: Not set
+	.... .... ...0 = Fin: Not set
+	Window size scaling factor: -1 (unknown)
+	.... ..0. .... = Urgent: Not set
+	Sequence number: 37896    (relative sequence number)
+	Acknowledgment number: 1616    (relative ack number)
+Layer HTTP:
+	HTTP/1.1 200 OK\r\n
+	Request Version: HTTP/1.1
+	Content-Length: 203\r\n
+	Time since request: 0.034230000 seconds
+	Last-Modified: Tue, 02 Dec 2014 12:13:05 GMT\r\n
+	Date: Sun, 05 Aug 2018 22:30:00 GMT\r\n
+	Severity level: Chat
+	Status Code: 200
+	Content-Encoding: gzip\r\n
+	Prev response in frame: 70
+	File Data: 958 bytes
+	HTTP/1.1 200 OK\r\n
+	Prev request in frame: 25
+	Response Phrase: OK
+	Group: Sequence
+	HTTP response 2/2
+	Connection: keep-alive\r\n
+	Request in frame: 80
+	Expert Info (Chat/Sequence): HTTP/1.1 200 OK\r\n
+	Content length: 203
+	Content-Type: image/x-icon\r\n
+	Cache-Control: max-age=86400, public\r\n
+	Server: Apache\r\n
+	\r\n
+	Content-encoded entity body (gzip): 203 bytes -> 958 bytes
+	ETag: "3be-5093aa6381640"\r\n
+	X-PAL-Host: pal063.back.live.cwwtf.local:80\r\n
+	X-Cache-Action: HIT\r\n
+	X-Cache-Age: 55553\r\n
+	Accept-Ranges: bytes\r\n
+	Via: 1.1 varnish\r\n
+	Age: 79137\r\n
+	X-Fastly-Cache-Status: HIT\r\n
+	X-Served-By: cache-hkg17929-HKG\r\n
+	X-Cache: HIT\r\n
+	X-Cache-Hits: 14939, 1088\r\n
+	X-Timer: S1533508200.329883,VS0,VE0\r\n
+	Vary: Accept-Encoding\r\n
+Layer MEDIA:
+	Media type: image/x-icon (958 bytes)
+
